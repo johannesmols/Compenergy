@@ -1,8 +1,13 @@
 <resources>
+
+    <!-- Basic informations about the app -->
     <string name="app_name">Compenergy</string>
 
+    <!-- Naviagtion drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_header_text">Select an option from the menu</string>
 
+    <!-- Context menu items -->
     <string name="action_settings">Settings</string>
 </resources>

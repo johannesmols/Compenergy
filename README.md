@@ -1,1 +1,1 @@
-CompenergyAndroidApp
+Compenergy Android App

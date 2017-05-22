@@ -11,5 +11,5 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="johannes.mols.compenergy.ActCompare"
-    tools:showIn="@layout/act_compare_toolbar">
+    tools:showIn="@layout/act_compare_main_layout">
 </RelativeLayout>

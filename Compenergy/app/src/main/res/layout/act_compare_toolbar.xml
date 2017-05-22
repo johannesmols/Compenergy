@@ -21,6 +21,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_act_compare" />
+    <include layout="@layout/act_compare_content" />
 
 </android.support.design.widget.CoordinatorLayout>

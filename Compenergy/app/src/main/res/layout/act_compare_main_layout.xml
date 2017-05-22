@@ -9,7 +9,7 @@
     tools:openDrawer="start">
 
     <include
-        layout="@layout/app_bar_act_compare"
+        layout="@layout/act_compare_toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -19,7 +19,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_act_compare"
+        app:headerLayout="@layout/act_compare_nav_drawer_header"
         app:menu="@menu/activity_act_compare_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

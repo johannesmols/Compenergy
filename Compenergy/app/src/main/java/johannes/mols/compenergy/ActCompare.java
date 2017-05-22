@@ -1,7 +1,14 @@
+/*
+ * Copyright (c) Johannes Mols 2017.
+ */
+
 package johannes.mols.compenergy;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -30,6 +37,8 @@ public class ActCompare extends AppCompatActivity implements NavigationView.OnNa
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        displaySelectedScreen(R.id.content_act_compare);
     }
 
     @Override
@@ -42,16 +51,16 @@ public class ActCompare extends AppCompatActivity implements NavigationView.OnNa
         }
     }
 
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
+    private void displaySelectedScreen(int id) {
+        Fragment fragment = null;
 
         switch (id) {
             case R.id.nav_compare: {
+                fragment = new Fragment_Compare();
                 break;
             }
             case R.id.nav_data: {
+                fragment = new Fragment_Data();
                 break;
             }
             case R.id.nav_add_data: {
@@ -73,12 +82,28 @@ public class ActCompare extends AppCompatActivity implements NavigationView.OnNa
                 break;
             }
             default: {
+                fragment = new Fragment_Compare();
                 break;
             }
         }
 
+        // Insert the fragment by replacing any existing fragment
+        if (fragment != null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_act_compare, fragment).commit();
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        displaySelectedScreen(item.getItemId());
+
         return true;
     }
 }

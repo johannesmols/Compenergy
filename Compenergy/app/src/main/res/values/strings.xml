@@ -3,6 +3,10 @@
     <!-- Basic information about the app -->
     <string name="app_name">Compenergy</string>
 
+    <!-- Fragment Titles -->
+    <string name="fragment_compare_title">Compare</string>
+    <string name="fragment_data_title">Data</string>
+
     <!-- Navigation drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

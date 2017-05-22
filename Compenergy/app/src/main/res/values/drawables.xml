@@ -1,8 +1,10 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    <item name="ic_menu_camera" type="drawable">@android:drawable/ic_menu_camera</item>
-    <item name="ic_menu_gallery" type="drawable">@android:drawable/ic_menu_gallery</item>
-    <item name="ic_menu_slideshow" type="drawable">@android:drawable/ic_menu_slideshow</item>
-    <item name="ic_menu_manage" type="drawable">@android:drawable/ic_menu_manage</item>
-    <item name="ic_menu_share" type="drawable">@android:drawable/ic_menu_share</item>
-    <item name="ic_menu_send" type="drawable">@android:drawable/ic_menu_send</item>
+    <item name="ic_menu_compare" type="drawable">@drawable/ic_compare_arrows_black_24dp</item>
+    <item name="ic_menu_data" type="drawable">@drawable/ic_storage_black_24dp</item>
+    <item name="ic_menu_add_data" type="drawable">@drawable/ic_add_circle_outline_black_24dp</item>
+    <item name="ic_menu_favorites" type="drawable">@drawable/ic_grade_black_24dp</item>
+    <item name="ic_menu_categories" type="drawable">@drawable/ic_inbox_black_24dp</item>
+    <item name="ic_menu_settings" type="drawable">@drawable/ic_settings_black_24dp</item>
+    <item name="ic_menu_about" type="drawable">@drawable/ic_info_outline_black_24dp</item>
+    <item name="ic_menu_help" type="drawable">@drawable/ic_local_hospital_black_24dp</item>
 </resources>

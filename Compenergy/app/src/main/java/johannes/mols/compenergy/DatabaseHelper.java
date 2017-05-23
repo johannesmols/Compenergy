@@ -61,13 +61,32 @@ class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    void updateCarrier(Carriers carrier, String new_name) {
+        ContentValues values = new ContentValues();
+        values.put(CARRIER_NAME, new_name);
+        values.put(CARRIER_CATEGORY, carrier.get_category());
+        values.put(CARRIER_UNIT, carrier.get_unit());
+        values.put(CARRIER_ENERGY, carrier.get_energy());
+        values.put(CARRIER_CUSTOM, carrier.get_custom());
+        SQLiteDatabase db = getWritableDatabase();
+        db.update(TABLE_CARRIERS_NAME, values, CARRIER_NAME + "='" + carrier.get_name() + "'", null);
+        db.close();
+    }
+
     //Delete a dataset from the carriers table
     void deleteCarrier(String carrier_name) {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_CARRIERS_NAME + " WHERE " + CARRIER_NAME + "=\"" + carrier_name + "\";");
     }
 
-    //Print something
+    void deleteAllCarriers() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_CARRIERS_NAME + " WHERE 1");
+    }
+
+
+
+    //Print all names of entries in carrier table (only for testing)
     String databaseToString() {
         String dbString = "";
         SQLiteDatabase db = getWritableDatabase();

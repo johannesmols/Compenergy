@@ -25,6 +25,12 @@
         android:layout_height="wrap_content"
         android:text="Delete Carrier"/>
 
+    <Button
+        android:id="@+id/fragment_data_button_drop_table"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Drop Table"/>
+
     <TextView
         android:id="@+id/fragment_data_txt_output"
         android:layout_width="wrap_content"

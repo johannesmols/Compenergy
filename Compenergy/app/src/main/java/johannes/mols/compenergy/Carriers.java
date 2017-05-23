@@ -21,26 +21,7 @@ class Carriers {
         this._custom = custom;
     }
 
-    public void set_name(String name) {
-        _name = name;
-    }
-
-    public void set_category(String category) {
-        _category = category;
-    }
-
-    public void set_unit(String unit) {
-        _unit = unit;
-    }
-
-    public void set_energy(long energy) {
-        _energy = energy;
-    }
-
-    //You probably don't wanna do that though, should be set once at the start
-    public void set_custom(Boolean custom) {
-        _custom = custom;
-    }
+    //setters should not be used, use SQL to update data
 
     public int get_id() {
         return _id;

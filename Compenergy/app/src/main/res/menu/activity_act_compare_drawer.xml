@@ -23,6 +23,10 @@
             android:id="@+id/nav_categories"
             android:icon="@drawable/ic_menu_categories"
             android:title="@string/nav_item_categories" />
+        <item
+            android:id="@+id/nav_submit_data"
+            android:icon="@drawable/ic_menu_submit_data"
+            android:title="@string/nav_item_submit_data" />
     </group>
 
     <item android:title="@string/navigation_second_group_title">

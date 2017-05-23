@@ -23,7 +23,7 @@ class Carriers {
     }
 
     Carriers(String name, String category, String unit, long energy, Boolean custom) {
-        this._id = 0;
+        this._id = -1;
         this._name = name;
         this._category = category;
         this._unit = unit;

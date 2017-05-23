@@ -16,12 +16,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-public class ActCompare extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class ActMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_compare_nav_drawer_layout);
+        setContentView(R.layout.act_main_nav_drawer_layout);
 
         //Toolbar
 
@@ -52,7 +52,7 @@ public class ActCompare extends AppCompatActivity implements NavigationView.OnNa
     }
 
     private void displaySelectedScreen(int id) {
-        Fragment fragment = null;
+        Fragment fragment;
 
         switch (id) {
             case R.id.nav_compare: {
@@ -64,21 +64,31 @@ public class ActCompare extends AppCompatActivity implements NavigationView.OnNa
                 break;
             }
             case R.id.nav_add_data: {
+                fragment = new Fragment_Add_Data();
                 break;
             }
             case R.id.nav_favorites: {
+                fragment = new Fragment_Favorites_Data();
                 break;
             }
             case R.id.nav_categories: {
+                fragment = new Fragment_Categories();
+                break;
+            }
+            case R.id.nav_submit_data: {
+                fragment = new Fragment_Submit_Data();
                 break;
             }
             case R.id.nav_settings: {
+                fragment = new Fragment_Settings();
                 break;
             }
             case R.id.nav_about: {
+                fragment = new Fragment_About();
                 break;
             }
             case R.id.nav_help: {
+                fragment = new Fragment_Help();
                 break;
             }
             default: {
@@ -88,10 +98,9 @@ public class ActCompare extends AppCompatActivity implements NavigationView.OnNa
         }
 
         // Insert the fragment by replacing any existing fragment
-        if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_act_compare, fragment).commit();
-        }
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_act_compare, fragment).commit();
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

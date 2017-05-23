@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="johannes.mols.compenergy.ActCompare">
+    tools:context="johannes.mols.compenergy.ActMain">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -22,6 +22,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/act_compare_content" />
+    <include layout="@layout/act_main_content" />
 
 </android.support.design.widget.CoordinatorLayout>

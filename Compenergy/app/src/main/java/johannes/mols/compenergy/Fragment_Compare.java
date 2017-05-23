@@ -16,7 +16,7 @@ public class Fragment_Compare extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        getActivity().setTitle(R.string.fragment_compare_title);
+        getActivity().setTitle(R.string.nav_item_compare);
     }
 
     @Nullable

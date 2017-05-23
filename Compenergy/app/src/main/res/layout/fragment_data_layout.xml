@@ -31,6 +31,18 @@
         android:layout_height="wrap_content"
         android:text="Drop Table"/>
 
+    <Button
+        android:id="@+id/fragment_data_button_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update Table"/>
+
+    <Button
+        android:id="@+id/fragment_data_button_get_carrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Carrier"/>
+
     <TextView
         android:id="@+id/fragment_data_txt_output"
         android:layout_width="wrap_content"

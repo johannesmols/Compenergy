@@ -4,6 +4,8 @@
 
 package johannes.mols.compenergy;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +15,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Fragment_Data extends Fragment {
 
@@ -20,6 +26,8 @@ public class Fragment_Data extends Fragment {
     private Button add;
     private Button delete;
     private Button drop;
+    private Button update;
+    private Button getCarrier;
     private TextView output;
     private DatabaseHelper dbHelper;
 
@@ -38,6 +46,8 @@ public class Fragment_Data extends Fragment {
         add = (Button) view.findViewById(R.id.fragment_data_button_add);
         delete = (Button) view.findViewById(R.id.fragment_data_button_delete);
         drop = (Button) view.findViewById(R.id.fragment_data_button_drop_table);
+        update = (Button) view.findViewById(R.id.fragment_data_button_update);
+        getCarrier = (Button) view.findViewById(R.id.fragment_data_button_get_carrier);
         output = (TextView) view.findViewById(R.id.fragment_data_txt_output);
         dbHelper = new DatabaseHelper(getContext(), null, null, 1);
         printDatabase();
@@ -63,10 +73,25 @@ public class Fragment_Data extends Fragment {
         drop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //dbHelper.deleteAllCarriers();
-                Carriers carrier = new Carriers(input.getText().toString(), "test", "test", 0, true);
-                dbHelper.updateCarrier(carrier, "updated carrier");
+                dbHelper.deleteAllCarriers();
                 printDatabase();
+            }
+        });
+
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Carriers carrier = new Carriers(input.getText().toString(), "test", "test", 0, true);
+                dbHelper.updateCarrier(carrier, carrier);
+                printDatabase();
+            }
+        });
+
+        getCarrier.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Carriers> result = new ArrayList<>(dbHelper.getCarrier(input.getText().toString()));
+                //Do whatever you please with this
             }
         });
 

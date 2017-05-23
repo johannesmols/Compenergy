@@ -13,7 +13,17 @@ class Carriers {
     private long _energy;
     private Boolean _custom;
 
+    Carriers(int id, String name, String category, String unit, long energy, Boolean custom) {
+        this._id = id;
+        this._name = name;
+        this._category = category;
+        this._unit = unit;
+        this._energy = energy;
+        this._custom = custom;
+    }
+
     Carriers(String name, String category, String unit, long energy, Boolean custom) {
+        this._id = 0;
         this._name = name;
         this._category = category;
         this._unit = unit;

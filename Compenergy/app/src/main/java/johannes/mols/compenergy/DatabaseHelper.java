@@ -10,6 +10,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class DatabaseHelper extends SQLiteOpenHelper {
 
     //General Database information
@@ -25,10 +28,12 @@ class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CARRIER_ENERGY = "energy";
     private static final String CARRIER_CUSTOM = "custom";
 
+    //Constructor
     DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
 
+    //Create Table
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE " + TABLE_CARRIERS_NAME + "(" +
@@ -42,13 +47,41 @@ class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
+    //Upgrade table
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CARRIERS_NAME);
         onCreate(db);
     }
 
-    //Add a dataset to the carriers table
+    //Get a dataset
+    List<Carriers> getCarrier(String name) {
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_CARRIERS_NAME + " WHERE " + CARRIER_NAME + "='" + name + "';";
+
+        //Return list of carriers
+        List<Carriers> result = new ArrayList<>();
+
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+
+        while (!c.isAfterLast()) {
+            if((c.getString(c.getColumnIndex(CARRIER_NAME)) != null) && (c.getString(c.getColumnIndex(CARRIER_CATEGORY)) != null)) {
+                result.add(new Carriers(c.getInt(c.getColumnIndex(CARRIER_ID)),
+                                        c.getString(c.getColumnIndex(CARRIER_NAME)),
+                                        c.getString(c.getColumnIndex(CARRIER_CATEGORY)),
+                                        c.getString(c.getColumnIndex(CARRIER_UNIT)),
+                                        c.getLong(c.getColumnIndex(CARRIER_ENERGY)),
+                                        c.getInt(c.getColumnIndex(CARRIER_CUSTOM)) > 0)); //getting boolean => getInt > 0
+            }
+            c.moveToNext();
+        }
+        c.close();
+        db.close();
+        return result;
+    }
+
+    //Add a dataset
     void addCarrier(Carriers carrier) {
         ContentValues values = new ContentValues();
         values.put(CARRIER_NAME, carrier.get_name());
@@ -61,9 +94,10 @@ class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    void updateCarrier(Carriers carrier, String new_name) {
+    //Update a dataset
+    void updateCarrier(Carriers carrier, Carriers new_carrier) {
         ContentValues values = new ContentValues();
-        values.put(CARRIER_NAME, new_name);
+        values.put(CARRIER_NAME, new_carrier.get_name());
         values.put(CARRIER_CATEGORY, carrier.get_category());
         values.put(CARRIER_UNIT, carrier.get_unit());
         values.put(CARRIER_ENERGY, carrier.get_energy());
@@ -73,18 +107,19 @@ class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    //Delete a dataset from the carriers table
+    //Delete a dataset
     void deleteCarrier(String carrier_name) {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_CARRIERS_NAME + " WHERE " + CARRIER_NAME + "=\"" + carrier_name + "\";");
     }
 
+    //Delete all datasets
     void deleteAllCarriers() {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_CARRIERS_NAME + " WHERE 1");
     }
 
-
+/* ---------------------------------------------------------------------------------------------------------------------------------- */
 
     //Print all names of entries in carrier table (only for testing)
     String databaseToString() {
@@ -108,4 +143,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return  dbString;
     }
+
+/* ---------------------------------------------------------------------------------------------------------------------------------- */
+
 }

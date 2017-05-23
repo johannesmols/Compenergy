@@ -5,6 +5,7 @@
 package johannes.mols.compenergy;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -98,12 +99,8 @@ public class ActCompare extends AppCompatActivity implements NavigationView.OnNa
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         displaySelectedScreen(item.getItemId());
-
         return true;
     }
 }

@@ -54,7 +54,7 @@ public class Fragment_Data extends Fragment {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Carriers carrier = new Carriers(input.getText().toString(), "test_category", "test_unit", 0, true);
+                Carriers carrier = new Carriers(input.getText().toString(), "test_category", "test_unit", 0, true, false);
                 dbHelper.addCarrier(carrier);
                 printDatabase();
             }
@@ -87,7 +87,7 @@ public class Fragment_Data extends Fragment {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Carriers carrier = new Carriers(input.getText().toString(), "test", "test", 0, true);
+                Carriers carrier = new Carriers(input.getText().toString(), "test", "test", 0, true, false);
                 dbHelper.updateCarrier(carrier, carrier);
                 printDatabase();
             }

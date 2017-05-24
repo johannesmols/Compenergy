@@ -28,8 +28,9 @@ class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CARRIER_UNIT = "unit";
     private static final String CARRIER_ENERGY = "energy";
     private static final String CARRIER_CUSTOM = "custom";
+    private static final String CARRIER_FAVORITE = "favorite";
 
-    //Constructor
+        //Constructor
     DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
         table_carriers_exist();
@@ -58,7 +59,8 @@ class DatabaseHelper extends SQLiteOpenHelper {
                 CARRIER_CATEGORY + " VARCHAR NOT NULL, " +
                 CARRIER_UNIT     + " VARCHAR NOT NULL, " +
                 CARRIER_ENERGY   + " BIGINT NOT NULL, " + //BIGINT/LONG max val: 9,223,372,036,854,775,807 => unsigned: 18,446,744,073,709,551,615 (Java has no unsigned longs, use BigInteger if values exceed signed bigint)
-                CARRIER_CUSTOM   + " BOOLEAN NOT NULL" +
+                CARRIER_CUSTOM   + " BOOLEAN NOT NULL, " +
+                CARRIER_FAVORITE + " BOOLEAN NOT NULL" +
                                    ");";
         db.execSQL(query);
     }
@@ -80,13 +82,17 @@ class DatabaseHelper extends SQLiteOpenHelper {
             c.moveToFirst();
 
             while (!c.isAfterLast()) {
-                if((c.getString(c.getColumnIndex(CARRIER_NAME)) != null) && (c.getString(c.getColumnIndex(CARRIER_CATEGORY)) != null)) {
+                if((c.getString(c.getColumnIndex(CARRIER_NAME)) != null) &&
+                   (c.getString(c.getColumnIndex(CARRIER_CATEGORY)) != null) &&
+                   (c.getString(c.getColumnIndex(CARRIER_UNIT)) != null))
+                {
                     result.add(new Carriers(c.getInt(c.getColumnIndex(CARRIER_ID)),
                             c.getString(c.getColumnIndex(CARRIER_NAME)),
                             c.getString(c.getColumnIndex(CARRIER_CATEGORY)),
                             c.getString(c.getColumnIndex(CARRIER_UNIT)),
                             c.getLong(c.getColumnIndex(CARRIER_ENERGY)),
-                            c.getInt(c.getColumnIndex(CARRIER_CUSTOM)) > 0)); //getting boolean => getInt > 0
+                            c.getInt(c.getColumnIndex(CARRIER_CUSTOM)) > 0,
+                            c.getInt(c.getColumnIndex(CARRIER_FAVORITE)) > 0)); //getting boolean => getInt > 0
                 }
                 c.moveToNext();
             }
@@ -105,6 +111,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
             values.put(CARRIER_UNIT, carrier.get_unit());
             values.put(CARRIER_ENERGY, carrier.get_energy());
             values.put(CARRIER_CUSTOM, carrier.get_custom());
+            values.put(CARRIER_FAVORITE, carrier.get_favorite());
             db.insert(TABLE_CARRIERS_NAME, null, values);
             db.close();
         }
@@ -119,6 +126,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
             values.put(CARRIER_UNIT, carrier.get_unit());
             values.put(CARRIER_ENERGY, carrier.get_energy());
             values.put(CARRIER_CUSTOM, carrier.get_custom());
+            values.put(CARRIER_FAVORITE, carrier.get_favorite());
             db.update(TABLE_CARRIERS_NAME, values, CARRIER_NAME + "='" + carrier.get_name() + "'", null);
             db.close();
         }

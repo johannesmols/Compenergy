@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,8 +97,7 @@ public class Fragment_Data extends Fragment {
         getCarrier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Carriers> result = new ArrayList<>(dbHelper.getCarrier(input.getText().toString()));
-                //Do whatever you please with this
+                List<Carriers> result = new ArrayList<>(dbHelper.getCarrierWithName(input.getText().toString()));
             }
         });
 

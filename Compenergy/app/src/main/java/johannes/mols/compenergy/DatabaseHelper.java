@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,10 +77,10 @@ class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //Get a dataset
-    List<Carriers> getCarrier(String name) {
+    private List<Carriers> getCarriers(String condition) {
         List<Carriers> result = new ArrayList<>();
         try (SQLiteDatabase db = getWritableDatabase()) {
-            String query = "SELECT * FROM " + TABLE_CARRIERS_NAME + " WHERE " + CARRIER_NAME + "='" + name + "';";
+            String query = "SELECT * FROM " + TABLE_CARRIERS_NAME + " WHERE " + condition + ";";
 
             Cursor c = db.rawQuery(query, null);
             c.moveToFirst();
@@ -103,6 +104,42 @@ class DatabaseHelper extends SQLiteOpenHelper {
             db.close();
         }
         return result;
+    }
+
+    List<Carriers> getAllCarriers() {
+        return getCarriers("1");
+    }
+
+    List<Carriers> getCarrierWithName(String name) {
+        return getCarriers(CARRIER_NAME + "='" + name + "'");
+    }
+
+    List<Carriers> getCarriersWithCategory(String category) {
+        return getCarriers(CARRIER_CATEGORY + "='" + category + "'");
+    }
+
+    List<Carriers> getCarriersWithUnit(String unit) {
+        return getCarriers(CARRIER_UNIT + "='" + unit + "'");
+    }
+
+    List<Carriers> getCarriersWithExactEnergy(long energy) {
+        return getCarriers(CARRIER_ENERGY + "='" + energy + "'");
+    }
+
+    List<Carriers> getCarriersWithHigherEnergy(long energy) {
+        return getCarriers(CARRIER_ENERGY + ">'" + energy + "'");
+    }
+
+    List<Carriers> getCarriersWithLowerEnergy(long energy) {
+        return getCarriers(CARRIER_ENERGY + "<'" + energy + "'");
+    }
+
+    List<Carriers> getFavoriteCarriers() {
+        return getCarriers(CARRIER_FAVORITE + "=true");
+    }
+
+    List<Carriers> getCustomCarriers() {
+        return getCarriers(CARRIER_CUSTOM + "=true");
     }
 
     //Add a dataset

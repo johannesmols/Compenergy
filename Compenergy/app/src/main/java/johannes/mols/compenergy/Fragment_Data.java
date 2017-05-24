@@ -22,6 +22,7 @@ public class Fragment_Data extends Fragment {
     private EditText input;
     private Button add;
     private Button delete;
+    private Button delete_all;
     private Button drop;
     private Button update;
     private Button getCarrier;
@@ -42,6 +43,7 @@ public class Fragment_Data extends Fragment {
         input = (EditText) view.findViewById(R.id.fragment_data_edit_txt);
         add = (Button) view.findViewById(R.id.fragment_data_button_add);
         delete = (Button) view.findViewById(R.id.fragment_data_button_delete);
+        delete_all = (Button) view.findViewById(R.id.fragment_data_button_delete_all);
         drop = (Button) view.findViewById(R.id.fragment_data_button_drop_table);
         update = (Button) view.findViewById(R.id.fragment_data_button_update);
         getCarrier = (Button) view.findViewById(R.id.fragment_data_button_get_carrier);
@@ -67,11 +69,18 @@ public class Fragment_Data extends Fragment {
             }
         });
 
-        drop.setOnClickListener(new View.OnClickListener() {
+        delete_all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dbHelper.deleteAllCarriers();
                 printDatabase();
+            }
+        });
+
+        drop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dbHelper.dropTable("carriers");
             }
         });
 

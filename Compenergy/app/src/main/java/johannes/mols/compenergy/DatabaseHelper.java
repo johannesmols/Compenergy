@@ -9,6 +9,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,14 +32,29 @@ class DatabaseHelper extends SQLiteOpenHelper {
     //Constructor
     DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
+        table_carriers_exist();
+    }
+
+    //Create a table if it doesn't exist
+    private void table_carriers_exist() {
+        SQLiteDatabase db = getWritableDatabase();
+        try {
+            Cursor c = db.query(TABLE_CARRIERS_NAME, null, null, null, null, null, null);
+            c.close();
+            //If it doesn't throw an Exception the able exists, do nothing further
+        }
+        catch (Exception e) {
+            Log.d(DatabaseHelper.class.toString(), TABLE_CARRIERS_NAME + "doesn't exist, creating...");
+            onCreate(db);
+        }
     }
 
     //Create Table
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE " + TABLE_CARRIERS_NAME + "(" +
-                CARRIER_ID       + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                CARRIER_NAME     + " VARCHAR NOT NULL, " +
+                CARRIER_ID       + " INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                CARRIER_NAME     + " VARCHAR UNIQUE NOT NULL, " +
                 CARRIER_CATEGORY + " VARCHAR NOT NULL, " +
                 CARRIER_UNIT     + " VARCHAR NOT NULL, " +
                 CARRIER_ENERGY   + " BIGINT NOT NULL, " + //BIGINT/LONG max val: 9,223,372,036,854,775,807 => unsigned: 18,446,744,073,709,551,615 (Java has no unsigned longs, use BigInteger if values exceed signed bigint)
@@ -56,67 +72,78 @@ class DatabaseHelper extends SQLiteOpenHelper {
 
     //Get a dataset
     List<Carriers> getCarrier(String name) {
-        SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_CARRIERS_NAME + " WHERE " + CARRIER_NAME + "='" + name + "';";
-
-        //Return list of carriers
         List<Carriers> result = new ArrayList<>();
+        try (SQLiteDatabase db = getWritableDatabase()) {
+            String query = "SELECT * FROM " + TABLE_CARRIERS_NAME + " WHERE " + CARRIER_NAME + "='" + name + "';";
 
-        Cursor c = db.rawQuery(query, null);
-        c.moveToFirst();
+            Cursor c = db.rawQuery(query, null);
+            c.moveToFirst();
 
-        while (!c.isAfterLast()) {
-            if((c.getString(c.getColumnIndex(CARRIER_NAME)) != null) && (c.getString(c.getColumnIndex(CARRIER_CATEGORY)) != null)) {
-                result.add(new Carriers(c.getInt(c.getColumnIndex(CARRIER_ID)),
-                                        c.getString(c.getColumnIndex(CARRIER_NAME)),
-                                        c.getString(c.getColumnIndex(CARRIER_CATEGORY)),
-                                        c.getString(c.getColumnIndex(CARRIER_UNIT)),
-                                        c.getLong(c.getColumnIndex(CARRIER_ENERGY)),
-                                        c.getInt(c.getColumnIndex(CARRIER_CUSTOM)) > 0)); //getting boolean => getInt > 0
+            while (!c.isAfterLast()) {
+                if((c.getString(c.getColumnIndex(CARRIER_NAME)) != null) && (c.getString(c.getColumnIndex(CARRIER_CATEGORY)) != null)) {
+                    result.add(new Carriers(c.getInt(c.getColumnIndex(CARRIER_ID)),
+                            c.getString(c.getColumnIndex(CARRIER_NAME)),
+                            c.getString(c.getColumnIndex(CARRIER_CATEGORY)),
+                            c.getString(c.getColumnIndex(CARRIER_UNIT)),
+                            c.getLong(c.getColumnIndex(CARRIER_ENERGY)),
+                            c.getInt(c.getColumnIndex(CARRIER_CUSTOM)) > 0)); //getting boolean => getInt > 0
+                }
+                c.moveToNext();
             }
-            c.moveToNext();
+            c.close();
+            db.close();
         }
-        c.close();
-        db.close();
         return result;
     }
 
     //Add a dataset
     void addCarrier(Carriers carrier) {
-        ContentValues values = new ContentValues();
-        values.put(CARRIER_NAME, carrier.get_name());
-        values.put(CARRIER_CATEGORY, carrier.get_category());
-        values.put(CARRIER_UNIT, carrier.get_unit());
-        values.put(CARRIER_ENERGY, carrier.get_energy());
-        values.put(CARRIER_CUSTOM, carrier.get_custom());
-        SQLiteDatabase db = getWritableDatabase();
-        db.insert(TABLE_CARRIERS_NAME, null, values);
-        db.close();
+        try (SQLiteDatabase db = getWritableDatabase()) {
+            ContentValues values = new ContentValues();
+            values.put(CARRIER_NAME, carrier.get_name());
+            values.put(CARRIER_CATEGORY, carrier.get_category());
+            values.put(CARRIER_UNIT, carrier.get_unit());
+            values.put(CARRIER_ENERGY, carrier.get_energy());
+            values.put(CARRIER_CUSTOM, carrier.get_custom());
+            db.insert(TABLE_CARRIERS_NAME, null, values);
+            db.close();
+        }
     }
 
     //Update a dataset
     void updateCarrier(Carriers carrier, Carriers new_carrier) {
-        ContentValues values = new ContentValues();
-        values.put(CARRIER_NAME, new_carrier.get_name());
-        values.put(CARRIER_CATEGORY, carrier.get_category());
-        values.put(CARRIER_UNIT, carrier.get_unit());
-        values.put(CARRIER_ENERGY, carrier.get_energy());
-        values.put(CARRIER_CUSTOM, carrier.get_custom());
-        SQLiteDatabase db = getWritableDatabase();
-        db.update(TABLE_CARRIERS_NAME, values, CARRIER_NAME + "='" + carrier.get_name() + "'", null);
-        db.close();
+        try (SQLiteDatabase db = getWritableDatabase()) {
+            ContentValues values = new ContentValues();
+            values.put(CARRIER_NAME, new_carrier.get_name());
+            values.put(CARRIER_CATEGORY, carrier.get_category());
+            values.put(CARRIER_UNIT, carrier.get_unit());
+            values.put(CARRIER_ENERGY, carrier.get_energy());
+            values.put(CARRIER_CUSTOM, carrier.get_custom());
+            db.update(TABLE_CARRIERS_NAME, values, CARRIER_NAME + "='" + carrier.get_name() + "'", null);
+            db.close();
+        }
     }
 
     //Delete a dataset
     void deleteCarrier(String carrier_name) {
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM " + TABLE_CARRIERS_NAME + " WHERE " + CARRIER_NAME + "=\"" + carrier_name + "\";");
+        try (SQLiteDatabase db = getWritableDatabase()) {
+            db.execSQL("DELETE FROM " + TABLE_CARRIERS_NAME + " WHERE " + CARRIER_NAME + "=\"" + carrier_name + "\";");
+        }
     }
 
     //Delete all datasets
     void deleteAllCarriers() {
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM " + TABLE_CARRIERS_NAME + " WHERE 1");
+        try (SQLiteDatabase db = getWritableDatabase()) {
+            db.execSQL("DELETE FROM " + TABLE_CARRIERS_NAME + " WHERE 1");
+        }
+    }
+
+    //Drops table and creates a new one, shouldn't be called, use delete all instead
+    void dropTable(String table_name) {
+        try (SQLiteDatabase db = getWritableDatabase()) {
+            db.execSQL("DROP TABLE IF EXISTS " + table_name);
+            onCreate(db);
+        }
     }
 
 /* ---------------------------------------------------------------------------------------------------------------------------------- */
@@ -124,24 +151,27 @@ class DatabaseHelper extends SQLiteOpenHelper {
     //Print all names of entries in carrier table (only for testing)
     String databaseToString() {
         String dbString = "";
-        SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_CARRIERS_NAME + " WHERE 1";
+        try (SQLiteDatabase db = getWritableDatabase()) {
+            String query = "SELECT * FROM " + TABLE_CARRIERS_NAME + " WHERE 1";
 
-        //Cursor point to a location in your results
-        Cursor c = db.rawQuery(query, null);
-        //Move to first row
-        c.moveToFirst();
+            //Cursor point to a location in your results
+            Cursor c = db.rawQuery(query, null);
+            //Move to first row
+            c.moveToFirst();
 
-        while (!c.isAfterLast()) {
-            if(c.getString(c.getColumnIndex(CARRIER_NAME)) != null) {
-                dbString += c.getString(c.getColumnIndex(CARRIER_NAME));
-                dbString += "\n";
+            while (!c.isAfterLast()) {
+                if (c.getString(c.getColumnIndex(CARRIER_NAME)) != null) {
+                    dbString += c.getString(c.getColumnIndex(CARRIER_NAME));
+                    dbString += "\n";
+                }
+                c.moveToNext();
             }
-            c.moveToNext();
+            c.close();
         }
-        c.close();
-        db.close();
-        return  dbString;
+        catch (Exception ex) {
+            return ex.toString();
+        }
+        return dbString;
     }
 
 /* ---------------------------------------------------------------------------------------------------------------------------------- */

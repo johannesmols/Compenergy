@@ -10,10 +10,9 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 public class Fragment_Settings extends PreferenceFragmentCompat {
-
-    private android.support.v7.preference.Preference resetButton;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -25,7 +24,9 @@ public class Fragment_Settings extends PreferenceFragmentCompat {
         addPreferencesFromResource(R.xml.preferences);
         getActivity().setTitle(R.string.nav_item_settings);
 
-        resetButton = findPreference(getString(R.string.pref_database_reset_key));
+        android.support.v7.preference.Preference resetButton = findPreference(getContext().getString(R.string.pref_database_reset_key));
+        android.support.v7.preference.Preference deleteButton = findPreference(getContext().getString(R.string.pref_database_delete_key));
+        deleteButton.setOnPreferenceClickListener(onPreferenceClickListener);
         resetButton.setOnPreferenceClickListener(onPreferenceClickListener);
 
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -40,10 +41,12 @@ public class Fragment_Settings extends PreferenceFragmentCompat {
         @Override
         public boolean onPreferenceClick(android.support.v7.preference.Preference preference) {
             DatabaseHelper db = new DatabaseHelper(getContext(), null, null, 1);
-            if (preference.getKey().equals(R.string.pref_database_reset_key)) {
+            if (preference.getKey().equals(getContext().getString(R.string.pref_database_reset_key))) {
+                Toast.makeText(getContext(), getContext().getString(R.string.pref_database_hint_reset), Toast.LENGTH_SHORT).show();
                 db.dropTableCarriers();
             }
-            else if (preference.getKey().equals(R.string.pref_database_delete_key)) {
+            else if (preference.getKey().equals(getContext().getString(R.string.pref_database_delete_key))) {
+                Toast.makeText(getContext(), getContext().getString(R.string.pref_database_hint_delete), Toast.LENGTH_SHORT).show();
                 db.deleteAllCarriers();
             }
 

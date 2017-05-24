@@ -29,4 +29,6 @@
     <string name="pref_database_delete_button">Delete all data</string>
     <string name="pref_database_delete_summary">Deletes every dataset and leaves you with an empty database</string>
     <string name="pref_database_delete_key">compenergy.database.delete</string>
+    <string name="pref_database_hint_reset">Database reset successful</string>
+    <string name="pref_database_hint_delete">All data deleted</string>
 </resources>

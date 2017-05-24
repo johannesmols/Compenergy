@@ -63,6 +63,9 @@ class DatabaseHelper extends SQLiteOpenHelper {
                 CARRIER_FAVORITE + " BOOLEAN NOT NULL" +
                                    ");";
         db.execSQL(query);
+
+        //Add default data
+
     }
 
     //Upgrade table
@@ -147,9 +150,9 @@ class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //Drops table and creates a new one, shouldn't be called, use delete all instead
-    void dropTable(String table_name) {
+    void dropTableCarriers() {
         try (SQLiteDatabase db = getWritableDatabase()) {
-            db.execSQL("DROP TABLE IF EXISTS " + table_name);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_CARRIERS_NAME);
             onCreate(db);
         }
     }

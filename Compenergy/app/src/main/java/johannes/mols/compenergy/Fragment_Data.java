@@ -80,7 +80,7 @@ public class Fragment_Data extends Fragment {
         drop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dbHelper.dropTable("carriers");
+                dbHelper.dropTableCarriers();
             }
         });
 

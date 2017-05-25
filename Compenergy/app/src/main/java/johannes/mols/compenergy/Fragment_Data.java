@@ -4,7 +4,6 @@
 
 package johannes.mols.compenergy;
 
-import android.app.LauncherActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -32,7 +30,7 @@ public class Fragment_Data extends Fragment {
     private ListView listView;
     private DatabaseHelper dbHelper;
 
-    ArrayAdapter<String> adapter;
+    DataListAdapter adapter;
 
     //Alphabetical sort of String List
     private static Comparator<String> ALPHABETICAL_ORDER = new Comparator<String>() {
@@ -44,6 +42,14 @@ public class Fragment_Data extends Fragment {
             return res;
         }
     };
+
+    //Custom comparator by Carrier property name
+    private class CustomComparator implements Comparator<Carrier> {
+        @Override
+        public int compare(Carrier c1, Carrier c2) {
+            return c1.get_name().compareTo(c2.get_name());
+        }
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -61,12 +67,12 @@ public class Fragment_Data extends Fragment {
         dbHelper = new DatabaseHelper(mContext, null, null, 1);
         listView = (ListView) view.findViewById(R.id.fragment_data_list_view);
         List<Carrier> carrierList = new ArrayList<>(dbHelper.getAllCarriers());
-        List<String> carrierNameList = new ArrayList<>();
+        List<String> carrierStringList = new ArrayList<>();
         for (Carrier carrier : carrierList) {
-            carrierNameList.add(carrier.get_name());
+            carrierStringList.add(carrier.get_name());
         }
-        Collections.sort(carrierNameList, ALPHABETICAL_ORDER);
-        adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, carrierNameList);
+        Collections.sort(carrierStringList, ALPHABETICAL_ORDER);
+        adapter = new DataListAdapter(mContext, R.layout.listview_item_data_layout, carrierStringList);
         listView.setAdapter(adapter);
         listView.setTextFilterEnabled(true);
 

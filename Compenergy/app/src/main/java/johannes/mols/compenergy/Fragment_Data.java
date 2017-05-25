@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Fragment_Data extends Fragment {
@@ -29,6 +31,17 @@ public class Fragment_Data extends Fragment {
     private DatabaseHelper dbHelper;
 
     ArrayAdapter<String> adapter;
+
+    //Alphabetical sort
+    private static Comparator<String> ALPHABETICAL_ORDER = new Comparator<String>() {
+        public int compare(String str1, String str2) {
+            int res = String.CASE_INSENSITIVE_ORDER.compare(str1, str2);
+            if (res == 0) {
+                res = str1.compareTo(str2);
+            }
+            return res;
+        }
+    };
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -49,6 +62,7 @@ public class Fragment_Data extends Fragment {
         for (Carrier carrier : carrierList) {
             carrierNameList.add(carrier.get_name());
         }
+        Collections.sort(carrierNameList, ALPHABETICAL_ORDER);
         adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, carrierNameList);
         listView.setAdapter(adapter);
         listView.setTextFilterEnabled(true);

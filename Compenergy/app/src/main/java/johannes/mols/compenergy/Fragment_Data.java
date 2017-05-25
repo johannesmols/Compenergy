@@ -32,7 +32,7 @@ public class Fragment_Data extends Fragment {
 
     ArrayAdapter<String> adapter;
 
-    //Alphabetical sort
+    //Alphabetical sort of String List
     private static Comparator<String> ALPHABETICAL_ORDER = new Comparator<String>() {
         public int compare(String str1, String str2) {
             int res = String.CASE_INSENSITIVE_ORDER.compare(str1, str2);
@@ -66,68 +66,6 @@ public class Fragment_Data extends Fragment {
         adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, carrierNameList);
         listView.setAdapter(adapter);
         listView.setTextFilterEnabled(true);
-
-        /* --- START: TESTING CODE, REMOVE WHEN LIST VIEW IMPLEMENTED --- */
-        input = (EditText) view.findViewById(R.id.fragment_data_edit_txt);
-        Button add = (Button) view.findViewById(R.id.fragment_data_button_add);
-        Button delete = (Button) view.findViewById(R.id.fragment_data_button_delete);
-        Button delete_all = (Button) view.findViewById(R.id.fragment_data_button_delete_all);
-        Button drop = (Button) view.findViewById(R.id.fragment_data_button_drop_table);
-        Button update = (Button) view.findViewById(R.id.fragment_data_button_update);
-        Button getCarrier = (Button) view.findViewById(R.id.fragment_data_button_get_carrier);
-        output = (TextView) view.findViewById(R.id.fragment_data_txt_output);
-        dbHelper = new DatabaseHelper(getContext(), null, null, 1);
-        printDatabase();
-
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Carrier carrier = new Carrier(input.getText().toString(), "test_category", "test_unit", 0, true, false);
-                dbHelper.addCarrier(carrier);
-                printDatabase();
-            }
-        });
-
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String delete_text = input.getText().toString();
-                dbHelper.deleteCarrier(delete_text);
-                printDatabase();
-            }
-        });
-
-        delete_all.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dbHelper.deleteAllCarriers();
-                printDatabase();
-            }
-        });
-
-        drop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dbHelper.dropTableCarriers();
-            }
-        });
-
-        update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Carrier carrier = new Carrier(input.getText().toString(), "test", "test", 0, true, false);
-                dbHelper.updateCarrier(carrier, carrier);
-                printDatabase();
-            }
-        });
-
-        getCarrier.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<Carrier> result = new ArrayList<>(dbHelper.getCarrierWithName(input.getText().toString()));
-            }
-        });
-        /* --- END: TESTING CODE, REMOVE WHEN LIST VIEW IMPLEMENTED --- */
 
         return view;
     }

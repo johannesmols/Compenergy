@@ -38,6 +38,16 @@ public class ActMain extends AppCompatActivity implements NavigationView.OnNavig
         navigationView.setNavigationItemSelectedListener(this);
 
         displaySelectedScreen(R.id.content_act_compare);
+
+        //Database
+        createDatabaseIfNotExistent();
+    }
+
+    private void createDatabaseIfNotExistent() {
+        DatabaseHelper db = new DatabaseHelper(this, null, null, 1); //Constructor automatically creates table if it doesn't exist
+        if (db.getAllCarriers().size() == 0) {                       //Fill database with default items if size is 0, therefore just created
+            db.addDefaultData();                                     //Database will also be refilled if it was emptied and the app was closed without adding new items
+        }
     }
 
     @Override

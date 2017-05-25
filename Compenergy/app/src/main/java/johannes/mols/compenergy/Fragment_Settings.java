@@ -44,6 +44,7 @@ public class Fragment_Settings extends PreferenceFragmentCompat {
             if (preference.getKey().equals(getContext().getString(R.string.pref_database_reset_key))) {
                 Toast.makeText(getContext(), getContext().getString(R.string.pref_database_hint_reset), Toast.LENGTH_SHORT).show();
                 db.dropTableCarriers();
+                db.addDefaultData();
             }
             else if (preference.getKey().equals(getContext().getString(R.string.pref_database_delete_key))) {
                 Toast.makeText(getContext(), getContext().getString(R.string.pref_database_hint_delete), Toast.LENGTH_SHORT).show();

@@ -37,21 +37,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
     DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
         mContext = context;
-        table_carriers_exist();
-    }
-
-    //Create a table if it doesn't exist
-    private void table_carriers_exist() {
-        SQLiteDatabase db = getWritableDatabase();
-        try {
-            Cursor c = db.query(TABLE_CARRIERS_NAME, null, null, null, null, null, null);
-            c.close();
-            //If it doesn't throw an Exception the able exists, do nothing further
-        }
-        catch (Exception e) {
-            Log.d(DatabaseHelper.class.toString(), TABLE_CARRIERS_NAME + "doesn't exist, creating...");
-            onCreate(db);
-        }
+        //table_carriers_exist();
     }
 
     //Create Table
@@ -65,16 +51,18 @@ class DatabaseHelper extends SQLiteOpenHelper {
                 CARRIER_ENERGY   + " BIGINT NOT NULL, " + //BIGINT/LONG max val: 9,223,372,036,854,775,807 => unsigned: 18,446,744,073,709,551,615 (Java has no unsigned longs, use BigInteger if values exceed signed bigint)
                 CARRIER_CUSTOM   + " BOOLEAN NOT NULL, " +
                 CARRIER_FAVORITE + " BOOLEAN NOT NULL" +
-                                   ");";
+                ");";
         db.execSQL(query);
+    }
 
-        //Add default data
+    void addDefaultData() {
         List<Carrier> carriers;
         XMLPullParserHandler parser = new XMLPullParserHandler();
         InputStream rawXML = mContext.getResources().openRawResource(R.raw.default_database);
         carriers = parser.parse(rawXML);
 
         for (int i = 0; i < carriers.size(); i++) {
+            //recursive error
             addCarrier(carriers.get(i));
         }
     }
@@ -97,8 +85,8 @@ class DatabaseHelper extends SQLiteOpenHelper {
 
             while (!c.isAfterLast()) {
                 if((c.getString(c.getColumnIndex(CARRIER_NAME)) != null) &&
-                   (c.getString(c.getColumnIndex(CARRIER_CATEGORY)) != null) &&
-                   (c.getString(c.getColumnIndex(CARRIER_UNIT)) != null))
+                        (c.getString(c.getColumnIndex(CARRIER_CATEGORY)) != null) &&
+                        (c.getString(c.getColumnIndex(CARRIER_UNIT)) != null))
                 {
                     result.add(new Carrier(c.getInt(c.getColumnIndex(CARRIER_ID)),
                             c.getString(c.getColumnIndex(CARRIER_NAME)),

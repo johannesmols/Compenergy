@@ -15,6 +15,6 @@
         android:padding="10dp"
         android:background="@android:color/darker_gray"
         android:textColor="@android:color/primary_text_light"
-        android:text=""/>
+        android:text="Header"/>
 
 </LinearLayout>

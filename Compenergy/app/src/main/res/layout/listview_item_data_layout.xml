@@ -9,7 +9,7 @@
             android:id="@+id/carrier_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
+            android:text="Carrier Name"
             android:textSize="18sp"
             android:textStyle="normal"
             android:textColor="@android:color/primary_text_light" />

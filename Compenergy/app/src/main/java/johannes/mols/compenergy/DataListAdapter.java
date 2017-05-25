@@ -26,7 +26,7 @@ class DataListAdapter extends ArrayAdapter<String> implements Filterable {
 
     @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
 
         if (view == null) {

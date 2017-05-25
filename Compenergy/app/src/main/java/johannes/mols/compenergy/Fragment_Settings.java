@@ -26,6 +26,8 @@ public class Fragment_Settings extends PreferenceFragmentCompat {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+
         addPreferencesFromResource(R.xml.preferences);
         getActivity().setTitle(R.string.nav_item_settings);
 
@@ -34,7 +36,7 @@ public class Fragment_Settings extends PreferenceFragmentCompat {
         deleteButton.setOnPreferenceClickListener(onPreferenceClickListener);
         resetButton.setOnPreferenceClickListener(onPreferenceClickListener);
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return view;
     }
 
     @Override

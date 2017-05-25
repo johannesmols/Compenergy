@@ -60,7 +60,6 @@ class DatabaseHelper extends SQLiteOpenHelper {
         carriers = parser.parse(rawXML);
 
         for (int i = 0; i < carriers.size(); i++) {
-            //recursive error
             addCarrier(carriers.get(i));
         }
     }
@@ -136,6 +135,27 @@ class DatabaseHelper extends SQLiteOpenHelper {
 
     List<Carrier> getCustomCarriers() {
         return getCarriers(CARRIER_CUSTOM + "=true");
+    }
+
+    List<String> getCategoryList() {
+        List<String> categories = new ArrayList<>();
+        try (SQLiteDatabase db = getWritableDatabase()) {
+            String query = "SELECT DISTINCT " + CARRIER_CATEGORY + " FROM " + TABLE_CARRIERS_NAME + ";";
+
+            Cursor c = db.rawQuery(query, null);
+            c.moveToFirst();
+
+            while (!c.isAfterLast()) {
+                if(c.getString(c.getColumnIndex(CARRIER_CATEGORY)) != null) {
+                    categories.add(c.getString(c.getColumnIndex(CARRIER_CATEGORY)));
+                }
+                c.moveToNext();
+            }
+            c.close();
+            db.close();
+        }
+
+        return categories;
     }
 
     //Add a dataset

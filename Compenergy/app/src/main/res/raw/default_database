@@ -2,7 +2,7 @@
 
 <carriers>
     <carrier>
-        <name>Test Carrier 1</name>
+        <name>A Carrier</name>
         <category>Test Category 1</category>
         <unit>Test Unit 1</unit>
         <energy>1337</energy>
@@ -10,7 +10,119 @@
         <favorite>false</favorite>
     </carrier>
     <carrier>
-        <name>Test Carrier 2</name>
+        <name>B Carrier</name>
+        <category>Test Category 2</category>
+        <unit>Test Unit 2</unit>
+        <energy>420</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>C Carrier</name>
+        <category>Test Category 2</category>
+        <unit>Test Unit 2</unit>
+        <energy>420</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>D Carrier</name>
+        <category>Test Category 2</category>
+        <unit>Test Unit 2</unit>
+        <energy>420</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>E Carrier</name>
+        <category>Test Category 2</category>
+        <unit>Test Unit 2</unit>
+        <energy>420</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>F Carrier</name>
+        <category>Test Category 2</category>
+        <unit>Test Unit 2</unit>
+        <energy>420</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>G Carrier</name>
+        <category>Test Category 2</category>
+        <unit>Test Unit 2</unit>
+        <energy>420</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>G Carrier</name>
+        <category>Test Category 2</category>
+        <unit>Test Unit 2</unit>
+        <energy>420</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>H Carrier</name>
+        <category>Test Category 2</category>
+        <unit>Test Unit 2</unit>
+        <energy>420</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>I Carrier</name>
+        <category>Test Category 2</category>
+        <unit>Test Unit 2</unit>
+        <energy>420</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>J Carrier</name>
+        <category>Test Category 2</category>
+        <unit>Test Unit 2</unit>
+        <energy>420</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>K Carrier</name>
+        <category>Test Category 2</category>
+        <unit>Test Unit 2</unit>
+        <energy>420</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>L Carrier</name>
+        <category>Test Category 2</category>
+        <unit>Test Unit 2</unit>
+        <energy>420</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>M Carrier</name>
+        <category>Test Category 2</category>
+        <unit>Test Unit 2</unit>
+        <energy>420</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>N Carrier</name>
+        <category>Test Category 2</category>
+        <unit>Test Unit 2</unit>
+        <energy>420</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>O Carrier</name>
         <category>Test Category 2</category>
         <unit>Test Unit 2</unit>
         <energy>420</energy>

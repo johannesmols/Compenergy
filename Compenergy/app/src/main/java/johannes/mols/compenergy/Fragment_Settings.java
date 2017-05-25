@@ -4,8 +4,11 @@
 
 package johannes.mols.compenergy;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 public class Fragment_Settings extends PreferenceFragmentCompat {
+
+    private Context mContext;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -35,20 +40,42 @@ public class Fragment_Settings extends PreferenceFragmentCompat {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mContext = view.getContext();
     }
 
     private android.support.v7.preference.Preference.OnPreferenceClickListener onPreferenceClickListener = new android.support.v7.preference.Preference.OnPreferenceClickListener() {
         @Override
         public boolean onPreferenceClick(android.support.v7.preference.Preference preference) {
-            DatabaseHelper db = new DatabaseHelper(getContext(), null, null, 1);
             if (preference.getKey().equals(getContext().getString(R.string.pref_database_reset_key))) {
-                Toast.makeText(getContext(), getContext().getString(R.string.pref_database_hint_reset), Toast.LENGTH_SHORT).show();
-                db.dropTableCarriers();
-                db.addDefaultData();
+                new AlertDialog.Builder(mContext)
+                        .setTitle("Confirm reset")
+                        .setMessage("Are you sure?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(getContext(), getContext().getString(R.string.pref_database_hint_reset), Toast.LENGTH_SHORT).show();
+                                DatabaseHelper db = new DatabaseHelper(mContext, null, null, 1);
+                                db.dropTableCarriers();
+                                db.addDefaultData();
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
             }
             else if (preference.getKey().equals(getContext().getString(R.string.pref_database_delete_key))) {
-                Toast.makeText(getContext(), getContext().getString(R.string.pref_database_hint_delete), Toast.LENGTH_SHORT).show();
-                db.deleteAllCarriers();
+                new AlertDialog.Builder(mContext)
+                        .setTitle("Confirm deletion")
+                        .setMessage("Are you sure?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(getContext(), getContext().getString(R.string.pref_database_hint_delete), Toast.LENGTH_SHORT).show();
+                                DatabaseHelper db = new DatabaseHelper(mContext, null, null, 1);
+                                db.deleteAllCarriers();
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
             }
 
             return false;

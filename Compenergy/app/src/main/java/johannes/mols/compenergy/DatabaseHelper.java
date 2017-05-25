@@ -9,7 +9,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -37,7 +36,6 @@ class DatabaseHelper extends SQLiteOpenHelper {
     DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
         mContext = context;
-        //table_carriers_exist();
     }
 
     //Create Table

@@ -4,12 +4,12 @@
 
     <PreferenceCategory
         android:title="@string/pref_database_group_title"
-        android:key="@string/pref_database_group_title_key" >
+        android:key="@string/pref_database_group_title_key">
 
         <Preference
             android:key="@string/pref_database_reset_key"
             android:title="@string/pref_database_reset_button"
-            android:summary="@string/pref_database_reset_summary"/>
+            android:summary="@string/pref_database_reset_summary" />
 
         <Preference
             android:key="@string/pref_database_delete_key"

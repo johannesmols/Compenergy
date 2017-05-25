@@ -13,20 +13,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Fragment_Data extends Fragment {
 
     private EditText input;
-    private Button add;
-    private Button delete;
-    private Button delete_all;
-    private Button drop;
-    private Button update;
-    private Button getCarrier;
     private TextView output;
     private DatabaseHelper dbHelper;
 
@@ -42,12 +34,12 @@ public class Fragment_Data extends Fragment {
         View view = inflater.inflate(R.layout.fragment_data_layout, container, false);
 
         input = (EditText) view.findViewById(R.id.fragment_data_edit_txt);
-        add = (Button) view.findViewById(R.id.fragment_data_button_add);
-        delete = (Button) view.findViewById(R.id.fragment_data_button_delete);
-        delete_all = (Button) view.findViewById(R.id.fragment_data_button_delete_all);
-        drop = (Button) view.findViewById(R.id.fragment_data_button_drop_table);
-        update = (Button) view.findViewById(R.id.fragment_data_button_update);
-        getCarrier = (Button) view.findViewById(R.id.fragment_data_button_get_carrier);
+        Button add = (Button) view.findViewById(R.id.fragment_data_button_add);
+        Button delete = (Button) view.findViewById(R.id.fragment_data_button_delete);
+        Button delete_all = (Button) view.findViewById(R.id.fragment_data_button_delete_all);
+        Button drop = (Button) view.findViewById(R.id.fragment_data_button_drop_table);
+        Button update = (Button) view.findViewById(R.id.fragment_data_button_update);
+        Button getCarrier = (Button) view.findViewById(R.id.fragment_data_button_get_carrier);
         output = (TextView) view.findViewById(R.id.fragment_data_txt_output);
         dbHelper = new DatabaseHelper(getContext(), null, null, 1);
         printDatabase();
@@ -55,7 +47,7 @@ public class Fragment_Data extends Fragment {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Carriers carrier = new Carriers(input.getText().toString(), "test_category", "test_unit", 0, true, false);
+                Carrier carrier = new Carrier(input.getText().toString(), "test_category", "test_unit", 0, true, false);
                 dbHelper.addCarrier(carrier);
                 printDatabase();
             }
@@ -88,7 +80,7 @@ public class Fragment_Data extends Fragment {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Carriers carrier = new Carriers(input.getText().toString(), "test", "test", 0, true, false);
+                Carrier carrier = new Carrier(input.getText().toString(), "test", "test", 0, true, false);
                 dbHelper.updateCarrier(carrier, carrier);
                 printDatabase();
             }
@@ -97,7 +89,7 @@ public class Fragment_Data extends Fragment {
         getCarrier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Carriers> result = new ArrayList<>(dbHelper.getCarrierWithName(input.getText().toString()));
+                List<Carrier> result = new ArrayList<>(dbHelper.getCarrierWithName(input.getText().toString()));
             }
         });
 

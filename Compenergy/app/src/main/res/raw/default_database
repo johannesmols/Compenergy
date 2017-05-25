@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<carriers>
+    <carrier>
+        <name>Test Carrier 1</name>
+        <category>Test Category 1</category>
+        <unit>Test Unit 1</unit>
+        <energy>1337</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Test Carrier 2</name>
+        <category>Test Category 2</category>
+        <unit>Test Unit 2</unit>
+        <energy>420</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+</carriers>

@@ -10,12 +10,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.Toast;
+import android.widget.ArrayAdapter;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 class DatabaseHelper extends SQLiteOpenHelper {
+
+    private Context mContext;
 
     //General Database information
     private static final byte DATABASE_VERSION = 1;
@@ -31,9 +35,10 @@ class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CARRIER_CUSTOM = "custom";
     private static final String CARRIER_FAVORITE = "favorite";
 
-        //Constructor
+    //Constructor
     DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
+        mContext = context;
         table_carriers_exist();
     }
 
@@ -66,7 +71,14 @@ class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(query);
 
         //Add default data
+        List<Carrier> carriers;
+        XMLPullParserHandler parser = new XMLPullParserHandler();
+        InputStream rawXML = mContext.getResources().openRawResource(R.raw.default_database);
+        carriers = parser.parse(rawXML);
 
+        for (int i = 0; i < carriers.size(); i++) {
+            addCarrier(carriers.get(i));
+        }
     }
 
     //Upgrade table
@@ -77,8 +89,8 @@ class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //Get a dataset
-    private List<Carriers> getCarriers(String condition) {
-        List<Carriers> result = new ArrayList<>();
+    private List<Carrier> getCarriers(String condition) {
+        List<Carrier> result = new ArrayList<>();
         try (SQLiteDatabase db = getWritableDatabase()) {
             String query = "SELECT * FROM " + TABLE_CARRIERS_NAME + " WHERE " + condition + ";";
 
@@ -90,7 +102,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
                    (c.getString(c.getColumnIndex(CARRIER_CATEGORY)) != null) &&
                    (c.getString(c.getColumnIndex(CARRIER_UNIT)) != null))
                 {
-                    result.add(new Carriers(c.getInt(c.getColumnIndex(CARRIER_ID)),
+                    result.add(new Carrier(c.getInt(c.getColumnIndex(CARRIER_ID)),
                             c.getString(c.getColumnIndex(CARRIER_NAME)),
                             c.getString(c.getColumnIndex(CARRIER_CATEGORY)),
                             c.getString(c.getColumnIndex(CARRIER_UNIT)),
@@ -106,44 +118,44 @@ class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    List<Carriers> getAllCarriers() {
+    List<Carrier> getAllCarriers() {
         return getCarriers("1");
     }
 
-    List<Carriers> getCarrierWithName(String name) {
+    List<Carrier> getCarrierWithName(String name) {
         return getCarriers(CARRIER_NAME + "='" + name + "'");
     }
 
-    List<Carriers> getCarriersWithCategory(String category) {
+    List<Carrier> getCarriersWithCategory(String category) {
         return getCarriers(CARRIER_CATEGORY + "='" + category + "'");
     }
 
-    List<Carriers> getCarriersWithUnit(String unit) {
+    List<Carrier> getCarriersWithUnit(String unit) {
         return getCarriers(CARRIER_UNIT + "='" + unit + "'");
     }
 
-    List<Carriers> getCarriersWithExactEnergy(long energy) {
+    List<Carrier> getCarriersWithExactEnergy(long energy) {
         return getCarriers(CARRIER_ENERGY + "='" + energy + "'");
     }
 
-    List<Carriers> getCarriersWithHigherEnergy(long energy) {
+    List<Carrier> getCarriersWithHigherEnergy(long energy) {
         return getCarriers(CARRIER_ENERGY + ">'" + energy + "'");
     }
 
-    List<Carriers> getCarriersWithLowerEnergy(long energy) {
+    List<Carrier> getCarriersWithLowerEnergy(long energy) {
         return getCarriers(CARRIER_ENERGY + "<'" + energy + "'");
     }
 
-    List<Carriers> getFavoriteCarriers() {
+    List<Carrier> getFavoriteCarriers() {
         return getCarriers(CARRIER_FAVORITE + "=true");
     }
 
-    List<Carriers> getCustomCarriers() {
+    List<Carrier> getCustomCarriers() {
         return getCarriers(CARRIER_CUSTOM + "=true");
     }
 
     //Add a dataset
-    void addCarrier(Carriers carrier) {
+    void addCarrier(Carrier carrier) {
         try (SQLiteDatabase db = getWritableDatabase()) {
             ContentValues values = new ContentValues();
             values.put(CARRIER_NAME, carrier.get_name());
@@ -158,7 +170,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //Update a dataset
-    void updateCarrier(Carriers carrier, Carriers new_carrier) {
+    void updateCarrier(Carrier carrier, Carrier new_carrier) {
         try (SQLiteDatabase db = getWritableDatabase()) {
             ContentValues values = new ContentValues();
             values.put(CARRIER_NAME, new_carrier.get_name());

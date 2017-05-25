@@ -10,9 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -209,7 +207,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
 /* ---------------------------------------------------------------------------------------------------------------------------------- */
 
     //Print all names of entries in carrier table (only for testing)
-    String databaseToString() {
+    String databaseAllCarrierNamesToString() {
         String dbString = "";
         try (SQLiteDatabase db = getWritableDatabase()) {
             String query = "SELECT * FROM " + TABLE_CARRIERS_NAME + " WHERE 1";

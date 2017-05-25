@@ -20,6 +20,9 @@
     <string name="nav_item_about">About</string>
     <string name="nav_item_help">Help</string>
 
+    <!-- Data Fragment -->
+    <string name="data_search_hint">Search for an item…</string>
+
     <!-- Preference screen strings -->
     <string name="pref_database_group_title">Database</string>
     <string name="pref_database_group_title_key">compenergy.database.title</string>
@@ -33,5 +36,5 @@
     <string name="pref_database_hint_delete">All data deleted</string>
 
     <!-- About screen -->
-    <string name="about_title_app_name">App Name:</string>
+    <string name="about_title_app_name">App name:</string>
 </resources>

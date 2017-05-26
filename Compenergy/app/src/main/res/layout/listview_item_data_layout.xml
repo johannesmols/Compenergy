@@ -3,13 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="10dp" >
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp" >
 
         <TextView
             android:id="@+id/carrier_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Carrier Name"
+            android:text="@string/placeholder_item_listview"
             android:textSize="18sp"
             android:textStyle="normal"
             android:textColor="@android:color/primary_text_light" />

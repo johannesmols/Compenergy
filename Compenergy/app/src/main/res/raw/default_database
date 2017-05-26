@@ -58,14 +58,6 @@
         <favorite>false</favorite>
     </carrier>
     <carrier>
-        <name>G Carrier</name>
-        <category>Test Category 2</category>
-        <unit>Test Unit 2</unit>
-        <energy>420</energy>
-        <custom>false</custom>
-        <favorite>false</favorite>
-    </carrier>
-    <carrier>
         <name>H Carrier</name>
         <category>Test Category 2</category>
         <unit>Test Unit 2</unit>

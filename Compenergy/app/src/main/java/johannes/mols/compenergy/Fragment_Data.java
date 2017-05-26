@@ -10,11 +10,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -22,7 +22,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 //IMPLEMENT THIS FOR CATEGORY HEADERS
 //https://w2davids.wordpress.com/android-sectioned-headers-in-listviews/
@@ -35,7 +37,10 @@ public class Fragment_Data extends Fragment {
     private ListView listView;
     private DatabaseHelper dbHelper;
 
-    DataListAdapter adapter;
+    DataListAdapterString adapter;
+
+    public final static String ITEM_TITLE = "title";
+    public final static String ITEM_CAPTION ="caption";
 
     //Alphabetical sort of String List
     private static Comparator<String> ALPHABETICAL_ORDER = new Comparator<String>() {
@@ -49,11 +54,18 @@ public class Fragment_Data extends Fragment {
     };
 
     //Custom comparator by Carrier property name
-    private class CustomComparator implements Comparator<Carrier> {
+    private class CarrierComparator implements Comparator<Carrier> {
         @Override
         public int compare(Carrier c1, Carrier c2) {
             return c1.get_name().compareTo(c2.get_name());
         }
+    }
+
+    public Map<String, ?> createItem(String title, String caption) {
+        Map<String, String> item = new HashMap<>();
+        item.put(ITEM_TITLE, title);
+        item.put(ITEM_CAPTION, caption);
+        return item;
     }
 
     @Override
@@ -69,21 +81,19 @@ public class Fragment_Data extends Fragment {
 
         //Fill List View
         mContext = getContext();
-        dbHelper = new DatabaseHelper(mContext, null, null, 1);                                             //Database helper class
-        listView = (ListView) view.findViewById(R.id.fragment_data_list_view);                              //Get list view object
-        List<Carrier> carrierList = new ArrayList<>(dbHelper.getAllCarriers());                             //Get all carriers as a list of the Carrier class
-        List<String> carrierStringList = new ArrayList<>();                                                 //The same list but as string, containing the name of each carrier class item
-        for (Carrier carrier : carrierList) {                                                               //Fill the string list with all the names
+        dbHelper = new DatabaseHelper(mContext, null, null, 1);
+        listView = (ListView) view.findViewById(R.id.fragment_data_list_view);
+        List<Carrier> carrierList = new ArrayList<>(dbHelper.getAllCarriers());
+        List<String> carrierStringList = new ArrayList<>();
+        for (Carrier carrier : carrierList) {
             carrierStringList.add(carrier.get_name());
         }
-        Collections.sort(carrierStringList, ALPHABETICAL_ORDER);                                            //Sort the name list alphabetically
-        adapter = new DataListAdapter(mContext, R.layout.listview_item_data_layout, carrierStringList);     //Use the custom List Adapter to display the name list with custom styled rows
-        listView.setAdapter(adapter);                                                                       //Assign the adapter to the list view
-        listView.setTextFilterEnabled(true);
-
-        //Category Test - works
+        Collections.sort(carrierList, new CarrierComparator());
+        Collections.sort(carrierStringList, ALPHABETICAL_ORDER);
         List<String> categories = dbHelper.getCategoryList();
-        Toast.makeText(mContext, categories.toArray().toString(), Toast.LENGTH_SHORT);//Enable filtering
+        adapter = new DataListAdapterString(mContext, R.layout.listview_item_data_layout, carrierStringList);
+        listView.setAdapter(adapter);
+        listView.setTextFilterEnabled(true);
 
         //Search
         searchEditText = (EditText) view.findViewById(R.id.fragment_data_search);

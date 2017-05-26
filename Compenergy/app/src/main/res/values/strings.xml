@@ -37,4 +37,8 @@
 
     <!-- About screen -->
     <string name="about_title_app_name">App name:</string>
+
+    <!-- Placeholders -->
+    <string name="placeholder_item_listview">Item Name</string>
+    <string name="placeholder_header_listview">Header</string>
 </resources>

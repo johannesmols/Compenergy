@@ -4,6 +4,7 @@
 
 package johannes.mols.compenergy;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -15,15 +16,16 @@ import android.widget.TextView;
 
 import java.util.List;
 
-class DataListAdapter extends ArrayAdapter<String> implements Filterable {
+class DataListAdapterString extends ArrayAdapter<String> implements Filterable {
 
     private Context mContext;
 
-    DataListAdapter(Context context, int resource, List<String> items) {
+    DataListAdapterString(Context context, int resource, List<String> items) {
         super(context, resource, items);
         mContext = context;
     }
 
+    @SuppressLint("InflateParams")
     @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {

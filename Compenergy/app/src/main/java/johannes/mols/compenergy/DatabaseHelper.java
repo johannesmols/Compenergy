@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 class DatabaseHelper extends SQLiteOpenHelper {
@@ -156,6 +157,36 @@ class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return categories;
+    }
+
+    List<Object> getCombinedCategoryCarrierList() {
+        ArrayList<Object> list = new ArrayList<>();
+        List<String> categoryList = getCategoryList();
+        List<Carrier> carrierList = getAllCarriers();
+        Collections.sort(categoryList, CustomComparators.ALPHABETICAL_ORDER);
+
+        for(String category : categoryList) {
+            list.add(category);
+            for(Carrier carrier : carrierList) {
+                if(carrier.get_category().equalsIgnoreCase(category)) {
+                    list.add(carrier);
+                }
+            }
+        }
+
+        /* Output may look like this
+         *
+         * Category 1       (String)
+         * Carrier A        (Carrier)
+         * Carrier D        (Carrier)
+         * Category 2       (String)
+         * Carrier B        (Carrier)
+         * Carrier C        (Carrier)
+         * ...
+         *
+         */
+
+        return list;
     }
 
     //Add a dataset

@@ -27,7 +27,7 @@
     </carrier>
     <carrier>
         <name>D Carrier</name>
-        <category>Test Category 2</category>
+        <category>Test Category 1</category>
         <unit>Test Unit 2</unit>
         <energy>420</energy>
         <custom>false</custom>
@@ -67,7 +67,7 @@
     </carrier>
     <carrier>
         <name>I Carrier</name>
-        <category>Test Category 2</category>
+        <category>Test Category 1</category>
         <unit>Test Unit 2</unit>
         <energy>420</energy>
         <custom>false</custom>
@@ -99,7 +99,7 @@
     </carrier>
     <carrier>
         <name>M Carrier</name>
-        <category>Test Category 2</category>
+        <category>Test Category 3</category>
         <unit>Test Unit 2</unit>
         <energy>420</energy>
         <custom>false</custom>

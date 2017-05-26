@@ -9,7 +9,7 @@
     android:paddingBottom="8dp" >
 
         <TextView
-            android:id="@+id/carrier_name"
+            android:id="@+id/fragment_data_list_view_carrier_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/placeholder_item_listview"

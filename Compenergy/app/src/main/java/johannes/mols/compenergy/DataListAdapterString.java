@@ -40,7 +40,7 @@ class DataListAdapterString extends ArrayAdapter<String> implements Filterable {
         String p = getItem(position);
 
         if (p != null) {
-            TextView tt1 = (TextView) view.findViewById(R.id.carrier_name);
+            TextView tt1 = (TextView) view.findViewById(R.id.fragment_data_list_view_carrier_name);
 
             if (tt1 != null) {
                 tt1.setText(p);

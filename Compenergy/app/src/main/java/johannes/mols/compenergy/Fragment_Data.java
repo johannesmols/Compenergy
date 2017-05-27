@@ -7,9 +7,7 @@ package johannes.mols.compenergy;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
 import android.support.v4.app.Fragment;
-import android.support.v4.util.CircularArray;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -31,9 +29,6 @@ public class Fragment_Data extends Fragment {
     private DatabaseHelper dbHelper;
 
     DataListAdapter adapter;
-
-    public final static String ITEM_TITLE = "title";
-    public final static String ITEM_CAPTION ="caption";
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -78,8 +73,8 @@ public class Fragment_Data extends Fragment {
                 }
 
                 //Fill the list of data which will be shown
-                //If you like to change the search method to "contain" instead of "start with", you can do that by swapping the two "startsWith" methods in the loop to "contains"
-                //Maybe put a setting to trigger that
+                //If you like to change the search method to "contain" instead of "startsWith", you can do that by swapping the two "startsWith" methods in the loop to "contains"
+                //Maybe put a setting to toggle that
                 for(int i = 0; i < combinedCategoryCarrierList.size(); i++) {
                     if(combinedCategoryCarrierList.get(i) instanceof Carrier) {
                         if(((Carrier)combinedCategoryCarrierList.get(i)).get_name().toLowerCase().startsWith(String.valueOf(s).toLowerCase())) {
@@ -87,7 +82,7 @@ public class Fragment_Data extends Fragment {
                         }
                     }
                     else if(combinedCategoryCarrierList.get(i) instanceof String) {
-                        //Check if the category has any child members by looping through all items, could be expensive in terms of computation time
+                        //Check if the category has any child members matching the search query by looping through all items, could be expensive in terms of computation time
                         String tmpCategory = (String)combinedCategoryCarrierList.get(i);
                         for(int x = 0; x < combinedCategoryCarrierList.size(); x++) {
                             if(combinedCategoryCarrierList.get(x) instanceof Carrier) {

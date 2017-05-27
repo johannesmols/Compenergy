@@ -7,7 +7,9 @@ package johannes.mols.compenergy;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringDef;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.CircularArray;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Fragment_Data extends Fragment {
@@ -47,7 +50,7 @@ public class Fragment_Data extends Fragment {
         dbHelper = new DatabaseHelper(mContext, null, null, 1);
         listView = (ListView) view.findViewById(R.id.fragment_data_list_view);
 
-        List<Object> combinedCategoryCarrierList = dbHelper.getCombinedCategoryCarrierList();
+        final List<Object> combinedCategoryCarrierList = dbHelper.getCombinedCategoryCarrierList();
         adapter = new DataListAdapter(mContext, combinedCategoryCarrierList);
         listView.setAdapter(adapter);
 
@@ -63,7 +66,54 @@ public class Fragment_Data extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter.getFilter().filter(searchEditText.getText().toString());
+                List<Object> list = new ArrayList<>();
+                List<Object> empty_list = new ArrayList<>();
+
+                //Check if the search query string is empty or whitespace, if yes: show all data and exit the function
+                if(s.toString().trim().length() == 0) {
+                    DataListAdapter new_adapter = new DataListAdapter(mContext, combinedCategoryCarrierList);
+                    listView.setAdapter(new_adapter);
+                    adapter.notifyDataSetChanged();
+                    return;
+                }
+
+                //Fill the list of data which will be shown
+                //If you like to change the search method to "contain" instead of "start with", you can do that by swapping the two "startsWith" methods in the loop to "contains"
+                //Maybe put a setting to trigger that
+                for(int i = 0; i < combinedCategoryCarrierList.size(); i++) {
+                    if(combinedCategoryCarrierList.get(i) instanceof Carrier) {
+                        if(((Carrier)combinedCategoryCarrierList.get(i)).get_name().toLowerCase().startsWith(String.valueOf(s).toLowerCase())) {
+                            list.add(combinedCategoryCarrierList.get(i));
+                        }
+                    }
+                    else if(combinedCategoryCarrierList.get(i) instanceof String) {
+                        //Check if the category has any child members by looping through all items, could be expensive in terms of computation time
+                        String tmpCategory = (String)combinedCategoryCarrierList.get(i);
+                        for(int x = 0; x < combinedCategoryCarrierList.size(); x++) {
+                            if(combinedCategoryCarrierList.get(x) instanceof Carrier) {
+                                if(((Carrier)combinedCategoryCarrierList.get(x)).get_name().toLowerCase().startsWith(String.valueOf(s).toLowerCase())) {
+                                    if(((Carrier)combinedCategoryCarrierList.get(x)).get_category().equalsIgnoreCase(tmpCategory)) {
+                                        list.add(combinedCategoryCarrierList.get(i));
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                //Check if the search query had matches, if yes the list size will be larger then zero and the list can be applied
+                //If the list is empty, fill the list view with an empty list so no data is shown
+                if(list.size() > 0) {
+                    DataListAdapter new_adapter = new DataListAdapter(mContext, list);
+                    listView.setAdapter(new_adapter);
+                    adapter.notifyDataSetChanged();
+                }
+                else {
+                    DataListAdapter new_adapter = new DataListAdapter(mContext, empty_list);
+                    listView.setAdapter(new_adapter);
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override

@@ -102,11 +102,31 @@ class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    List<String> getAllCarriersAsStringList() {
+        List<String> result = new ArrayList<>();
+        try (SQLiteDatabase db = getWritableDatabase()) {
+            String query = "SELECT " + CARRIER_NAME + " FROM " + TABLE_CARRIERS_NAME + " WHERE 1;";
+
+            Cursor c = db.rawQuery(query, null);
+            c.moveToFirst();
+
+            while (!c.isAfterLast()) {
+                if(c.getString(c.getColumnIndex(CARRIER_NAME)) != null) {
+                    result.add(c.getString(c.getColumnIndex(CARRIER_NAME)));
+                }
+                c.moveToNext();
+            }
+            c.close();
+            db.close();
+        }
+        return result;
+    }
+
     List<Carrier> getAllCarriers() {
         return getCarriers("1");
     }
 
-    List<Carrier> getCarrierWithName(String name) {
+    List<Carrier> getCarriersWithName(String name) {
         return getCarriers(CARRIER_NAME + "='" + name + "'");
     }
 

@@ -17,8 +17,6 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Fragment_Data extends Fragment {
@@ -29,7 +27,7 @@ public class Fragment_Data extends Fragment {
     private ListView listView;
     private DatabaseHelper dbHelper;
 
-    DataListAdapterString adapter;
+    DataListAdapter adapter;
 
     public final static String ITEM_TITLE = "title";
     public final static String ITEM_CAPTION ="caption";
@@ -50,7 +48,8 @@ public class Fragment_Data extends Fragment {
         listView = (ListView) view.findViewById(R.id.fragment_data_list_view);
 
         List<Object> combinedCategoryCarrierList = dbHelper.getCombinedCategoryCarrierList();
-        listView.setAdapter(new DataListAdapter(mContext, combinedCategoryCarrierList));
+        adapter = new DataListAdapter(mContext, combinedCategoryCarrierList);
+        listView.setAdapter(adapter);
 
         listView.setTextFilterEnabled(true);
 

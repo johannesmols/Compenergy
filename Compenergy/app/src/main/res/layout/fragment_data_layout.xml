@@ -7,20 +7,34 @@
     android:orientation="vertical"
     android:padding="0dp" >
 
-    <EditText
-        android:id="@+id/fragment_data_search"
+    <SearchView
+        android:visibility="visible"
+        android:id="@+id/fragment_data_search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:hint="@string/data_search_hint"
+        android:queryHint="@string/data_search_hint"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp" />
 
-    <ListView
-        android:id="@+id/fragment_data_list_view"
+    <EditText
+        android:visibility="gone"
+        android:id="@+id/fragment_data_search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/data_search_hint"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp" />
+
+    <ExpandableListView
+        android:id="@+id/fragment_data_expandable_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ExpandableListView>
 
 </LinearLayout>

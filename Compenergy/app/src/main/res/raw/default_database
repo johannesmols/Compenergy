@@ -113,4 +113,12 @@
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>
+    <carrier>
+        <name>Test Carrier</name>
+        <category>Test Category</category>
+        <unit>Watt</unit>
+        <energy>1337</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
 </carriers>

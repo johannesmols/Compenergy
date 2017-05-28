@@ -38,9 +38,15 @@
                             Units: Cubic inch, Cubic foot, Imperial teaspoon, Imperial tablespoon, Imperial fluid ounce, Imperial cup, Imperial pint, Imperial quart, Imperial gallon,
                                    Millilitre, Litre, Cubic metre, US teaspoon, US tablespoon, US fluid ounce, US legal cup, US liquid pint, US liquid quart, US liquid gallon
 
+
+     Sources for carriers:  https://en.wikipedia.org/wiki/Energy_density
+
  -->
 
 <carriers>
+
+    <!-- Power Plants -->
+
     <carrier>
         <name>Fukushima nuclear power plant</name>
         <category>Power Plants</category>
@@ -201,4 +207,252 @@
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>
+
+    <!-- Nuclear Fission -->
+
+    <carrier>
+        <name>Uranium</name>
+        <category>Nuclear Fission</category>
+        <unit>Content Volume</unit>
+        <energy>1539842000000000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Thorium</name>
+        <category>Nuclear Fission</category>
+        <unit>Content Volume</unit>
+        <energy>929214000000000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+
+    <!-- Nuclear Fusion -->
+
+    <carrier>
+        <name>Deuterium-Helium-3</name>
+        <category>Nuclear Fusion</category>
+        <unit>Content Volume</unit>
+        <energy>3940000000000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Deuterium</name>
+        <category>Nuclear Fusion</category>
+        <unit>Content Volume</unit>
+        <energy>3930000000000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Deuterium-Tritium</name>
+        <category>Nuclear Fusion</category>
+        <unit>Content Volume</unit>
+        <energy>3790000000000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+
+    <!-- Nuclear Decay -->
+
+    <carrier>
+        <name>Plutonium 238</name>
+        <category>Nuclear Decay</category>
+        <unit>Content Mass</unit>
+        <energy>2239000000000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Tritium</name>
+        <category>Nuclear Decay</category>
+        <unit>Content Mass</unit>
+        <energy>583529000000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+
+    <!-- Electrochemical -->
+
+    <carrier>
+        <name>Lithium battery</name>
+        <category>Electrochemical</category>
+        <unit>Content Mass</unit>
+        <energy>1800000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Alkaline battery</name>
+        <category>Electrochemical</category>
+        <unit>Content Mass</unit>
+        <energy>500400</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Lithium-ion battery</name>
+        <category>Electrochemical</category>
+        <unit>Content Mass</unit>
+        <energy>874800</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Lead-acid battery</name>
+        <category>Electrochemical</category>
+        <unit>Content Mass</unit>
+        <energy>169200</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Nickel-metal hydride battery</name>
+        <category>Electrochemical</category>
+        <unit>Content Mass</unit>
+        <energy>288000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+
+    <!-- Chemical -->
+
+    <carrier>
+        <name>Kerosene</name>
+        <category>Chemical</category>
+        <unit>Content Volume</unit>
+        <energy>37400000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Diesel</name>
+        <category>Chemical</category>
+        <unit>Content Volume</unit>
+        <energy>35800000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Gasoline</name>
+        <category>Chemical</category>
+        <unit>Content Volume</unit>
+        <energy>34200000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Coal</name>
+        <category>Chemical</category>
+        <unit>Content Mass</unit>
+        <energy>33000000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Fat</name>
+        <category>Chemical</category>
+        <unit>Content Mass</unit>
+        <energy>37000000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Liquefied petroleum gas</name>
+        <category>Chemical</category>
+        <unit>Content Volume</unit>
+        <energy>26000000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Liquefied natural gas</name>
+        <category>Chemical</category>
+        <unit>Content Volume</unit>
+        <energy>22200000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Ethanol fuel</name>
+        <category>Chemical</category>
+        <unit>Content Volume</unit>
+        <energy>20900000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Dimethyl ether</name>
+        <category>Chemical</category>
+        <unit>Content Volume</unit>
+        <energy>19300000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Methanol fuel</name>
+        <category>Chemical</category>
+        <unit>Content Volume</unit>
+        <energy>15600000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Wood</name>
+        <category>Chemical</category>
+        <unit>Content Mass</unit>
+        <energy>162000000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Methane</name>
+        <category>Chemical</category>
+        <unit>Content Volume</unit>
+        <energy>36400</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Butanol fuel</name>
+        <category>Chemical</category>
+        <unit>Content Mass</unit>
+        <energy>35000000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Carbohydrates</name>
+        <category>Chemical</category>
+        <unit>Content Mass</unit>
+        <energy>17000000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Gunpowder</name>
+        <category>Chemical</category>
+        <unit>Content Mass</unit>
+        <energy>3000000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Protein</name>
+        <category>Chemical</category>
+        <unit>Content Mass</unit>
+        <energy>1680000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>TNT</name>
+        <category>Chemical</category>
+        <unit>Content Mass</unit>
+        <energy>4600000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+
 </carriers>

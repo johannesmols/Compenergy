@@ -47,7 +47,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
                 CARRIER_NAME     + " VARCHAR UNIQUE NOT NULL, " +
                 CARRIER_CATEGORY + " VARCHAR NOT NULL, " +
                 CARRIER_UNIT     + " VARCHAR NOT NULL, " +
-                CARRIER_ENERGY   + " BIGINT NOT NULL, " + //BIGINT/LONG max val: 9,223,372,036,854,775,807 => unsigned: 18,446,744,073,709,551,615 (Java has no unsigned longs, use BigInteger if values exceed signed bigint)
+                CARRIER_ENERGY   + " BIGINT NOT NULL, " + //BIGINT/LONG max val: 9223372036854775807 => unsigned: 18446744073709551615 (Java has no unsigned longs, use BigInteger if values exceed signed bigint)
                 CARRIER_CUSTOM   + " BOOLEAN NOT NULL, " +
                 CARRIER_FAVORITE + " BOOLEAN NOT NULL" +
                 ");";

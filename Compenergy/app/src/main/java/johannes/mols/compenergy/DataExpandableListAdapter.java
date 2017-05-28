@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -19,17 +20,17 @@ import java.util.List;
 class DataExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context mContext;
-    private List<String> list_categories;
-    private List<String> list_categories_original;
-    private HashMap<String, List<Carrier>> list_carriers;
-    private HashMap<String, List<Carrier>> list_carriers_original;
+    private List<String> list_categories = new ArrayList<>();
+    private List<String> list_categories_original = new ArrayList<>();
+    private HashMap<String, List<Carrier>> list_carriers = new HashMap<>();
+    private HashMap<String, List<Carrier>> list_carriers_original = new HashMap<>();
 
     DataExpandableListAdapter(Context context, List<String> categories, HashMap<String, List<Carrier>> carriers) {
         this.mContext = context;
         this.list_categories = categories;
         this.list_categories_original = categories;
         this.list_carriers = carriers;
-        this.list_carriers = carriers;
+        this.list_carriers_original = carriers;
     }
 
     @Override
@@ -81,6 +82,13 @@ class DataExpandableListAdapter extends BaseExpandableListAdapter {
         TextView lblListHeader = (TextView) convertView.findViewById(R.id.fragment_data_list_view_category);
         lblListHeader.setText(headerTitle);
 
+        ImageView expandIcon = (ImageView) convertView.findViewById(R.id.fragment_data_list_view_category_icon);
+        if(isExpanded) {
+            expandIcon.setImageResource(R.drawable.ic_remove_black_24dp);
+        } else {
+            expandIcon.setImageResource(R.drawable.ic_add_black_24dp);
+        }
+
         return convertView;
     }
 
@@ -106,64 +114,35 @@ class DataExpandableListAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-    public void filterData(String query) {
+    void filterData(String query) {
         query = query.toLowerCase();
-        list_categories.clear();
-        list_carriers.clear();
+        list_categories = new ArrayList<>(); //Don't use .clear() => it will clear the other original list too, thanks java -.-
+        list_carriers = new HashMap<>();
 
         DatabaseHelper dbHelper = new DatabaseHelper(mContext, null, null, 1);
 
-        if(query.isEmpty()) {
-            list_categories.addAll(list_categories_original);
-            list_carriers.putAll(list_carriers_original);
+        if(query.trim().isEmpty()) {
+            list_categories = new ArrayList<>(list_categories_original);
+            list_carriers = new HashMap<>(list_carriers_original);
+            notifyDataSetInvalidated();
         }
         else {
-            //Fill category list with categories which contain matching child items
-            /*List<String> categories_list = new ArrayList<>();
-            List<String> tmpCategoryList = dbHelper.getCategoryList();
-            for(String category : tmpCategoryList) {
-                //Check if category has items with search query
-                List<Carrier> tmpCarrierList = dbHelper.getAllCarriers();
-                for(Carrier carrier : tmpCarrierList) {
-                    if(carrier.get_category().toLowerCase().equalsIgnoreCase(category)) {
-                        if(carrier.get_name().toLowerCase().startsWith(query)) {
-                            categories_list.add(category);
-                        }
-                    }
-                }
-            }
-
-            if(categories_list.size() > 0) {
-                list_categories.addAll(categories_list);
-            }
-
-            //Get matching carriers
-            List<Carrier> carrierList = dbHelper.getAllCarriers();
-            HashMap<String, List<Carrier>>new_carriers_list_2 = new HashMap<>();
-            for(Carrier carrier : carrierList) {
-                if(carrier.get_name().toLowerCase().startsWith(query)) {
-                    new_carriers_list_2.put(categories_list.get(0), carrier);
-                }
-
-                for(int i = 0; i < categories_list.size(); i++) {
-                    List<Carrier> carrierList = dbHelper.getCarriersWithCategory(categories_list.get(i));
-                    carriers_list.put(categories_list.get(i), carrierList);
-                }
-            }*/
-
+            //Filter all data with the given search query. Yes, it's complicated
             List<String> new_categories_list = new ArrayList<>();
             HashMap<String, List<Carrier>> new_carriers_list = new HashMap<>();
             List<String> all_categories_list = dbHelper.getCategoryList();
             for(int i = 0; i < all_categories_list.size(); i++) {
                 List<Carrier> carriersWithCategoryList = dbHelper.getCarriersWithCategory(all_categories_list.get(i));
+                List<Carrier> matchingCarriersInCategory = new ArrayList<>();
                 for(Carrier carrierInCategory : carriersWithCategoryList) {
-                    if(carrierInCategory.get_name().toLowerCase().startsWith(query)) {
-                        new_carriers_list.put(all_categories_list.get(i), carriersWithCategoryList);
-                        if(!new_carriers_list.containsValue(all_categories_list.get(i))) {
+                    if(carrierInCategory.get_name().toLowerCase().contains(query)) {
+                        matchingCarriersInCategory.add(carrierInCategory);
+                        if(!new_categories_list.contains(all_categories_list.get(i))) {
                             new_categories_list.add(all_categories_list.get(i));
                         }
                     }
                 }
+                new_carriers_list.put(all_categories_list.get(i), matchingCarriersInCategory);
             }
 
             if(new_categories_list.size() > 0 && new_carriers_list.size() > 0) {

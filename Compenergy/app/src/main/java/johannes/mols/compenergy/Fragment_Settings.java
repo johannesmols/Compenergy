@@ -57,8 +57,9 @@ public class Fragment_Settings extends PreferenceFragmentCompat {
                             public void onClick(DialogInterface dialog, int which) {
                                 Toast.makeText(getContext(), getContext().getString(R.string.pref_database_hint_reset), Toast.LENGTH_SHORT).show();
                                 DatabaseHelper db = new DatabaseHelper(mContext, null, null, 1);
-                                db.dropTableCarriers();
+                                db.dropTables();
                                 db.addDefaultData();
+                                db.addDatabaseVersionNumber();
                             }
                         })
                         .setNegativeButton("No", null)

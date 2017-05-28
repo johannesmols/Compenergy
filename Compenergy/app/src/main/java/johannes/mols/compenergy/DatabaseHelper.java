@@ -20,7 +20,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
     private Context mContext;
 
     //General Database information
-    private static final byte DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2; //Increment this number to give the user a notification that a new DB version is available
     private static final String DATABASE_NAME = "Compenergy.db";
 
     //Items table
@@ -32,6 +32,10 @@ class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CARRIER_ENERGY = "energy";
     private static final String CARRIER_CUSTOM = "custom";
     private static final String CARRIER_FAVORITE = "favorite";
+
+    //Database version table
+    private static final String TABLE_DB_VERSION = "database_version";
+    private static final String COLUMN_DB_VERSION = "db_version";
 
     //Constructor
     DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -52,6 +56,18 @@ class DatabaseHelper extends SQLiteOpenHelper {
                 CARRIER_FAVORITE + " BOOLEAN NOT NULL" +
                 ");";
         db.execSQL(query);
+
+        //Version control for the database
+        query = "CREATE TABLE IF NOT EXISTS " + TABLE_DB_VERSION + " (" + COLUMN_DB_VERSION + " INTEGER NOT NULL);";
+        db.execSQL(query);
+    }
+
+    void addDatabaseVersionNumber() {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_DB_VERSION, DATABASE_VERSION);
+        db.insert(TABLE_DB_VERSION, null, values);
+        db.close();
     }
 
     void addDefaultData() {
@@ -210,6 +226,52 @@ class DatabaseHelper extends SQLiteOpenHelper {
         return list;
     }
 
+    boolean isDatabaseCurrent() {
+        List<Integer> db_version = new ArrayList<>();
+        try (SQLiteDatabase db = getWritableDatabase()) {
+            String query = "SELECT " + COLUMN_DB_VERSION + " FROM " + TABLE_DB_VERSION + " WHERE 1;";
+
+            Cursor c = db.rawQuery(query, null);
+            c.moveToFirst();
+
+            while (!c.isAfterLast()) {
+                db_version.add(c.getInt(c.getColumnIndex(COLUMN_DB_VERSION)));
+                c.moveToNext();
+            }
+            c.close();
+            db.close();
+        }
+
+        return db_version.size() == 1 && db_version.get(0) == DATABASE_VERSION;
+    }
+
+    void setDatabaseVersion() {
+        try (SQLiteDatabase db = getWritableDatabase()) {
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_DB_VERSION, DATABASE_VERSION);
+            db.update(TABLE_DB_VERSION, values, COLUMN_DB_VERSION + "=?", null);
+        }
+    }
+
+    List<Integer> getAllDatabaseVersions() {
+        List<Integer> result = new ArrayList<>();
+        try (SQLiteDatabase db = getWritableDatabase()) {
+            String query = "SELECT * FROM " + TABLE_DB_VERSION + " WHERE 1;";
+
+            Cursor c = db.rawQuery(query, null);
+            c.moveToFirst();
+
+            while (!c.isAfterLast()) {
+                result.add(c.getInt(c.getColumnIndex(COLUMN_DB_VERSION)));
+
+                c.moveToNext();
+            }
+            c.close();
+            db.close();
+        }
+        return result;
+    }
+
     //Add a dataset
     void addCarrier(Carrier carrier) {
         try (SQLiteDatabase db = getWritableDatabase()) {
@@ -255,9 +317,10 @@ class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //Drops table and creates a new one, shouldn't be called, use delete all instead
-    void dropTableCarriers() {
+    void dropTables() {
         try (SQLiteDatabase db = getWritableDatabase()) {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_CARRIERS_NAME);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_DB_VERSION);
             onCreate(db);
         }
     }

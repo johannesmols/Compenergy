@@ -183,6 +183,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<Object> list = new ArrayList<>();
         List<String> categoryList = getCategoryList();
         List<Carrier> carrierList = getAllCarriers();
+        Collections.sort(carrierList, new CustomComparators.CarrierComparator());
         Collections.sort(categoryList, CustomComparators.ALPHABETICAL_ORDER);
 
         for(String category : categoryList) {

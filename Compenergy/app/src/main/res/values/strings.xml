@@ -41,4 +41,7 @@
     <!-- Placeholders -->
     <string name="placeholder_item_listview">Item Name</string>
     <string name="placeholder_header_listview">Header</string>
+
+    <!-- Content Descriptions -->
+    <string name="content_description_list_view_header">Minimize or maximize this category</string>
 </resources>

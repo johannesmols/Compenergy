@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -18,13 +19,15 @@ class DataListAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<Object> list = null;
+    private List<Boolean> _minimized_categories = null;
     private static final int CARRIER = 0;
     private static final int HEADER = 1;
     private LayoutInflater inflater;
 
-    DataListAdapter(Context context, List<Object> input) {
+    DataListAdapter(Context context, List<Object> input, List<Boolean> minimized_categories) {
         this.mContext = context;
         this.list = input;
+        this._minimized_categories = minimized_categories;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -81,6 +84,16 @@ class DataListAdapter extends BaseAdapter {
                 case HEADER:
                     TextView category = (TextView) convertView.findViewById(R.id.fragment_data_list_view_category);
                     category.setText((String) list.get(position));
+
+                    ImageView imageView = (ImageView) convertView.findViewById(R.id.fragment_data_list_view_category_icon);
+                    if(imageView.getTag().toString().equalsIgnoreCase("maximized")) {
+                        imageView.setImageResource(R.drawable.ic_remove_black_24dp);
+                        imageView.setTag("minimized");
+                    }
+                    else if (imageView.getTag().toString().equalsIgnoreCase("minimized")) {
+                        imageView.setImageResource(R.drawable.ic_add_black_24dp);
+                        imageView.setTag("maximized");
+                    }
                     break;
             }
         }

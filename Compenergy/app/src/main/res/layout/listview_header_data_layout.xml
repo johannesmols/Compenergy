@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/colorAccent" >
 
     <TextView
         android:id="@+id/fragment_data_list_view_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:gravity="start"
         android:textStyle="bold"
         android:textSize="18sp"
@@ -16,8 +18,23 @@
         android:paddingEnd="16dp"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
-        android:background="@color/colorAccent"
         android:textColor="@android:color/primary_text_light"
-        android:text="@string/placeholder_header_listview"/>
+        android:text="@string/placeholder_header_listview"
+        android:maxLines="1"
+        android:ellipsize="end" />
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/fragment_data_list_view_category_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="end"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:contentDescription="@string/content_description_list_view_header"
+        android:src="@drawable/ic_remove_black_24dp"
+        android:tag="maximized"/>
+
+</RelativeLayout>

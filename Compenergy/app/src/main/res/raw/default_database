@@ -2,122 +2,114 @@
 
 <carriers>
     <carrier>
-        <name>A Carrier</name>
-        <category>Test Category 1</category>
-        <unit>Test Unit 1</unit>
-        <energy>1337</energy>
+        <name>Fukushima nuclear power plant</name>
+        <category>Power Plants</category>
+        <unit>Watt</unit>
+        <energy>4546000000</energy>
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>
     <carrier>
-        <name>B Carrier</name>
-        <category>Test Category 2</category>
-        <unit>Test Unit 2</unit>
-        <energy>420</energy>
+        <name>Fessenheim nuclear power plant</name>
+        <category>Power Plants</category>
+        <unit>Watt</unit>
+        <energy>1840000000</energy>
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>
     <carrier>
-        <name>C Carrier</name>
-        <category>Test Category 2</category>
-        <unit>Test Unit 2</unit>
-        <energy>420</energy>
+        <name>Chernobyl nuclear power plant</name>
+        <category>Power Plants</category>
+        <unit>Watt</unit>
+        <energy>4000000000</energy>
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>
     <carrier>
-        <name>D Carrier</name>
-        <category>Test Category 1</category>
-        <unit>Test Unit 2</unit>
-        <energy>420</energy>
+        <name>Kashiwazaki-Kariwa nuclear power plant</name>
+        <category>Power Plants</category>
+        <unit>Watt</unit>
+        <energy>7965000000</energy>
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>
     <carrier>
-        <name>E Carrier</name>
-        <category>Test Category 2</category>
-        <unit>Test Unit 2</unit>
-        <energy>420</energy>
+        <name>China's wind power capacity</name>
+        <category>Power Plants</category>
+        <unit>Watt</unit>
+        <energy>168690000000</energy>
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>
     <carrier>
-        <name>F Carrier</name>
-        <category>Test Category 2</category>
-        <unit>Test Unit 2</unit>
-        <energy>420</energy>
+        <name>United States wind power capacity</name>
+        <category>Power Plants</category>
+        <unit>Watt</unit>
+        <energy>821830000000</energy>
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>
     <carrier>
-        <name>G Carrier</name>
-        <category>Test Category 2</category>
-        <unit>Test Unit 2</unit>
-        <energy>420</energy>
+        <name>Germany's wind power capacity</name>
+        <category>Power Plants</category>
+        <unit>Watt</unit>
+        <energy>50019000000</energy>
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>
     <carrier>
-        <name>H Carrier</name>
-        <category>Test Category 2</category>
-        <unit>Test Unit 2</unit>
-        <energy>420</energy>
+        <name>European Union wind power capacity</name>
+        <category>Power Plants</category>
+        <unit>Watt</unit>
+        <energy>153730000000</energy>
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>
     <carrier>
-        <name>I Carrier</name>
-        <category>Test Category 1</category>
-        <unit>Test Unit 2</unit>
-        <energy>420</energy>
+        <name>Earth's wind power capacity</name>
+        <category>Power Plants</category>
+        <unit>Watt</unit>
+        <energy>432883000000</energy>
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>
     <carrier>
-        <name>J Carrier</name>
-        <category>Test Category 2</category>
-        <unit>Test Unit 2</unit>
-        <energy>420</energy>
+        <name>Three Gorges hydroelectric dam</name>
+        <category>Power Plants</category>
+        <unit>Watt</unit>
+        <energy>22500000000</energy>
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>
     <carrier>
-        <name>K Carrier</name>
-        <category>Test Category 2</category>
-        <unit>Test Unit 2</unit>
-        <energy>420</energy>
+        <name>Itaipu hydroelectric dam</name>
+        <category>Power Plants</category>
+        <unit>Watt</unit>
+        <energy>14000000000</energy>
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>
     <carrier>
-        <name>L Carrier</name>
-        <category>Test Category 2</category>
-        <unit>Test Unit 2</unit>
-        <energy>420</energy>
+        <name>Xiluodu hydroelectric dam</name>
+        <category>Power Plants</category>
+        <unit>Watt</unit>
+        <energy>13860000000</energy>
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>
     <carrier>
-        <name>M Carrier</name>
-        <category>Test Category 3</category>
-        <unit>Test Unit 2</unit>
-        <energy>420</energy>
+        <name>Guri hydroelectric dam</name>
+        <category>Power Plants</category>
+        <unit>Watt</unit>
+        <energy>10200000000</energy>
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>
     <carrier>
-        <name>N Carrier</name>
-        <category>Test Category 2</category>
-        <unit>Test Unit 2</unit>
-        <energy>420</energy>
-        <custom>false</custom>
-        <favorite>false</favorite>
-    </carrier>
-    <carrier>
-        <name>O Carrier</name>
-        <category>Test Category 2</category>
-        <unit>Test Unit 2</unit>
-        <energy>420</energy>
+        <name>Hoover hydroelectric dam</name>
+        <category>Power Plants</category>
+        <unit>Watt</unit>
+        <energy>2080000000</energy>
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>

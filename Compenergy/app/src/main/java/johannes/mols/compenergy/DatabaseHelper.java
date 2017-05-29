@@ -20,7 +20,8 @@ class DatabaseHelper extends SQLiteOpenHelper {
     private Context mContext;
 
     //General Database information
-    private static final int DATABASE_VERSION = 2; //Increment this number to give the user a notification that a new DB version is available
+    private static final int DATABASE_VERSION_DO_NOT_CHANGE = 1; //Do not change this number, it will call onUpgrade() and automatically rewrite the entire database, which is not wanted
+    private static final int DATABASE_VERSION = 1; //Increment this number to give the user a notification that a new DB version is available and the choice if he wants to use it
     private static final String DATABASE_NAME = "Compenergy.db";
 
     //Items table
@@ -39,7 +40,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
 
     //Constructor
     DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, DATABASE_NAME, factory, DATABASE_VERSION);
+        super(context, DATABASE_NAME, factory, DATABASE_VERSION_DO_NOT_CHANGE);
         mContext = context;
     }
 

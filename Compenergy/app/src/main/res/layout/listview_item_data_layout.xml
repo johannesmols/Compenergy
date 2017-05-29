@@ -17,6 +17,7 @@
             android:textStyle="normal"
             android:textColor="@android:color/primary_text_light"
             android:maxLines="1"
-            android:ellipsize="end" />
+            android:ellipsize="end"
+            android:longClickable="true"/>
 
 </RelativeLayout>

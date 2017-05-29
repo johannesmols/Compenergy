@@ -3,17 +3,25 @@
  */
 
 package johannes.mols.compenergy;
+
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,6 +78,8 @@ public class Fragment_Data extends Fragment {
             }
         });
 
+        expandableListView.setOnItemLongClickListener(deleteSelectedItem);
+
         return view;
     }
 
@@ -84,6 +94,8 @@ public class Fragment_Data extends Fragment {
 
         adapter = new DataExpandableListAdapter(mContext, categories_list, carriers_list);
         expandableListView.setAdapter(adapter);
+
+        expandAllGroups();
     }
 
     private void prepareListData() {
@@ -97,4 +109,46 @@ public class Fragment_Data extends Fragment {
             carriers_list.put(categories_list.get(i), carrierList);
         }
     }
+
+    AdapterView.OnItemLongClickListener deleteSelectedItem = new AdapterView.OnItemLongClickListener() {
+        @SuppressWarnings("deprecation")
+        @Override
+        public boolean onItemLongClick(final AdapterView<?> parent, View view, final int position, long id) {
+            if(parent.getAdapter().getItem(position) instanceof Carrier) {
+                final Spanned message;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    message = Html.fromHtml("Do you want to delete <b>" + ((Carrier) parent.getAdapter().getItem(position)).get_name() + "</b>?", Html.FROM_HTML_MODE_LEGACY);
+                } else {
+                    message = Html.fromHtml("Do you want to delete " + ((Carrier) parent.getAdapter().getItem(position)).get_name() + "?");
+                }
+
+                final boolean[] successful = {false};
+
+                new AlertDialog.Builder(mContext)
+                        .setTitle("Delete")
+                        .setMessage(message)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dbHelper.deleteCarrier(((Carrier) parent.getAdapter().getItem(position)).get_name());
+                                displayList();
+                                Toast.makeText(mContext, "Item deleted", Toast.LENGTH_SHORT).show();
+                                successful[0] = true;
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                successful[0] = false;
+                            }
+                        })
+                        .show();
+
+                return successful[0];
+            }
+            else {
+                return false;
+            }
+        }
+    };
 }

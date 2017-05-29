@@ -79,6 +79,7 @@ public class Fragment_Data extends Fragment {
         });
 
         expandableListView.setOnItemLongClickListener(deleteSelectedItem);
+        expandableListView.setOnChildClickListener(editSelectedItem);
 
         return view;
     }
@@ -110,6 +111,14 @@ public class Fragment_Data extends Fragment {
         }
     }
 
+    ExpandableListView.OnChildClickListener editSelectedItem = new ExpandableListView.OnChildClickListener() {
+        @Override
+        public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+            //Show Editor here
+            return false;
+        }
+    };
+
     AdapterView.OnItemLongClickListener deleteSelectedItem = new AdapterView.OnItemLongClickListener() {
         @SuppressWarnings("deprecation")
         @Override
@@ -122,8 +131,6 @@ public class Fragment_Data extends Fragment {
                     message = Html.fromHtml("Do you want to delete " + ((Carrier) parent.getAdapter().getItem(position)).get_name() + "?");
                 }
 
-                final boolean[] successful = {false};
-
                 new AlertDialog.Builder(mContext)
                         .setTitle("Delete")
                         .setMessage(message)
@@ -133,22 +140,12 @@ public class Fragment_Data extends Fragment {
                                 dbHelper.deleteCarrier(((Carrier) parent.getAdapter().getItem(position)).get_name());
                                 displayList();
                                 Toast.makeText(mContext, "Item deleted", Toast.LENGTH_SHORT).show();
-                                successful[0] = true;
                             }
                         })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                successful[0] = false;
-                            }
-                        })
+                        .setNegativeButton("No", null)
                         .show();
-
-                return successful[0];
             }
-            else {
-                return false;
-            }
+            return false;
         }
     };
 }

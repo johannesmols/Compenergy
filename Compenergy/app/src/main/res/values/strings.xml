@@ -92,6 +92,18 @@
         <item>Ton</item>
     </string-array>
 
+    <string-array name="unit_list_distance">
+        <item>Metre</item>
+        <item>Kilometre</item>
+        <item>Millimetre</item>
+        <item>Nanometre</item>
+        <item>Mile</item>
+        <item>Yard</item>
+        <item>Foot</item>
+        <item>Inch</item>
+        <item>Nautical mile</item>
+    </string-array>
+
     <!-- Data Fragment -->
     <string name="data_search_hint">Search for an item…</string>
 

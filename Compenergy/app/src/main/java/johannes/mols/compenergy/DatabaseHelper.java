@@ -325,35 +325,4 @@ class DatabaseHelper extends SQLiteOpenHelper {
             onCreate(db);
         }
     }
-
-/* ---------------------------------------------------------------------------------------------------------------------------------- */
-
-    //Print all names of entries in carrier table (only for testing)
-    String databaseAllCarrierNamesToString() {
-        String dbString = "";
-        try (SQLiteDatabase db = getWritableDatabase()) {
-            String query = "SELECT * FROM " + TABLE_CARRIERS_NAME + " WHERE 1";
-
-            //Cursor point to a location in your results
-            Cursor c = db.rawQuery(query, null);
-            //Move to first row
-            c.moveToFirst();
-
-            while (!c.isAfterLast()) {
-                if (c.getString(c.getColumnIndex(CARRIER_NAME)) != null) {
-                    dbString += c.getString(c.getColumnIndex(CARRIER_NAME));
-                    dbString += "\n";
-                }
-                c.moveToNext();
-            }
-            c.close();
-        }
-        catch (Exception ex) {
-            return ex.toString();
-        }
-        return dbString;
-    }
-
-/* ---------------------------------------------------------------------------------------------------------------------------------- */
-
 }

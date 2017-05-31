@@ -19,8 +19,88 @@
     <string name="nav_item_about">About</string>
     <string name="nav_item_help">Help</string>
 
+    <!-- Spinner Dropdown Lists -->
+    <string-array name="spinner_carrier_types">
+        <item>Electric producer</item>
+        <item>Electric consumer</item>
+        <item>Consumer by distance</item>
+        <item>Mass energy content</item>
+        <item>Volume energy content</item>
+    </string-array>
+
+    <string-array name="spinner_energy_type">
+        <item>Joule</item>
+        <item>Kilojoule</item>
+        <item>Megajoule</item>
+        <item>Gram calorie</item>
+        <item>Kilocalorie</item>
+        <item>Watt hour</item>
+        <item>Kilowatt hour</item>
+        <item>Electronvolt</item>
+        <item>British thermal unit</item>
+        <item>US therm</item>
+        <item>Foot-pound</item>
+    </string-array>
+
+    <string-array name="unit_list_time">
+        <item>Nanosecond</item>
+        <item>Microsecond</item>
+        <item>Millisecond</item>
+        <item>Second</item>
+        <item>Minute</item>
+        <item>Hour</item>
+        <item>Day</item>
+        <item>Week</item>
+        <item>Month</item>
+        <item>Year</item>
+        <item>Decade</item>
+        <item>Century</item>
+    </string-array>
+
+    <string-array name="unit_list_volume">
+        <item>Cubic inch</item>
+        <item>Cubic foot</item>
+        <item>Imperial teaspoon</item>
+        <item>Imperial tablespoon</item>
+        <item>Imperial fluid ounce</item>
+        <item>Imperial cup</item>
+        <item>Imperial pint</item>
+        <item>Imperial quart</item>
+        <item>Imperial gallon</item>
+        <item>Millilitre</item>
+        <item>Litre</item>
+        <item>Cubic metre</item>
+        <item>US teaspoon</item>
+        <item>US tablespoon</item>
+        <item>US fluid ounce</item>
+        <item>US legal cup</item>
+        <item>US liquid pint</item>
+        <item>US liquid quart</item>
+        <item>US liquid gallon</item>
+    </string-array>
+
+    <string-array name="unit_list_mass">
+        <item>Ounce</item>
+        <item>Pound</item>
+        <item>Stone</item>
+        <item>US ton</item>
+        <item>Imperial ton</item>
+        <item>Microgram</item>
+        <item>Milligram</item>
+        <item>Gram</item>
+        <item>Kilogram</item>
+        <item>Ton</item>
+    </string-array>
+
     <!-- Data Fragment -->
     <string name="data_search_hint">Search for an item…</string>
+
+    <!-- Add Data Fragment -->
+    <string name="add_data_name_edit_hint">Name</string>
+    <string name="add_data_category_edit_hint">Category</string>
+    <string name="add_data_energy_edit_hint">Energy</string>
+    <string name="add_data_unit_amount_edit_hint">Amount</string>
+    <string name="add_data_add_button">Add Item</string>
 
     <!-- Preference screen strings -->
     <string name="pref_database_group_title">Database</string>

@@ -626,7 +626,7 @@
         <favorite>false</favorite>
     </carrier>
     <carrier>
-        <name>BMW M6 Coupe (2016)</name>
+        <name>BMW M6 (2016)</name>
         <category>Cars</category>
         <unit>Volume Consumption</unit>
         <energy>338580000</energy>

@@ -24,6 +24,7 @@ import android.widget.ExpandableListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -109,6 +110,12 @@ public class Fragment_Data extends Fragment {
             List<Carrier> carrierList = dbHelper.getCarriersWithCategory(categories_list.get(i));
             carriers_list.put(categories_list.get(i), carrierList);
         }
+
+        //Sort
+        Collections.sort(categories_list, CustomComparators.ALPHABETICAL_ORDER);
+        CustomComparators.CarrierComparator comparator = new CustomComparators.CarrierComparator();
+        for (List<Carrier> l : carriers_list.values())
+            Collections.sort(l, comparator);
     }
 
     ExpandableListView.OnChildClickListener editSelectedItem = new ExpandableListView.OnChildClickListener() {

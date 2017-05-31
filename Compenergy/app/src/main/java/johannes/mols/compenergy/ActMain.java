@@ -28,12 +28,10 @@ public class ActMain extends AppCompatActivity implements NavigationView.OnNavig
         setContentView(R.layout.act_main_nav_drawer_layout);
 
         //Toolbar
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         //Navigation Drawer
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -106,10 +104,6 @@ public class ActMain extends AppCompatActivity implements NavigationView.OnNavig
             }
             case R.id.nav_favorites: {
                 fragment = new Fragment_Favorites_Data();
-                break;
-            }
-            case R.id.nav_categories: {
-                fragment = new Fragment_Categories();
                 break;
             }
             case R.id.nav_submit_data: {

@@ -8,7 +8,6 @@
     android:padding="0dp" >
 
     <EditText
-        android:visibility="visible"
         android:id="@+id/fragment_data_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

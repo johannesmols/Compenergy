@@ -18,10 +18,9 @@
 
                             Capactiy and Consumption needs to be seperate to evaluate in the comparison, if the carrier produces energy or uses it
 
-     Volume Consumption:    Energy is given in LITERS PER 100 KILOMETER
-                            Describes the energy consumption of e.g. a vehicle on one kilometer of movement (e.g.: BMW M6 E63: 21L/100km)
-                      ===>  The unit name needs to disclose the fuel type (e.g. Petrol, Diesel, E20, ...)
-                            In this manner: Volume Consumption (Petrol)
+     Volume Consumption:    Energy is given in JOULE PER 100 KILOMETER
+                            Describes the energy consumption of e.g. a vehicle on 100 kilometers of movement (e.g.: BMW M6 E63 (Gasoline): 21L/100km => Energy density of 1L of gasoline * 21 = Joule per 100km)
+                            Give the user the possibilty to select a quantity in any volume unit (user can also select on what track (consumption in 1337 miles e.g. => convert in app)
                             Units: Cubic inch, Cubic foot, Imperial teaspoon, Imperial tablespoon, Imperial fluid ounce, Imperial cup, Imperial pint, Imperial quart, Imperial gallon,
                                    Millilitre, Litre, Cubic metre, US teaspoon, US tablespoon, US fluid ounce, US legal cup, US liquid pint, US liquid quart, US liquid gallon
 
@@ -39,7 +38,9 @@
                                    Millilitre, Litre, Cubic metre, US teaspoon, US tablespoon, US fluid ounce, US legal cup, US liquid pint, US liquid quart, US liquid gallon
 
 
-     Sources for carriers:  https://en.wikipedia.org/wiki/Energy_density
+     Sources for carriers:  [1] Mainly chemicals:             https://en.wikipedia.org/wiki/Energy_density
+                            [2] Fuel usage of cars:           https://www.spritmonitor.de
+                            [3] Fuel usage of cars:           https://www.auto-data.net
 
  -->
 
@@ -451,6 +452,208 @@
         <category>Chemical</category>
         <unit>Content Mass</unit>
         <energy>4600000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+
+    <!-- Cars -->
+    <carrier>
+        <name>Alfa Romeo Giulia (2016)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>196542000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Alfa Romeo Spider (1991)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>195966000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Aston Martin DB9 (2008)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>451440000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Aston Martin V12 Vantage S (2014)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>461358000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Aston Martin DB5 Vantage (1965)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>553356000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Aston Martin Vantage (1973)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>553014000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Audi 80 (1992)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>154656000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Audi A1 (2011)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>161458000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Audi A3 e-tron (2016)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>114102000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Audi Q7 (2016)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>266710000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Audi R8 Spyder V10 (2013)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>627570000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Audi RS6 Avant (2015)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>458280000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Audi RS4 (2001)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>570114000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Bentley Continental GT (2012)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>518814000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>BMW 330e (2016)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>109440000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>BMW M4 (2017)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>287280000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>BMW 3 Series (2009)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>300960000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>BMW 4 Series Gran Coupe (2017)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>174420000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>BMW i3 (2013)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>125820000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>BMW i8 (2013)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>197100000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>BMW M2 (2016)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>359100000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>BMW M6 Coupe (2016)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>338580000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>BMW X3 (2003)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>413820000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>BMW X5 (2014)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>379620000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>BMW Z4 (2013)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>232560000</energy>
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>

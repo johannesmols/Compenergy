@@ -26,6 +26,7 @@
     <string name="carrier_type_db_content_mass">Content Mass</string>
     <string name="carrier_type_db_content_volume">Content Volume</string>
 
+    <!-- String arrays for spinners - DO NOT CHANGE ORDER -->
     <string-array name="spinner_carrier_types">
         <item>Electric producer</item>
         <item>Electric consumer</item>
@@ -150,6 +151,24 @@
     <string name="pref_database_delete_key">compenergy.database.delete</string>
     <string name="pref_database_hint_reset">Database reset successful</string>
     <string name="pref_database_hint_delete">All data deleted</string>
+
+    <!-- Error messages -->
+    <string name="name_already_exists">Name already exists</string>
+    <string name="invalid_input">Invalid input</string>
+
+    <!-- Dialog messages -->
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_ok">Okay</string>
+    <string name="add_data_input_too_large_title">Input too large</string>
+    <string name="add_data_input_too_large_message">One of the input values is too large for our largest datatype. Try using a smaller unit scope</string>
+    <string name="data_delete_item_title">Delete</string>
+    <string name="data_delete_confirm">Do you want to delete</string>
+
+    <!-- Toast messages -->
+    <string name="item_deleted">Item deleted</string>
+    <string name="item_added_to_db">Item added to the database</string>
 
     <!-- About screen -->
     <string name="about_title_app_name">App name:</string>

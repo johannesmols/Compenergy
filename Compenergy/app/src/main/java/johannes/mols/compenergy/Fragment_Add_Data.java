@@ -124,7 +124,7 @@ public class Fragment_Add_Data extends Fragment {
             if(validateInput()) {
                 addItemToDatabase();
             } else {
-                Toast.makeText(mContext, "Invalid input", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, mContext.getResources().getString(R.string.item_added_to_db), Toast.LENGTH_LONG).show();
             }
         }
     };
@@ -178,7 +178,7 @@ public class Fragment_Add_Data extends Fragment {
     }
 
     private void ItemAdded() {
-        Toast.makeText(mContext, "Item added to the database", Toast.LENGTH_LONG).show();
+        Toast.makeText(mContext, mContext.getResources().getString(R.string.item_added_to_db),Toast.LENGTH_LONG).show();
     }
 
     private boolean addElectricProducer() {
@@ -201,9 +201,9 @@ public class Fragment_Add_Data extends Fragment {
 
     private void showErrorInputTooLong() {
         new AlertDialog.Builder(mContext)
-                .setTitle("Input too large")
-                .setMessage("One of the input values is too large for our largest datatype. Try using a smaller unit scope")
-                .setNeutralButton("Okay", null)
+                .setTitle(mContext.getResources().getString(R.string.add_data_input_too_large_title))
+                .setMessage(mContext.getResources().getString(R.string.add_data_input_too_large_message))
+                .setNeutralButton(mContext.getResources().getString(R.string.dialog_ok), null)
                 .show();
     }
 
@@ -218,7 +218,7 @@ public class Fragment_Add_Data extends Fragment {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if(containsCaseInsensitive(s.toString(), alreadyExistentCarriersNameList)) {
-                edit_name.setError("Name already exists");
+                edit_name.setError(mContext.getResources().getString(R.string.name_already_exists));
             } else {
                 edit_name.setError(null);
             }
@@ -267,13 +267,13 @@ public class Fragment_Add_Data extends Fragment {
                         ArrayAdapter<CharSequence> adapter_2 = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type, R.layout.spinner_item);
                         adapter_2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_energy_type.setAdapter(adapter_2);
-                        spinner_energy_type.setSelection(adapter_2.getPosition("Kilojoule"));
+                        spinner_energy_type.setSelection(1); //Kilojoule
                         ArrayAdapter<CharSequence> adapter_2_1 = ArrayAdapter.createFromResource(mContext, R.array.unit_list_distance, R.layout.spinner_item);
                         adapter_2_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_unit.setAdapter(adapter_2_1);
                         edit_energy.setHint(R.string.add_data_energy_edit_hint);
                         edit_unit_amount.setHint(R.string.add_data_unit_amount_edit_hint);
-                        spinner_unit.setSelection(adapter_2_1.getPosition("Kilometre"));
+                        spinner_unit.setSelection(3); //Kilometre
                         edit_unit_amount.setVisibility(View.VISIBLE);
                         spinner_unit.setVisibility(View.VISIBLE);
                         break;
@@ -281,13 +281,13 @@ public class Fragment_Add_Data extends Fragment {
                         ArrayAdapter<CharSequence> adapter_3 = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type, R.layout.spinner_item);
                         adapter_3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_energy_type.setAdapter(adapter_3);
-                        spinner_energy_type.setSelection(adapter_3.getPosition("Kilojoule"));
+                        spinner_energy_type.setSelection(1); //Kilojoule
                         ArrayAdapter<CharSequence> adapter_3_1 = ArrayAdapter.createFromResource(mContext, R.array.unit_list_mass, R.layout.spinner_item);
                         adapter_3_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_unit.setAdapter(adapter_3_1);
                         edit_energy.setHint(R.string.add_data_energy_edit_hint);
                         edit_unit_amount.setHint(R.string.add_data_unit_amount_edit_hint);
-                        spinner_unit.setSelection(adapter_3_1.getPosition("Kilogram"));
+                        spinner_unit.setSelection(8); //Kilogram
                         edit_unit_amount.setVisibility(View.VISIBLE);
                         spinner_unit.setVisibility(View.VISIBLE);
                         break;
@@ -295,13 +295,13 @@ public class Fragment_Add_Data extends Fragment {
                         ArrayAdapter<CharSequence> adapter_4 = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type, R.layout.spinner_item);
                         adapter_4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_energy_type.setAdapter(adapter_4);
-                        spinner_energy_type.setSelection(adapter_4.getPosition("Kilojoule"));
+                        spinner_energy_type.setSelection(1);
                         ArrayAdapter<CharSequence> adapter_4_1 = ArrayAdapter.createFromResource(mContext, R.array.unit_list_volume, R.layout.spinner_item);
                         adapter_4_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_unit.setAdapter(adapter_4_1);
                         edit_energy.setHint(R.string.add_data_energy_edit_hint);
                         edit_unit_amount.setHint(R.string.add_data_unit_amount_edit_hint);
-                        spinner_unit.setSelection(adapter_4_1.getPosition("Litre"));
+                        spinner_unit.setSelection(10); //Litre
                         edit_unit_amount.setVisibility(View.VISIBLE);
                         spinner_unit.setVisibility(View.VISIBLE);
                         break;
@@ -309,14 +309,14 @@ public class Fragment_Add_Data extends Fragment {
                         ArrayAdapter<CharSequence> adapter_5 = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type_if_vehicle, R.layout.spinner_item);
                         adapter_5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_energy_type.setAdapter(adapter_5);
-                        spinner_energy_type.setSelection(adapter_5.getPosition("Gasoline"));
+                        spinner_energy_type.setSelection(0); //Gasoline
                         ArrayAdapter<CharSequence> adapter_5_1 = ArrayAdapter.createFromResource(mContext, R.array.unit_list_distance, R.layout.spinner_item);
                         adapter_5_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_unit.setAdapter(adapter_5_1);
                         edit_energy.setHint(R.string.add_data_energy_edit_hint_if_vehicle);
                         edit_unit_amount.setHint(R.string.add_data_unit_amount_edit_hint_if_vehicle);
                         edit_unit_amount.setText(String.valueOf(100));
-                        spinner_unit.setSelection(adapter_5_1.getPosition("Kilometre"));
+                        spinner_unit.setSelection(3); //Kilometre
                         edit_unit_amount.setVisibility(View.VISIBLE);
                         spinner_unit.setVisibility(View.VISIBLE);
                         break;

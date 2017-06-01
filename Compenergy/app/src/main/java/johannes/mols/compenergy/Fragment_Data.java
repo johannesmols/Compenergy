@@ -133,23 +133,23 @@ public class Fragment_Data extends Fragment {
             if(parent.getAdapter().getItem(position) instanceof Carrier) {
                 final Spanned message;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    message = Html.fromHtml("Do you want to delete <b>" + ((Carrier) parent.getAdapter().getItem(position)).get_name() + "</b>?", Html.FROM_HTML_MODE_LEGACY);
+                    message = Html.fromHtml(mContext.getResources().getString(R.string.data_delete_confirm) + " <b>" + ((Carrier) parent.getAdapter().getItem(position)).get_name() + "</b>?", Html.FROM_HTML_MODE_LEGACY);
                 } else {
-                    message = Html.fromHtml("Do you want to delete " + ((Carrier) parent.getAdapter().getItem(position)).get_name() + "?");
+                    message = Html.fromHtml(mContext.getResources().getString(R.string.data_delete_confirm) + " " + ((Carrier) parent.getAdapter().getItem(position)).get_name() + "?");
                 }
 
                 new AlertDialog.Builder(mContext)
-                        .setTitle("Delete")
+                        .setTitle(mContext.getResources().getString(R.string.data_delete_item_title))
                         .setMessage(message)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(mContext.getResources().getString(R.string.dialog_yes), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dbHelper.deleteCarrier(((Carrier) parent.getAdapter().getItem(position)).get_name());
                                 displayList();
-                                Toast.makeText(mContext, "Item deleted", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, mContext.getResources().getString(R.string.item_deleted), Toast.LENGTH_SHORT).show();
                             }
                         })
-                        .setNegativeButton("No", null)
+                        .setNegativeButton(mContext.getResources().getString(R.string.dialog_no), null)
                         .show();
             }
             return false;

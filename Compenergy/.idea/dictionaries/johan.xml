@@ -6,6 +6,7 @@
       <w>butanol</w>
       <w>compenergy</w>
       <w>dataset</w>
+      <w>datasets</w>
       <w>datatype</w>
       <w>dimethyl</w>
       <w>electronvolt</w>
@@ -19,12 +20,15 @@
       <w>listview</w>
       <w>megajoule</w>
       <w>microgram</w>
+      <w>mols</w>
       <w>nitromethane</w>
       <w>nlist</w>
       <w>signum</w>
       <w>spritmonitor</w>
       <w>spyder</w>
       <w>tagname</w>
+      <w>timepsan</w>
+      <w>timespan</w>
       <w>xiluodu</w>
     </words>
   </dictionary>

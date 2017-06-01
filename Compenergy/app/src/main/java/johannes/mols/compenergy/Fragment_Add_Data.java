@@ -229,6 +229,7 @@ public class Fragment_Add_Data extends Fragment {
         long energy = input_energy.longValue();
 
         Log.i("Energy input", input_energy.toString());
+        //
 
         Carrier newCarrier = new Carrier(name, category, unit, energy, true, false);
         dbHelper.addCarrier(newCarrier);

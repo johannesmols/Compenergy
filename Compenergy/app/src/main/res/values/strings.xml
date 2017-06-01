@@ -181,4 +181,5 @@
 
     <!-- Content Descriptions -->
     <string name="content_description_list_view_header">Minimize or maximize this category</string>
+    <string name="content_description_nav_drawer_icon">Application icon</string>
 </resources>

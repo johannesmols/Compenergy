@@ -7,24 +7,24 @@
      Capacity:              Energy is given in WATT
                             Describes the capacity of a certain power plant
                             Convertible to Joule: Joule = Watt * sec
-                            Give the user the possibilty to select a timepsan
+                            Give the user the possibility to select a timepsan
                             Units: Nanosecond, Microsecond, Millisecond, Second, Minute, Hour, Day, Week, Month, Year, Decade, Century
 
      Consumption:           Energy is given in WATT
                             Describes the consumption of a certain energy consumer
                             Convertible to Joule: Joule = Watt * sec
-                            Give the user the possibilty to select a timespan
+                            Give the user the possibility to select a timespan
                             Units: Nanosecond, Microsecond, Millisecond, Second, Minute, Hour, Day, Week, Month, Year, Decade, Century
 
-                            Capactiy and Consumption needs to be seperate to evaluate in the comparison, if the carrier produces energy or uses it
+                            Capacity and Consumption needs to be separate to evaluate in the comparison, if the carrier produces energy or uses it
 
      Volume Consumption:    Energy is given in JOULE PER 100 KILOMETER
                             Describes the energy consumption of e.g. a vehicle on 100 kilometers of movement (e.g.: BMW M6 E63 (Gasoline): 21L/100km => Energy density of 1L of gasoline * 21 = Joule per 100km)
-                            Give the user the possibilty to select a quantity in any volume unit (user can also select on what track (consumption in 1337 miles e.g. => convert in app)
+                            Give the user the possibility to select a quantity in any volume unit (user can also select on what track (consumption in 1337 miles e.g. => convert in app)
                             Units: Cubic inch, Cubic foot, Imperial teaspoon, Imperial tablespoon, Imperial fluid ounce, Imperial cup, Imperial pint, Imperial quart, Imperial gallon,
                                    Millilitre, Litre, Cubic metre, US teaspoon, US tablespoon, US fluid ounce, US legal cup, US liquid pint, US liquid quart, US liquid gallon
 
-     Content Mass:          Energy is given in JOULE PER KILOGRAMM
+     Content Mass:          Energy is given in JOULE PER KILOGRAM
                             Describes the energy content of an item with a certain mass (e.g. food)
                             Convertible to Watt: Watt = Joule / sec
                             Give the user the possibility to select a quantity in any mass unit

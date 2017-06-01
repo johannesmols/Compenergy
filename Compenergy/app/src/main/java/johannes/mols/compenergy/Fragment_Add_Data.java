@@ -162,6 +162,11 @@ public class Fragment_Add_Data extends Fragment {
                     }
                     break;
                 case 1: //Electric consumer
+                    if(!addElectricConsumer()) {
+                        showErrorInputTooLong();
+                    } else {
+                        ItemAdded();
+                    }
                     break;
                 case 2: //Consumer by distance
                     break;
@@ -179,12 +184,35 @@ public class Fragment_Add_Data extends Fragment {
 
     private void ItemAdded() {
         Toast.makeText(mContext, mContext.getResources().getString(R.string.item_added_to_db),Toast.LENGTH_LONG).show();
+
+        edit_name.setText("");
+        edit_category.setText("");
+        edit_energy.setText("");
+        edit_unit_amount.setText("");
     }
 
     private boolean addElectricProducer() {
         String name = edit_name.getText().toString().trim();
         String category = edit_category.getText().toString().trim();
         String unit = mContext.getResources().getString(R.string.carrier_type_db_capacity);
+        BigDecimal input = new BigDecimal(String.valueOf(edit_energy.getText().toString()));
+        BigInteger input_energy = input.toBigInteger();
+        if(input_energy.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) == 1) {
+            //The input is larger than the allowed size (Long.MAX_VALUE)
+            return false;
+        }
+        long energy = input_energy.longValue();
+
+        Carrier newCarrier = new Carrier(name, category, unit, energy, true, false);
+        dbHelper.addCarrier(newCarrier);
+
+        return true;
+    }
+
+    private boolean addElectricConsumer() {
+        String name = edit_name.getText().toString().trim();
+        String category = edit_category.getText().toString().trim();
+        String unit = mContext.getResources().getString(R.string.carrier_type_db_consumption);
         BigDecimal input = new BigDecimal(String.valueOf(edit_energy.getText().toString()));
         BigInteger input_energy = input.toBigInteger();
         if(input_energy.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) == 1) {
@@ -267,7 +295,7 @@ public class Fragment_Add_Data extends Fragment {
                         ArrayAdapter<CharSequence> adapter_2 = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type, R.layout.spinner_item);
                         adapter_2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_energy_type.setAdapter(adapter_2);
-                        spinner_energy_type.setSelection(1); //Kilojoule
+                        spinner_energy_type.setSelection(6); //Kilowatt hour
                         ArrayAdapter<CharSequence> adapter_2_1 = ArrayAdapter.createFromResource(mContext, R.array.unit_list_distance, R.layout.spinner_item);
                         adapter_2_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_unit.setAdapter(adapter_2_1);

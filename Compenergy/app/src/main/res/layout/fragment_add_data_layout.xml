@@ -100,7 +100,7 @@
                 android:inputType="numberDecimal"
                 android:hint="@string/add_data_unit_amount_edit_hint"
                 android:layout_weight="5"
-                android:layout_gravity="start"/>
+                android:layout_gravity="start" />
 
             <Spinner
                 android:id="@+id/fragment_add_data_unit_spinner"

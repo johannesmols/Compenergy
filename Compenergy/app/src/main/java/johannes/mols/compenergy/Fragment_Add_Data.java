@@ -8,6 +8,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,6 +39,8 @@ public class Fragment_Add_Data extends Fragment {
     private Button button_add;
 
     private DatabaseHelper dbHelper;
+
+    private List<String> alreadyExistentCarriersNameList;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -64,6 +69,10 @@ public class Fragment_Add_Data extends Fragment {
         fill_spinner_type();
         fill_spinner_energy_type();
         fill_spinner_unit();
+
+        alreadyExistentCarriersNameList = new ArrayList<>(dbHelper.getAllCarriersAsStringList());
+
+        edit_name.addTextChangedListener(editNameTextWatcher);
 
         edit_category.setOnTouchListener(editCategoryOnTouchListener);
         edit_name.setOnTouchListener(editNameOnTouchListener);
@@ -99,6 +108,38 @@ public class Fragment_Add_Data extends Fragment {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(mContext, R.array.unit_list_mass, R.layout.spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_unit.setAdapter(adapter);
+    }
+
+    /* --- On Text Change Events (EditText) --- */
+
+    TextWatcher editNameTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if(containsCaseInsensitive(s.toString(), alreadyExistentCarriersNameList)) {
+                edit_name.setError("Name already exists");
+            } else {
+                edit_name.setError(null);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+
+    private boolean containsCaseInsensitive(String s, List<String> list) {
+        for(String string : list) {
+            if(string.equalsIgnoreCase(s)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /* --- On Change Events (Spinner) --- */
@@ -155,7 +196,7 @@ public class Fragment_Add_Data extends Fragment {
                         ArrayAdapter<CharSequence> adapter_4_1 = ArrayAdapter.createFromResource(mContext, R.array.unit_list_volume, R.layout.spinner_item);
                         adapter_4_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_unit.setAdapter(adapter_4_1);
-                        spinner_unit.setSelection(adapter_4.getPosition("Litre"));
+                        spinner_unit.setSelection(adapter_4_1.getPosition("Litre"));
                         edit_unit_amount.setVisibility(View.VISIBLE);
                         spinner_unit.setVisibility(View.VISIBLE);
                         break;

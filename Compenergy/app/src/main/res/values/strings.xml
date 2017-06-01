@@ -20,6 +20,12 @@
     <string name="nav_item_help">Help</string>
 
     <!-- Spinner Dropdown Lists -->
+    <string name="carrier_type_db_capacity">Capacity</string>
+    <string name="carrier_type_db_consumption">Consumption</string>
+    <string name="carrier_type_db_volume_consumption">Volume Consumption</string>
+    <string name="carrier_type_db_content_mass">Content Mass</string>
+    <string name="carrier_type_db_content_volume">Content Volume</string>
+
     <string-array name="spinner_carrier_types">
         <item>Electric producer</item>
         <item>Electric consumer</item>

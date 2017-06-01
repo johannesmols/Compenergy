@@ -8,6 +8,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -20,7 +21,10 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -79,6 +83,8 @@ public class Fragment_Add_Data extends Fragment {
 
         spinner_type.setOnItemSelectedListener(spinnerTypeItemSelectedListener);
 
+        button_add.setOnClickListener(addButtonClickListener);
+
         return view;
     }
 
@@ -108,6 +114,97 @@ public class Fragment_Add_Data extends Fragment {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(mContext, R.array.unit_list_mass, R.layout.spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_unit.setAdapter(adapter);
+    }
+
+    /* --- On Button Click --- */
+
+    View.OnClickListener addButtonClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if(validateInput()) {
+                addItemToDatabase();
+            } else {
+                Toast.makeText(mContext, "Invalid input", Toast.LENGTH_LONG).show();
+            }
+        }
+    };
+
+    //Returns true if all input data is valid
+    private boolean validateInput() {
+        int selItem = spinner_type.getSelectedItemPosition();
+        if(selItem == 0 || selItem == 1) {
+            return !(edit_name.getText().toString().trim().length() == 0 ||
+                    containsCaseInsensitive(edit_name.getText().toString(), alreadyExistentCarriersNameList) ||
+                    edit_category.getText().toString().trim().length() == 0 ||
+                    edit_energy.getText().toString().trim().length() == 0 ||
+                    new BigDecimal(edit_energy.getText().toString()).compareTo(BigDecimal.ZERO) == 0);
+        } else {
+            return !(edit_name.getText().toString().trim().length() == 0 ||
+                    containsCaseInsensitive(edit_name.getText().toString(), alreadyExistentCarriersNameList) ||
+                    edit_category.getText().toString().trim().length() == 0 ||
+                    edit_energy.getText().toString().trim().length() == 0 ||
+                    new BigDecimal(edit_energy.getText().toString()).compareTo(BigDecimal.ZERO) == 0 ||
+                    Long.parseLong(edit_energy.getText().toString()) == 0 ||
+                    edit_unit_amount.getText().toString().trim().length() == 0 ||
+                    new BigDecimal(edit_unit_amount.getText().toString()).compareTo(BigDecimal.ZERO) == 0);
+        }
+    }
+
+    private void addItemToDatabase() {
+        String[] types = mContext.getResources().getStringArray(R.array.spinner_carrier_types);
+        if(types.length >= spinner_type.getSelectedItemPosition() + 1) {
+            switch (spinner_type.getSelectedItemPosition()) {
+                case 0: //Electric producer
+                    if(!addElectricProducer()) {
+                        showErrorInputTooLong();
+                    } else {
+                        ItemAdded();
+                    }
+                    break;
+                case 1: //Electric consumer
+                    break;
+                case 2: //Consumer by distance
+                    break;
+                case 3: //Mass energy content
+                    break;
+                case 4: //Volume energy content
+                    break;
+                case 5: //Vehicle
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    private void ItemAdded() {
+        Toast.makeText(mContext, "Item added to the database", Toast.LENGTH_LONG).show();
+    }
+
+    private boolean addElectricProducer() {
+        String name = edit_name.getText().toString().trim();
+        String category = edit_category.getText().toString().trim();
+        String unit = mContext.getResources().getString(R.string.carrier_type_db_capacity);
+        BigDecimal input = new BigDecimal(String.valueOf(edit_energy.getText().toString()));
+        BigInteger input_energy = input.toBigInteger();
+        if(input_energy.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) == 1) {
+            //The input is larger than the allowed size (Long.MAX_VALUE)
+            return false;
+        }
+        long energy = input_energy.longValue();
+
+        Carrier newCarrier = new Carrier(name, category, unit, energy, true, false);
+        dbHelper.addCarrier(newCarrier);
+
+        return true;
+    }
+
+    private void showErrorInputTooLong() {
+        new AlertDialog.Builder(mContext)
+                .setTitle("Input too large")
+                .setMessage("One of the input values is too large for our largest datatype. Try using a smaller unit scope")
+                .setNeutralButton("Okay", null)
+                .show();
     }
 
     /* --- On Text Change Events (EditText) --- */
@@ -154,6 +251,7 @@ public class Fragment_Add_Data extends Fragment {
                         ArrayAdapter<CharSequence> adapter_0 = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type_electric, R.layout.spinner_item);
                         adapter_0.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_energy_type.setAdapter(adapter_0);
+                        edit_energy.setHint(R.string.add_data_energy_edit_hint);
                         edit_unit_amount.setVisibility(View.GONE);
                         spinner_unit.setVisibility(View.GONE);
                         break;
@@ -161,6 +259,7 @@ public class Fragment_Add_Data extends Fragment {
                         ArrayAdapter<CharSequence> adapter_1 = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type_electric, R.layout.spinner_item);
                         adapter_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_energy_type.setAdapter(adapter_1);
+                        edit_energy.setHint(R.string.add_data_energy_edit_hint);
                         edit_unit_amount.setVisibility(View.GONE);
                         spinner_unit.setVisibility(View.GONE);
                         break;
@@ -225,6 +324,7 @@ public class Fragment_Add_Data extends Fragment {
                         ArrayAdapter<CharSequence> adapter_default = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type_electric, R.layout.spinner_item);
                         adapter_default.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_energy_type.setAdapter(adapter_default);
+                        edit_energy.setHint(R.string.add_data_energy_edit_hint);
                         edit_unit_amount.setVisibility(View.GONE);
                         spinner_unit.setVisibility(View.GONE);
                         break;
@@ -237,6 +337,7 @@ public class Fragment_Add_Data extends Fragment {
             ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type_electric, R.layout.spinner_item);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_energy_type.setAdapter(adapter);
+            edit_energy.setHint(R.string.add_data_energy_edit_hint);
             edit_unit_amount.setVisibility(View.GONE);
             spinner_unit.setVisibility(View.GONE);
         }

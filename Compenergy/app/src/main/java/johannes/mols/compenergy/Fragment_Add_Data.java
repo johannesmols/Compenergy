@@ -172,6 +172,8 @@ public class Fragment_Add_Data extends Fragment {
                         ArrayAdapter<CharSequence> adapter_2_1 = ArrayAdapter.createFromResource(mContext, R.array.unit_list_distance, R.layout.spinner_item);
                         adapter_2_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_unit.setAdapter(adapter_2_1);
+                        edit_energy.setHint(R.string.add_data_energy_edit_hint);
+                        edit_unit_amount.setHint(R.string.add_data_unit_amount_edit_hint);
                         spinner_unit.setSelection(adapter_2_1.getPosition("Kilometre"));
                         edit_unit_amount.setVisibility(View.VISIBLE);
                         spinner_unit.setVisibility(View.VISIBLE);
@@ -184,6 +186,8 @@ public class Fragment_Add_Data extends Fragment {
                         ArrayAdapter<CharSequence> adapter_3_1 = ArrayAdapter.createFromResource(mContext, R.array.unit_list_mass, R.layout.spinner_item);
                         adapter_3_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_unit.setAdapter(adapter_3_1);
+                        edit_energy.setHint(R.string.add_data_energy_edit_hint);
+                        edit_unit_amount.setHint(R.string.add_data_unit_amount_edit_hint);
                         spinner_unit.setSelection(adapter_3_1.getPosition("Kilogram"));
                         edit_unit_amount.setVisibility(View.VISIBLE);
                         spinner_unit.setVisibility(View.VISIBLE);
@@ -196,7 +200,24 @@ public class Fragment_Add_Data extends Fragment {
                         ArrayAdapter<CharSequence> adapter_4_1 = ArrayAdapter.createFromResource(mContext, R.array.unit_list_volume, R.layout.spinner_item);
                         adapter_4_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_unit.setAdapter(adapter_4_1);
+                        edit_energy.setHint(R.string.add_data_energy_edit_hint);
+                        edit_unit_amount.setHint(R.string.add_data_unit_amount_edit_hint);
                         spinner_unit.setSelection(adapter_4_1.getPosition("Litre"));
+                        edit_unit_amount.setVisibility(View.VISIBLE);
+                        spinner_unit.setVisibility(View.VISIBLE);
+                        break;
+                    case 5: //Vehicle
+                        ArrayAdapter<CharSequence> adapter_5 = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type_if_vehicle, R.layout.spinner_item);
+                        adapter_5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinner_energy_type.setAdapter(adapter_5);
+                        spinner_energy_type.setSelection(adapter_5.getPosition("Gasoline"));
+                        ArrayAdapter<CharSequence> adapter_5_1 = ArrayAdapter.createFromResource(mContext, R.array.unit_list_distance, R.layout.spinner_item);
+                        adapter_5_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinner_unit.setAdapter(adapter_5_1);
+                        edit_energy.setHint(R.string.add_data_energy_edit_hint_if_vehicle);
+                        edit_unit_amount.setHint(R.string.add_data_unit_amount_edit_hint_if_vehicle);
+                        edit_unit_amount.setText(String.valueOf(100));
+                        spinner_unit.setSelection(adapter_5_1.getPosition("Kilometre"));
                         edit_unit_amount.setVisibility(View.VISIBLE);
                         spinner_unit.setVisibility(View.VISIBLE);
                         break;

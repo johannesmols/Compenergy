@@ -26,6 +26,7 @@
         <item>Consumer by distance</item>
         <item>Mass energy content</item>
         <item>Volume energy content</item>
+        <item>Vehicle</item>
     </string-array>
 
     <string-array name="spinner_energy_type">
@@ -44,6 +45,18 @@
 
     <string-array name="spinner_energy_type_electric">
         <item>Watt</item>
+    </string-array>
+
+    <!-- Energy density: https://en.wikipedia.org/wiki/Fuel#Energy -->
+    <string-array name="spinner_energy_type_if_vehicle">
+        <item>Gasoline</item>
+        <item>Diesel</item>
+        <item>Kerosene</item>
+        <item>Liquefied Petroleum Gas</item>
+        <item>Ethanol</item>
+        <item>Hydrogen</item>
+        <item>Methanol</item>
+        <item>Nitromethane</item>
     </string-array>
 
     <string-array name="unit_list_time">
@@ -115,7 +128,9 @@
     <string name="add_data_name_edit_hint">Name</string>
     <string name="add_data_category_edit_hint">Category</string>
     <string name="add_data_energy_edit_hint">Energy</string>
+    <string name="add_data_energy_edit_hint_if_vehicle">Avg. fuel consumption</string>
     <string name="add_data_unit_amount_edit_hint">Amount</string>
+    <string name="add_data_unit_amount_edit_hint_if_vehicle">Distance</string>
     <string name="add_data_add_button">Add Item</string>
 
     <!-- Preference screen strings -->

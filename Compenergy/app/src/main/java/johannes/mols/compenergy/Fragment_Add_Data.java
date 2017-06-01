@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -67,8 +68,12 @@ public class Fragment_Add_Data extends Fragment {
         edit_category.setOnTouchListener(editCategoryOnTouchListener);
         edit_name.setOnTouchListener(editNameOnTouchListener);
 
+        spinner_type.setOnItemSelectedListener(spinnerTypeItemSelectedListener);
+
         return view;
     }
+
+    /* --- Filling Methods --- */
 
     private void fill_edit_category() {
         List<String> categories = dbHelper.getCategoryList();
@@ -96,6 +101,88 @@ public class Fragment_Add_Data extends Fragment {
         spinner_unit.setAdapter(adapter);
     }
 
+    /* --- On Change Events (Spinner) --- */
+
+    AdapterView.OnItemSelectedListener spinnerTypeItemSelectedListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            String[] types = parent.getResources().getStringArray(R.array.spinner_carrier_types);
+            if(types.length >= position + 1) {
+                switch (position) {
+                    case 0: //Electric producer => Energy is in Watt, hide the amount input and change energy type spinner items to Watt only
+                        ArrayAdapter<CharSequence> adapter_0 = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type_electric, R.layout.spinner_item);
+                        adapter_0.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinner_energy_type.setAdapter(adapter_0);
+                        edit_unit_amount.setVisibility(View.GONE);
+                        spinner_unit.setVisibility(View.GONE);
+                        break;
+                    case 1: //Electric consumer
+                        ArrayAdapter<CharSequence> adapter_1 = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type_electric, R.layout.spinner_item);
+                        adapter_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinner_energy_type.setAdapter(adapter_1);
+                        edit_unit_amount.setVisibility(View.GONE);
+                        spinner_unit.setVisibility(View.GONE);
+                        break;
+                    case 2: //Consumer by distance
+                        ArrayAdapter<CharSequence> adapter_2 = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type, R.layout.spinner_item);
+                        adapter_2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinner_energy_type.setAdapter(adapter_2);
+                        spinner_energy_type.setSelection(adapter_2.getPosition("Kilojoule"));
+                        ArrayAdapter<CharSequence> adapter_2_1 = ArrayAdapter.createFromResource(mContext, R.array.unit_list_distance, R.layout.spinner_item);
+                        adapter_2_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinner_unit.setAdapter(adapter_2_1);
+                        spinner_unit.setSelection(adapter_2_1.getPosition("Kilometre"));
+                        edit_unit_amount.setVisibility(View.VISIBLE);
+                        spinner_unit.setVisibility(View.VISIBLE);
+                        break;
+                    case 3: //Mass energy content
+                        ArrayAdapter<CharSequence> adapter_3 = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type, R.layout.spinner_item);
+                        adapter_3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinner_energy_type.setAdapter(adapter_3);
+                        spinner_energy_type.setSelection(adapter_3.getPosition("Kilojoule"));
+                        ArrayAdapter<CharSequence> adapter_3_1 = ArrayAdapter.createFromResource(mContext, R.array.unit_list_mass, R.layout.spinner_item);
+                        adapter_3_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinner_unit.setAdapter(adapter_3_1);
+                        spinner_unit.setSelection(adapter_3_1.getPosition("Kilogram"));
+                        edit_unit_amount.setVisibility(View.VISIBLE);
+                        spinner_unit.setVisibility(View.VISIBLE);
+                        break;
+                    case 4: //Volume energy content
+                        ArrayAdapter<CharSequence> adapter_4 = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type, R.layout.spinner_item);
+                        adapter_4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinner_energy_type.setAdapter(adapter_4);
+                        spinner_energy_type.setSelection(adapter_4.getPosition("Kilojoule"));
+                        ArrayAdapter<CharSequence> adapter_4_1 = ArrayAdapter.createFromResource(mContext, R.array.unit_list_volume, R.layout.spinner_item);
+                        adapter_4_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinner_unit.setAdapter(adapter_4_1);
+                        spinner_unit.setSelection(adapter_4.getPosition("Litre"));
+                        edit_unit_amount.setVisibility(View.VISIBLE);
+                        spinner_unit.setVisibility(View.VISIBLE);
+                        break;
+                    default:
+                        ArrayAdapter<CharSequence> adapter_default = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type_electric, R.layout.spinner_item);
+                        adapter_default.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinner_energy_type.setAdapter(adapter_default);
+                        edit_unit_amount.setVisibility(View.GONE);
+                        spinner_unit.setVisibility(View.GONE);
+                        break;
+                }
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type_electric, R.layout.spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner_energy_type.setAdapter(adapter);
+            edit_unit_amount.setVisibility(View.GONE);
+            spinner_unit.setVisibility(View.GONE);
+        }
+    };
+
+    /* --- On Touch Events --- */
+
+    //Clear the field when clicking the X
     View.OnTouchListener editNameOnTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {

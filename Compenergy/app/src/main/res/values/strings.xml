@@ -42,6 +42,10 @@
         <item>Foot-pound</item>
     </string-array>
 
+    <string-array name="spinner_energy_type_electric">
+        <item>Watt</item>
+    </string-array>
+
     <string-array name="unit_list_time">
         <item>Nanosecond</item>
         <item>Microsecond</item>
@@ -93,10 +97,10 @@
     </string-array>
 
     <string-array name="unit_list_distance">
+        <item>Nanometre</item>
+        <item>Millimetre</item>
         <item>Metre</item>
         <item>Kilometre</item>
-        <item>Millimetre</item>
-        <item>Nanometre</item>
         <item>Mile</item>
         <item>Yard</item>
         <item>Foot</item>

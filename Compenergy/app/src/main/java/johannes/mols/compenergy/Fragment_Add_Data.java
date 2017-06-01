@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -144,7 +145,6 @@ public class Fragment_Add_Data extends Fragment {
                     edit_category.getText().toString().trim().length() == 0 ||
                     edit_energy.getText().toString().trim().length() == 0 ||
                     new BigDecimal(edit_energy.getText().toString()).compareTo(BigDecimal.ZERO) == 0 ||
-                    Long.parseLong(edit_energy.getText().toString()) == 0 ||
                     edit_unit_amount.getText().toString().trim().length() == 0 ||
                     new BigDecimal(edit_unit_amount.getText().toString()).compareTo(BigDecimal.ZERO) == 0);
         }
@@ -169,6 +169,11 @@ public class Fragment_Add_Data extends Fragment {
                     }
                     break;
                 case 2: //Consumer by distance
+                    if(!addConsumerByDistance()) {
+                        showErrorInputTooLong();
+                    } else {
+                        ItemAdded();
+                    }
                     break;
                 case 3: //Mass energy content
                     break;
@@ -203,6 +208,8 @@ public class Fragment_Add_Data extends Fragment {
         }
         long energy = input_energy.longValue();
 
+        Log.i("Energy input", input_energy.toString());
+
         Carrier newCarrier = new Carrier(name, category, unit, energy, true, false);
         dbHelper.addCarrier(newCarrier);
 
@@ -215,11 +222,42 @@ public class Fragment_Add_Data extends Fragment {
         String unit = mContext.getResources().getString(R.string.carrier_type_db_consumption);
         BigDecimal input = new BigDecimal(String.valueOf(edit_energy.getText().toString()));
         BigInteger input_energy = input.toBigInteger();
-        if(input_energy.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) == 1) {
-            //The input is larger than the allowed size (Long.MAX_VALUE)
+        if(input_energy.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) == 1 || input_energy.compareTo(BigInteger.ZERO) == 0) {
+            //The input is larger than the allowed size (Long.MAX_VALUE) or zero
             return false;
         }
         long energy = input_energy.longValue();
+
+        Log.i("Energy input", input_energy.toString());
+
+        Carrier newCarrier = new Carrier(name, category, unit, energy, true, false);
+        dbHelper.addCarrier(newCarrier);
+
+        return true;
+    }
+
+    private boolean addConsumerByDistance() {
+        String name = edit_name.getText().toString().trim();
+        String category = edit_category.getText().toString().trim();
+        String unit = mContext.getResources().getString(R.string.carrier_type_db_volume_consumption);
+        BigDecimal energy_input = new BigDecimal(String.valueOf(edit_energy.getText().toString()));
+        BigDecimal amount_input = new BigDecimal(String.valueOf(edit_unit_amount.getText().toString()));
+
+        BigInteger energy_result = UnitConverter.energyInputToJoule(spinner_energy_type.getSelectedItemPosition(), energy_input);
+        BigDecimal amount_result = UnitConverter.distanceInputToKilometre(spinner_unit.getSelectedItemPosition(), amount_input);
+        BigDecimal factor = new BigDecimal(100).divide(amount_result, 20, BigDecimal.ROUND_HALF_UP);
+        BigInteger energy_normalized_to_100km = new BigDecimal(energy_result).multiply(factor).toBigInteger();
+        if(energy_normalized_to_100km.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) == 1 || energy_normalized_to_100km.compareTo(BigInteger.ZERO) == 0) {
+            return false;
+        }
+        long energy = energy_normalized_to_100km.longValue();
+
+        Log.i("Energy input", energy_input.toString());
+        Log.i("Amount input", amount_input.toString());
+        Log.i("Energy in Joule", energy_result.toString());
+        Log.i("Distance in km", amount_result.toString());
+        Log.i("Factor", factor.toString());
+        Log.i("Normalized energy", energy_normalized_to_100km.toString());
 
         Carrier newCarrier = new Carrier(name, category, unit, energy, true, false);
         dbHelper.addCarrier(newCarrier);
@@ -301,7 +339,7 @@ public class Fragment_Add_Data extends Fragment {
                         spinner_unit.setAdapter(adapter_2_1);
                         edit_energy.setHint(R.string.add_data_energy_edit_hint);
                         edit_unit_amount.setHint(R.string.add_data_unit_amount_edit_hint);
-                        spinner_unit.setSelection(3); //Kilometre
+                        spinner_unit.setSelection(5); //Kilometre
                         edit_unit_amount.setVisibility(View.VISIBLE);
                         spinner_unit.setVisibility(View.VISIBLE);
                         break;

@@ -118,7 +118,9 @@
 
     <string-array name="unit_list_distance">
         <item>Nanometre</item>
+        <item>Micrometre</item>
         <item>Millimetre</item>
+        <item>Centimetre</item>
         <item>Metre</item>
         <item>Kilometre</item>
         <item>Mile</item>

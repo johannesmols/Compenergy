@@ -124,7 +124,7 @@ public class Fragment_Add_Data extends Fragment {
             if(validateInput()) {
                 addItemToDatabase();
             } else {
-                Toast.makeText(mContext, mContext.getResources().getString(R.string.item_added_to_db), Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, mContext.getResources().getString(R.string.invalid_input), Toast.LENGTH_LONG).show();
             }
         }
     };

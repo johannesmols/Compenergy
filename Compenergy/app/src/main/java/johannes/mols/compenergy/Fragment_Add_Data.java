@@ -183,6 +183,11 @@ public class Fragment_Add_Data extends Fragment {
                     }
                     break;
                 case 4: //Volume energy content
+                    if(!addVolumeEnergyContent()) {
+                        showErrorInputTooLong();
+                    } else {
+                        ItemAdded();
+                    }
                     break;
                 case 5: //Vehicle
                     break;
@@ -215,10 +220,14 @@ public class Fragment_Add_Data extends Fragment {
 
         Log.i("Energy input", input_energy.toString());
 
-        Carrier newCarrier = new Carrier(name, category, unit, energy, true, false);
-        dbHelper.addCarrier(newCarrier);
+        if(!containsCaseInsensitive(name, alreadyExistentCarriersNameList)) {
+            Carrier newCarrier = new Carrier(name, category, unit, energy, true, false);
+            dbHelper.addCarrier(newCarrier);
 
-        return true;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private boolean addElectricConsumer() {
@@ -235,10 +244,14 @@ public class Fragment_Add_Data extends Fragment {
 
         Log.i("Energy input", input_energy.toString());
 
-        Carrier newCarrier = new Carrier(name, category, unit, energy, true, false);
-        dbHelper.addCarrier(newCarrier);
+        if(!containsCaseInsensitive(name, alreadyExistentCarriersNameList)) {
+            Carrier newCarrier = new Carrier(name, category, unit, energy, true, false);
+            dbHelper.addCarrier(newCarrier);
 
-        return true;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private boolean addConsumerByDistance() {
@@ -264,10 +277,14 @@ public class Fragment_Add_Data extends Fragment {
         Log.i("Factor", factor.toString());
         Log.i("Normalized energy", energy_normalized_to_100km.toString());
 
-        Carrier newCarrier = new Carrier(name, category, unit, energy, true, false);
-        dbHelper.addCarrier(newCarrier);
+        if(!containsCaseInsensitive(name, alreadyExistentCarriersNameList)) {
+            Carrier newCarrier = new Carrier(name, category, unit, energy, true, false);
+            dbHelper.addCarrier(newCarrier);
 
-        return true;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private boolean addMassEnergyContent() {
@@ -289,14 +306,51 @@ public class Fragment_Add_Data extends Fragment {
         Log.i("Energy input", energy_input.toString());
         Log.i("Amount input", amount_input.toString());
         Log.i("Energy in Joule", energy_result.toString());
-        Log.i("Distance in kg", amount_result.toString());
+        Log.i("Mass in kg", amount_result.toString());
         Log.i("Factor", factor.toString());
         Log.i("Normalized energy", energy_normalized_to_1kg.toString());
 
-        Carrier newCarrier = new Carrier(name, category, unit, energy, true, false);
-        dbHelper.addCarrier(newCarrier);
+        if(!containsCaseInsensitive(name, alreadyExistentCarriersNameList)) {
+            Carrier newCarrier = new Carrier(name, category, unit, energy, true, false);
+            dbHelper.addCarrier(newCarrier);
 
-        return true;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean addVolumeEnergyContent() {
+        String name = edit_name.getText().toString().trim();
+        String category = edit_category.getText().toString().trim();
+        String unit = mContext.getResources().getString(R.string.carrier_type_db_content_mass);
+        BigDecimal energy_input = new BigDecimal(String.valueOf(edit_energy.getText().toString()));
+        BigDecimal amount_input = new BigDecimal(String.valueOf(edit_unit_amount.getText().toString()));
+
+        BigInteger energy_result = UnitConverter.energyInputToJoule(spinner_energy_type.getSelectedItemPosition(), energy_input);
+        BigDecimal amount_result = UnitConverter.volumeInputToLitre(spinner_unit.getSelectedItemPosition(), amount_input);
+        BigDecimal factor = new BigDecimal(1).divide(amount_result, 20, BigDecimal.ROUND_HALF_UP);
+        BigInteger energy_normalized_to_1l = new BigDecimal(energy_result).multiply(factor).toBigInteger();
+        if(energy_normalized_to_1l.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) == 1 || energy_normalized_to_1l.compareTo(BigInteger.ZERO) == 0) {
+            return false;
+        }
+        long energy = energy_normalized_to_1l.longValue();
+
+        Log.i("Energy input", energy_input.toString());
+        Log.i("Amount input", amount_input.toString());
+        Log.i("Energy in Joule", energy_result.toString());
+        Log.i("Volume in l", amount_result.toString());
+        Log.i("Factor", factor.toString());
+        Log.i("Normalized energy", energy_normalized_to_1l.toString());
+
+        if(!containsCaseInsensitive(name, alreadyExistentCarriersNameList)) {
+            Carrier newCarrier = new Carrier(name, category, unit, energy, true, false);
+            dbHelper.addCarrier(newCarrier);
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void showErrorInputTooLong() {
@@ -401,7 +455,7 @@ public class Fragment_Add_Data extends Fragment {
                         spinner_unit.setAdapter(adapter_4_1);
                         edit_energy.setHint(R.string.add_data_energy_edit_hint);
                         edit_unit_amount.setHint(R.string.add_data_unit_amount_edit_hint);
-                        spinner_unit.setSelection(10); //Litre
+                        spinner_unit.setSelection(11); //Litre
                         edit_unit_amount.setVisibility(View.VISIBLE);
                         spinner_unit.setVisibility(View.VISIBLE);
                         break;

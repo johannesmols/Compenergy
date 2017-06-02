@@ -51,6 +51,27 @@ final class UnitConverter {
     private static final BigDecimal gramToKilogram              = new BigDecimal(0.001);
     private static final BigDecimal tonToKilogram               = new BigDecimal(1000);
 
+    //Volume to Liter
+    private static final BigDecimal cubicInchToLiter            = new BigDecimal(0.0163871);
+    private static final BigDecimal cubicFootToLiter            = new BigDecimal(28.3168);
+    private static final BigDecimal cubicMetreToLiter           = new BigDecimal(1000);
+    private static final BigDecimal imperialTeaspoonToLiter     = new BigDecimal(0.00591939);
+    private static final BigDecimal imperialTablespoonToLiter   = new BigDecimal(0.0177582);
+    private static final BigDecimal imperialFluidOunceToLiter   = new BigDecimal(0.0284131);
+    private static final BigDecimal imperialCupToLiter          = new BigDecimal(0.284131);
+    private static final BigDecimal imperialPintToLiter         = new BigDecimal(0.568261);
+    private static final BigDecimal imperialQuartToLiter        = new BigDecimal(1.13652);
+    private static final BigDecimal imperialGallonToLiter       = new BigDecimal(4.54609);
+    private static final BigDecimal millilitreToLiter           = new BigDecimal(0.001);
+    private static final BigDecimal usTeaspoonToLiter           = new BigDecimal(0.00492892);
+    private static final BigDecimal usTablespoonToLiter         = new BigDecimal(0.0147868);
+    private static final BigDecimal usFluidOunceToLiter         = new BigDecimal(0.0295735);
+    private static final BigDecimal usLegalCupToLiter           = new BigDecimal(0.24);
+    private static final BigDecimal usLiquidPintToLiter         = new BigDecimal(0.473176);
+    private static final BigDecimal usLiquidQuartToLiter        = new BigDecimal(0.946353);
+    private static final BigDecimal usLiquidGallonToLiter       = new BigDecimal(3.785412);
+
+
     /* --- Joule/Watt conversion --- */
 
     static BigDecimal wattToJoule(BigDecimal watt, BigDecimal seconds) {
@@ -79,10 +100,10 @@ final class UnitConverter {
                 result = input.toBigInteger();
                 break;
             case 1: //Kilojoule
-                result = input.toBigInteger().multiply(BigInteger.valueOf(toKilo));
+                result = input.multiply(BigDecimal.valueOf(toKilo)).toBigInteger();
                 break;
             case 2: //Megajoule
-                result = input.toBigInteger().multiply(BigInteger.valueOf(toMega));
+                result = input.multiply(BigDecimal.valueOf(toMega)).toBigInteger();
                 break;
             case 3: //Gram calorie
                 result = input.multiply(gramCalorieToJoule).toBigInteger();
@@ -194,6 +215,74 @@ final class UnitConverter {
                 break;
             case 9: //Ton
                 result = input.multiply(tonToKilogram);
+                break;
+            default:
+                result = BigDecimal.ZERO;
+                break;
+        }
+
+        return result;
+    }
+
+    static BigDecimal volumeInputToLitre(int input_type, BigDecimal input) {
+        BigDecimal result;
+        switch (input_type) {
+            case 0: //Cubic inch
+                result = input.multiply(cubicInchToLiter);
+                break;
+            case 1: //Cubic foot
+                result = input.multiply(cubicFootToLiter);
+                break;
+            case 2: //Cubic metre
+                result = input.multiply(cubicMetreToLiter);
+                break;
+            case 3: //Imperial teaspoon
+                result = input.multiply(imperialTeaspoonToLiter);
+                break;
+            case 4: //Imperial tablespoon
+                result = input.multiply(imperialTablespoonToLiter);
+                break;
+            case 5: //Imperial fluid ounce
+                result = input.multiply(imperialFluidOunceToLiter);
+                break;
+            case 6: //Imperial cup
+                result = input.multiply(imperialCupToLiter);
+                break;
+            case 7: //Imperial pint
+                result = input.multiply(imperialPintToLiter);
+                break;
+            case 8: //Imperial quart
+                result = input.multiply(imperialQuartToLiter);
+                break;
+            case 9: //Imperial gallon
+                result = input.multiply(imperialGallonToLiter);
+                break;
+            case 10: //Millilitre
+                result = input.multiply(millilitreToLiter);
+                break;
+            case 11: //Litre
+                result = input;
+                break;
+            case 12: //US teaspoon
+                result = input.multiply(usTeaspoonToLiter);
+                break;
+            case 13: //US tablespoon
+                result = input.multiply(usTablespoonToLiter);
+                break;
+            case 14: //US fluid ounce
+                result = input.multiply(usFluidOunceToLiter);
+                break;
+            case 15: //US legal cup
+                result = input.multiply(usLegalCupToLiter);
+                break;
+            case 16: //US liquid pint
+                result = input.multiply(usLiquidPintToLiter);
+                break;
+            case 17: //US liquid quart
+                result = input.multiply(usLiquidQuartToLiter);
+                break;
+            case 18: //US liquid gallon
+                result = input.multiply(usLiquidGallonToLiter);
                 break;
             default:
                 result = BigDecimal.ZERO;

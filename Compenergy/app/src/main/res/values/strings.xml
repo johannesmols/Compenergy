@@ -84,6 +84,7 @@
     <string-array name="unit_list_volume">
         <item>Cubic inch</item>
         <item>Cubic foot</item>
+        <item>Cubic metre</item>
         <item>Imperial teaspoon</item>
         <item>Imperial tablespoon</item>
         <item>Imperial fluid ounce</item>
@@ -93,7 +94,6 @@
         <item>Imperial gallon</item>
         <item>Millilitre</item>
         <item>Litre</item>
-        <item>Cubic metre</item>
         <item>US teaspoon</item>
         <item>US tablespoon</item>
         <item>US fluid ounce</item>

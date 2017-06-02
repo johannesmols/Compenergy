@@ -52,6 +52,8 @@
 
     <string-array name="spinner_energy_type_electric">
         <item>Watt</item>
+        <item>Kilowatt</item>
+        <item>Megawatt</item>
     </string-array>
 
     <!-- Energy density: https://en.wikipedia.org/wiki/Fuel#Energy -->

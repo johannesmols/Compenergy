@@ -137,6 +137,26 @@ final class UnitConverter {
         return result;
     }
 
+    static BigDecimal wattInputToWatt(int input_type, BigDecimal input) {
+        BigDecimal result;
+        switch (input_type) {
+            case 0: //Watt
+                result = input;
+                break;
+            case 1: //Kilowatt
+                result = input.multiply(new BigDecimal(toKilo));
+                break;
+            case 2: //Megawatt
+                result = input.multiply(new BigDecimal(toMega));
+                break;
+            default:
+                result = BigDecimal.ZERO;
+                break;
+        }
+
+        return result;
+    }
+
     /* --- Distance I/O --- */
 
     static BigDecimal distanceInputToKilometre(int input_type, BigDecimal input) {

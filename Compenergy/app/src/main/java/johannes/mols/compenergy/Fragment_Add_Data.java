@@ -168,8 +168,8 @@ public class Fragment_Add_Data extends Fragment {
                         ItemAdded();
                     }
                     break;
-                case 2: //Consumer by distance
-                    if(!addConsumerByDistance()) {
+                case 2: //Energy by distance
+                    if(!addEnergyByDistance()) {
                         showErrorInputTooLong();
                     } else {
                         ItemAdded();
@@ -211,14 +211,14 @@ public class Fragment_Add_Data extends Fragment {
         String category = edit_category.getText().toString().trim();
         String unit = mContext.getResources().getString(R.string.carrier_type_db_capacity);
         BigDecimal input = new BigDecimal(String.valueOf(edit_energy.getText().toString()));
-        BigInteger input_energy = input.toBigInteger();
-        if(input_energy.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) == 1) {
-            //The input is larger than the allowed size (Long.MAX_VALUE)
+        BigDecimal input_result = UnitConverter.wattInputToWatt(spinner_energy_type.getSelectedItemPosition(), input);
+        BigInteger energy_converted = input_result.toBigInteger();
+        if(energy_converted.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) == 1 || energy_converted.compareTo(BigInteger.ZERO) == 0) {
             return false;
         }
-        long energy = input_energy.longValue();
+        long energy = energy_converted.longValue();
 
-        Log.i("Energy input", input_energy.toString());
+        Log.i("Energy input", energy_converted.toString());
 
         if(!containsCaseInsensitive(name, alreadyExistentCarriersNameList)) {
             Carrier newCarrier = new Carrier(name, category, unit, energy, true, false);
@@ -235,14 +235,14 @@ public class Fragment_Add_Data extends Fragment {
         String category = edit_category.getText().toString().trim();
         String unit = mContext.getResources().getString(R.string.carrier_type_db_consumption);
         BigDecimal input = new BigDecimal(String.valueOf(edit_energy.getText().toString()));
-        BigInteger input_energy = input.toBigInteger();
-        if(input_energy.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) == 1 || input_energy.compareTo(BigInteger.ZERO) == 0) {
-            //The input is larger than the allowed size (Long.MAX_VALUE) or zero
+        BigDecimal input_result = UnitConverter.wattInputToWatt(spinner_energy_type.getSelectedItemPosition(), input);
+        BigInteger energy_converted = input_result.toBigInteger();
+        if(energy_converted.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) == 1 || energy_converted.compareTo(BigInteger.ZERO) == 0) {
             return false;
         }
-        long energy = input_energy.longValue();
+        long energy = energy_converted.longValue();
 
-        Log.i("Energy input", input_energy.toString());
+        Log.i("Energy input", energy_converted.toString());
 
         if(!containsCaseInsensitive(name, alreadyExistentCarriersNameList)) {
             Carrier newCarrier = new Carrier(name, category, unit, energy, true, false);
@@ -254,7 +254,7 @@ public class Fragment_Add_Data extends Fragment {
         }
     }
 
-    private boolean addConsumerByDistance() {
+    private boolean addEnergyByDistance() {
         String name = edit_name.getText().toString().trim();
         String category = edit_category.getText().toString().trim();
         String unit = mContext.getResources().getString(R.string.carrier_type_db_volume_consumption);
@@ -405,6 +405,7 @@ public class Fragment_Add_Data extends Fragment {
                         ArrayAdapter<CharSequence> adapter_0 = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type_electric, R.layout.spinner_item);
                         adapter_0.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_energy_type.setAdapter(adapter_0);
+                        spinner_energy_type.setSelection(0);
                         edit_energy.setHint(R.string.add_data_energy_edit_hint);
                         edit_unit_amount.setVisibility(View.GONE);
                         spinner_unit.setVisibility(View.GONE);
@@ -413,11 +414,12 @@ public class Fragment_Add_Data extends Fragment {
                         ArrayAdapter<CharSequence> adapter_1 = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type_electric, R.layout.spinner_item);
                         adapter_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_energy_type.setAdapter(adapter_1);
+                        spinner_energy_type.setSelection(0);
                         edit_energy.setHint(R.string.add_data_energy_edit_hint);
                         edit_unit_amount.setVisibility(View.GONE);
                         spinner_unit.setVisibility(View.GONE);
                         break;
-                    case 2: //Consumer by distance
+                    case 2: //Energy by distance
                         ArrayAdapter<CharSequence> adapter_2 = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type, R.layout.spinner_item);
                         adapter_2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_energy_type.setAdapter(adapter_2);
@@ -478,6 +480,7 @@ public class Fragment_Add_Data extends Fragment {
                         ArrayAdapter<CharSequence> adapter_default = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type_electric, R.layout.spinner_item);
                         adapter_default.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_energy_type.setAdapter(adapter_default);
+                        spinner_energy_type.setSelection(0);
                         edit_energy.setHint(R.string.add_data_energy_edit_hint);
                         edit_unit_amount.setVisibility(View.GONE);
                         spinner_unit.setVisibility(View.GONE);
@@ -491,6 +494,7 @@ public class Fragment_Add_Data extends Fragment {
             ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type_electric, R.layout.spinner_item);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_energy_type.setAdapter(adapter);
+            spinner_energy_type.setSelection(0);
             edit_energy.setHint(R.string.add_data_energy_edit_hint);
             edit_unit_amount.setVisibility(View.GONE);
             spinner_unit.setVisibility(View.GONE);

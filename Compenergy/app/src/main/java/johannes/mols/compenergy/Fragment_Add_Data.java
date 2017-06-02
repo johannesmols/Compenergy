@@ -176,6 +176,11 @@ public class Fragment_Add_Data extends Fragment {
                     }
                     break;
                 case 3: //Mass energy content
+                    if(!addMassEnergyContent()) {
+                        showErrorInputTooLong();
+                    } else {
+                        ItemAdded();
+                    }
                     break;
                 case 4: //Volume energy content
                     break;
@@ -229,7 +234,6 @@ public class Fragment_Add_Data extends Fragment {
         long energy = input_energy.longValue();
 
         Log.i("Energy input", input_energy.toString());
-        //
 
         Carrier newCarrier = new Carrier(name, category, unit, energy, true, false);
         dbHelper.addCarrier(newCarrier);
@@ -259,6 +263,35 @@ public class Fragment_Add_Data extends Fragment {
         Log.i("Distance in km", amount_result.toString());
         Log.i("Factor", factor.toString());
         Log.i("Normalized energy", energy_normalized_to_100km.toString());
+
+        Carrier newCarrier = new Carrier(name, category, unit, energy, true, false);
+        dbHelper.addCarrier(newCarrier);
+
+        return true;
+    }
+
+    private boolean addMassEnergyContent() {
+        String name = edit_name.getText().toString().trim();
+        String category = edit_category.getText().toString().trim();
+        String unit = mContext.getResources().getString(R.string.carrier_type_db_content_mass);
+        BigDecimal energy_input = new BigDecimal(String.valueOf(edit_energy.getText().toString()));
+        BigDecimal amount_input = new BigDecimal(String.valueOf(edit_unit_amount.getText().toString()));
+
+        BigInteger energy_result = UnitConverter.energyInputToJoule(spinner_energy_type.getSelectedItemPosition(), energy_input);
+        BigDecimal amount_result = UnitConverter.massInputToKilogram(spinner_unit.getSelectedItemPosition(), amount_input);
+        BigDecimal factor = new BigDecimal(1).divide(amount_result, 20, BigDecimal.ROUND_HALF_UP);
+        BigInteger energy_normalized_to_1kg = new BigDecimal(energy_result).multiply(factor).toBigInteger();
+        if(energy_normalized_to_1kg.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) == 1 || energy_normalized_to_1kg.compareTo(BigInteger.ZERO) == 0) {
+            return false;
+        }
+        long energy = energy_normalized_to_1kg.longValue();
+
+        Log.i("Energy input", energy_input.toString());
+        Log.i("Amount input", amount_input.toString());
+        Log.i("Energy in Joule", energy_result.toString());
+        Log.i("Distance in kg", amount_result.toString());
+        Log.i("Factor", factor.toString());
+        Log.i("Normalized energy", energy_normalized_to_1kg.toString());
 
         Carrier newCarrier = new Carrier(name, category, unit, energy, true, false);
         dbHelper.addCarrier(newCarrier);

@@ -11,7 +11,7 @@ package johannes.mols.compenergy;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-public final class UnitConverter {
+final class UnitConverter {
 
     //Constant sources: https://en.wikipedia.org/wiki/Conversion_of_units
 
@@ -19,36 +19,47 @@ public final class UnitConverter {
     private static final int toMega = 1000000;
 
     //Energy types to Joule
-    private static final BigDecimal gramCalorieToJoule = new BigDecimal(4.1868);
-    private static final BigDecimal kiloCalorieToJoule = new BigDecimal(4186.8);
-    private static final BigDecimal wattHourToJoule = new BigDecimal(3600);
-    private static final BigDecimal kiloWattHourToJoule = new BigDecimal(3600000);
-    private static final BigDecimal electronVoltToJoule = new BigDecimal(0.00000000000000000016021766);
-    private static final BigDecimal britishThermalUnitToJoule = new BigDecimal(1054.5);
-    private static final BigDecimal usThermToJoule = new BigDecimal(105480400);
-    private static final BigDecimal footPoundToJoule = new BigDecimal(1.3558179483314004);
+    private static final BigDecimal gramCalorieToJoule          = new BigDecimal(4.1868);
+    private static final BigDecimal kiloCalorieToJoule          = new BigDecimal(4186.8);
+    private static final BigDecimal wattHourToJoule             = new BigDecimal(3600);
+    private static final BigDecimal kiloWattHourToJoule         = new BigDecimal(3600000);
+    private static final BigDecimal electronVoltToJoule         = new BigDecimal(0.00000000000000000016021766);
+    private static final BigDecimal britishThermalUnitToJoule   = new BigDecimal(1054.5);
+    private static final BigDecimal usThermToJoule              = new BigDecimal(105480400);
+    private static final BigDecimal footPoundToJoule            = new BigDecimal(1.3558179483314004);
 
     //Distance to Kilometer
-    private static final BigDecimal nanoMetreToKilometer    = new BigDecimal(0.000000000001);
-    private static final BigDecimal microMetreToKilometer   = new BigDecimal(0.000000001);
-    private static final BigDecimal milliMetreToKilometer   = new BigDecimal(0.000001);
-    private static final BigDecimal centimetreToKilometer   = new BigDecimal(0.0001);
-    private static final BigDecimal metreToKilometer        = new BigDecimal(0.001);
-    private static final BigDecimal mileToKilometer         = new BigDecimal(1.609344);
-    private static final BigDecimal yardToKilometer         = new BigDecimal(0.0009144);
-    private static final BigDecimal footToKilometer         = new BigDecimal(0.0003048);
-    private static final BigDecimal inchToKilometer         = new BigDecimal(0.0000254);
-    private static final BigDecimal nauticalMileToKilometer = new BigDecimal(1.852);
+    private static final BigDecimal nanoMetreToKilometer        = new BigDecimal(0.000000000001);
+    private static final BigDecimal microMetreToKilometer       = new BigDecimal(0.000000001);
+    private static final BigDecimal milliMetreToKilometer       = new BigDecimal(0.000001);
+    private static final BigDecimal centimetreToKilometer       = new BigDecimal(0.0001);
+    private static final BigDecimal metreToKilometer            = new BigDecimal(0.001);
+    private static final BigDecimal mileToKilometer             = new BigDecimal(1.609344);
+    private static final BigDecimal yardToKilometer             = new BigDecimal(0.0009144);
+    private static final BigDecimal footToKilometer             = new BigDecimal(0.0003048);
+    private static final BigDecimal inchToKilometer             = new BigDecimal(0.0000254);
+    private static final BigDecimal nauticalMileToKilometer     = new BigDecimal(1.852);
+
+    //Mass to Kilogram
+    private static final BigDecimal ounceToKilogram             = new BigDecimal(0.028349523125);
+    private static final BigDecimal poundToKilogram             = new BigDecimal(0.45359237);
+    private static final BigDecimal stoneToKilogram             = new BigDecimal(6.35029318);
+    private static final BigDecimal usTonToKilogram             = new BigDecimal(907.18474);
+    private static final BigDecimal imperialTonToKilogram       = new BigDecimal(1016.0469088);
+    private static final BigDecimal microGramToKilogram         = new BigDecimal(0.000000001);
+    private static final BigDecimal milliGramToKilogram         = new BigDecimal(0.000001);
+    private static final BigDecimal gramToKilogram              = new BigDecimal(0.001);
+    private static final BigDecimal tonToKilogram               = new BigDecimal(1000);
 
     /* --- Joule/Watt conversion --- */
 
-    public static BigDecimal wattToJoule(BigDecimal watt, BigDecimal seconds) {
+    static BigDecimal wattToJoule(BigDecimal watt, BigDecimal seconds) {
         BigDecimal result = new BigDecimal(String.valueOf(watt));
         result = result.multiply(new BigDecimal(String.valueOf(seconds)));
         return result;
     }
 
-    public static BigDecimal jouleToWatt(BigDecimal joule, BigDecimal seconds) {
+    static BigDecimal jouleToWatt(BigDecimal joule, BigDecimal seconds) {
         //signum() returns -1,0,1 depending on if the BigDecimal is negative, zero or positive
         if(seconds.signum() == 1) {
             BigDecimal result = new BigDecimal(String.valueOf(joule));
@@ -61,7 +72,7 @@ public final class UnitConverter {
     /* --- Energy I/O --- */
 
     //input_type = index of item in energy units list (0 = Joule, 1 = Kilojoule, ...)
-    public static BigInteger energyInputToJoule(int input_type, BigDecimal input) {
+    static BigInteger energyInputToJoule(int input_type, BigDecimal input) {
         BigInteger result;
         switch (input_type) {
             case 0: //Joule
@@ -107,7 +118,7 @@ public final class UnitConverter {
 
     /* --- Distance I/O --- */
 
-    public static BigDecimal distanceInputToKilometre(int input_type, BigDecimal input) {
+    static BigDecimal distanceInputToKilometre(int input_type, BigDecimal input) {
         BigDecimal result;
         switch (input_type) {
             case 0: //Nanometre
@@ -142,6 +153,47 @@ public final class UnitConverter {
                 break;
             case 10: //Nautical mile
                 result = input.multiply(nauticalMileToKilometer);
+                break;
+            default:
+                result = BigDecimal.ZERO;
+                break;
+        }
+
+        return result;
+    }
+
+    static BigDecimal massInputToKilogram(int input_type, BigDecimal input) {
+        BigDecimal result;
+        switch (input_type) {
+            case 0: //Ounce
+                result = input.multiply(ounceToKilogram);
+                break;
+            case 1: //Pound
+                result = input.multiply(poundToKilogram);
+                break;
+            case 2: //Stone
+                result = input.multiply(stoneToKilogram);
+                break;
+            case 3: //US ton
+                result = input.multiply(usTonToKilogram);
+                break;
+            case 4: //Imperial ton
+                result = input.multiply(imperialTonToKilogram);
+                break;
+            case 5: //Microgram
+                result = input.multiply(microGramToKilogram);
+                break;
+            case 6: //Milligram
+                result = input.multiply(milliGramToKilogram);
+                break;
+            case 7: //Gram
+                result = input.multiply(gramToKilogram);
+                break;
+            case 8: //Kilogram
+                result = input;
+                break;
+            case 9: //Ton
+                result = input.multiply(tonToKilogram);
                 break;
             default:
                 result = BigDecimal.ZERO;

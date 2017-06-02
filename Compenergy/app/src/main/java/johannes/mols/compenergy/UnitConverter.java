@@ -51,7 +51,7 @@ final class UnitConverter {
     private static final BigDecimal gramToKilogram              = new BigDecimal(0.001);
     private static final BigDecimal tonToKilogram               = new BigDecimal(1000);
 
-    //Volume to Liter
+    //Volume to Litre
     private static final BigDecimal cubicInchToLiter            = new BigDecimal(0.0163871);
     private static final BigDecimal cubicFootToLiter            = new BigDecimal(28.3168);
     private static final BigDecimal cubicMetreToLiter           = new BigDecimal(1000);
@@ -71,6 +71,15 @@ final class UnitConverter {
     private static final BigDecimal usLiquidQuartToLiter        = new BigDecimal(0.946353);
     private static final BigDecimal usLiquidGallonToLiter       = new BigDecimal(3.785412);
 
+    //Fuel types energy density (Joules/Litre)
+    private static final BigDecimal gasolineDensity             = new BigDecimal(34200000);
+    private static final BigDecimal dieselDensity               = new BigDecimal(35800000);
+    private static final BigDecimal keroseneDensity             = new BigDecimal(37400000);
+    private static final BigDecimal lpgDensity                  = new BigDecimal(26000000);
+    private static final BigDecimal ethanolDensity              = new BigDecimal(20900000);
+    private static final BigDecimal hydrogenDensity             = new BigDecimal(5600000);
+    private static final BigDecimal methanolDensity             = new BigDecimal(15600000);
+
 
     /* --- Joule/Watt conversion --- */
 
@@ -89,8 +98,6 @@ final class UnitConverter {
         }
         return new BigDecimal(0);
     }
-
-    /* --- Energy I/O --- */
 
     //input_type = index of item in energy units list (0 = Joule, 1 = Kilojoule, ...)
     static BigInteger energyInputToJoule(int input_type, BigDecimal input) {
@@ -156,8 +163,6 @@ final class UnitConverter {
 
         return result;
     }
-
-    /* --- Distance I/O --- */
 
     static BigDecimal distanceInputToKilometre(int input_type, BigDecimal input) {
         BigDecimal result;
@@ -303,6 +308,38 @@ final class UnitConverter {
                 break;
             case 18: //US liquid gallon
                 result = input.multiply(usLiquidGallonToLiter);
+                break;
+            default:
+                result = BigDecimal.ZERO;
+                break;
+        }
+
+        return result;
+    }
+
+    static BigDecimal vehicleConsumptionToJoule(int input_type, BigDecimal input) {
+        BigDecimal result;
+        switch (input_type) {
+            case 0: //Gasoline
+                result = input.multiply(gasolineDensity);
+                break;
+            case 1: //Diesel
+                result = input.multiply(dieselDensity);
+                break;
+            case 2: //Kerosene
+                result = input.multiply(keroseneDensity);
+                break;
+            case 3: //LPG
+                result = input.multiply(lpgDensity);
+                break;
+            case 4: //Ethanol
+                result = input.multiply(ethanolDensity);
+                break;
+            case 5: //Hydrogen
+                result = input.multiply(hydrogenDensity);
+                break;
+            case 6: //Methanol
+                result = input.multiply(methanolDensity);
                 break;
             default:
                 result = BigDecimal.ZERO;

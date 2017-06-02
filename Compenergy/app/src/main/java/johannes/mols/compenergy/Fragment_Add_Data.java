@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -37,6 +38,8 @@ public class Fragment_Add_Data extends Fragment {
     private EditText edit_name;
     private AutoCompleteTextView edit_category;
     private Spinner spinner_type;
+    private FrameLayout vehicle_fuel_type_layout;
+    private Spinner spinner_vehicle_fuel_type;
     private EditText edit_energy;
     private Spinner spinner_energy_type;
     private EditText edit_unit_amount;
@@ -64,6 +67,8 @@ public class Fragment_Add_Data extends Fragment {
         edit_name = (EditText) view.findViewById(R.id.fragment_add_data_name_edit);
         edit_category = (InstantAutoComplete) view.findViewById(R.id.fragment_add_data_category_autocomplete_edit);
         spinner_type = (Spinner) view.findViewById(R.id.fragment_add_data_type_spinner);
+        vehicle_fuel_type_layout = (FrameLayout) view.findViewById(R.id.fragment_add_data_fuel_type_spinner_frame_layout);
+        spinner_vehicle_fuel_type = (Spinner) view.findViewById(R.id.fragment_add_data_vehicle_fuel_type_spinner);
         edit_energy = (EditText) view.findViewById(R.id.fragment_add_data_energy_edit);
         spinner_energy_type = (Spinner) view.findViewById(R.id.fragment_add_data_energy_type_spinner);
         edit_unit_amount = (EditText) view.findViewById(R.id.fragment_add_data_unit_amount_edit);
@@ -72,6 +77,7 @@ public class Fragment_Add_Data extends Fragment {
 
         fill_edit_category();
         fill_spinner_type();
+        fill_spinner_vehicle_fuel_type();
         fill_spinner_energy_type();
         fill_spinner_unit();
 
@@ -102,6 +108,12 @@ public class Fragment_Add_Data extends Fragment {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(mContext, R.array.spinner_carrier_types, R.layout.spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_type.setAdapter(adapter);
+    }
+
+    private void fill_spinner_vehicle_fuel_type() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type_if_vehicle, R.layout.spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_vehicle_fuel_type.setAdapter(adapter);
     }
 
     private void fill_spinner_energy_type() {
@@ -190,6 +202,11 @@ public class Fragment_Add_Data extends Fragment {
                     }
                     break;
                 case 5: //Vehicle
+                    if(!addVehicle()) {
+                        showErrorInputTooLong();
+                    } else {
+                        ItemAdded();
+                    }
                     break;
                 default:
                     break;
@@ -353,6 +370,40 @@ public class Fragment_Add_Data extends Fragment {
         }
     }
 
+    private boolean addVehicle() {
+        String name = edit_name.getText().toString().trim();
+        String category = edit_category.getText().toString().trim();
+        String unit = mContext.getResources().getString(R.string.carrier_type_db_volume_consumption);
+        BigDecimal fuel_consumption_input = new BigDecimal(String.valueOf(edit_energy.getText().toString()));
+        BigDecimal distance_input = new BigDecimal(String.valueOf(edit_unit_amount.getText().toString()));
+        BigDecimal fuel_consumption_in_litre = UnitConverter.volumeInputToLitre(spinner_energy_type.getSelectedItemPosition(), fuel_consumption_input);
+        BigDecimal distance_in_kilometre = UnitConverter.distanceInputToKilometre(spinner_unit.getSelectedItemPosition(), distance_input);
+        BigDecimal fuel_consumption_with_fuel_type = UnitConverter.vehicleConsumptionToJoule(spinner_vehicle_fuel_type.getSelectedItemPosition(), fuel_consumption_in_litre);
+        BigDecimal factor = new BigDecimal(100).divide(distance_in_kilometre, 20, BigDecimal.ROUND_HALF_UP);
+        BigInteger energy_in_joule_on_100_km = fuel_consumption_with_fuel_type.multiply(factor).toBigInteger();
+        if(energy_in_joule_on_100_km.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) == 1 || energy_in_joule_on_100_km.compareTo(BigInteger.ZERO) == 0) {
+            return false;
+        }
+        long energy = energy_in_joule_on_100_km.longValue();
+
+        Log.i("Avg. consumption", fuel_consumption_input.toString());
+        Log.i("Distance input", distance_input.toString());
+        Log.i("Consumption in L", fuel_consumption_in_litre.toString());
+        Log.i("Distance in km", distance_in_kilometre.toString());
+        Log.i("Consump. with type", fuel_consumption_with_fuel_type.toString());
+        Log.i("Factor", factor.toString());
+        Log.i("Energy in J on 100km", energy_in_joule_on_100_km.toString());
+
+        if(!containsCaseInsensitive(name, alreadyExistentCarriersNameList)) {
+            Carrier newCarrier = new Carrier(name, category, unit, energy, true, false);
+            dbHelper.addCarrier(newCarrier);
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private void showErrorInputTooLong() {
         new AlertDialog.Builder(mContext)
                 .setTitle(mContext.getResources().getString(R.string.add_data_input_too_large_title))
@@ -405,8 +456,9 @@ public class Fragment_Add_Data extends Fragment {
                         ArrayAdapter<CharSequence> adapter_0 = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type_electric, R.layout.spinner_item);
                         adapter_0.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_energy_type.setAdapter(adapter_0);
-                        spinner_energy_type.setSelection(0);
+                        spinner_energy_type.setSelection(0); //Watt
                         edit_energy.setHint(R.string.add_data_energy_edit_hint);
+                        vehicle_fuel_type_layout.setVisibility(View.GONE);
                         edit_unit_amount.setVisibility(View.GONE);
                         spinner_unit.setVisibility(View.GONE);
                         break;
@@ -414,8 +466,9 @@ public class Fragment_Add_Data extends Fragment {
                         ArrayAdapter<CharSequence> adapter_1 = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type_electric, R.layout.spinner_item);
                         adapter_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_energy_type.setAdapter(adapter_1);
-                        spinner_energy_type.setSelection(0);
+                        spinner_energy_type.setSelection(0); //Watt
                         edit_energy.setHint(R.string.add_data_energy_edit_hint);
+                        vehicle_fuel_type_layout.setVisibility(View.GONE);
                         edit_unit_amount.setVisibility(View.GONE);
                         spinner_unit.setVisibility(View.GONE);
                         break;
@@ -430,6 +483,7 @@ public class Fragment_Add_Data extends Fragment {
                         edit_energy.setHint(R.string.add_data_energy_edit_hint);
                         edit_unit_amount.setHint(R.string.add_data_unit_amount_edit_hint);
                         spinner_unit.setSelection(5); //Kilometre
+                        vehicle_fuel_type_layout.setVisibility(View.GONE);
                         edit_unit_amount.setVisibility(View.VISIBLE);
                         spinner_unit.setVisibility(View.VISIBLE);
                         break;
@@ -444,6 +498,7 @@ public class Fragment_Add_Data extends Fragment {
                         edit_energy.setHint(R.string.add_data_energy_edit_hint);
                         edit_unit_amount.setHint(R.string.add_data_unit_amount_edit_hint);
                         spinner_unit.setSelection(8); //Kilogram
+                        vehicle_fuel_type_layout.setVisibility(View.GONE);
                         edit_unit_amount.setVisibility(View.VISIBLE);
                         spinner_unit.setVisibility(View.VISIBLE);
                         break;
@@ -458,21 +513,23 @@ public class Fragment_Add_Data extends Fragment {
                         edit_energy.setHint(R.string.add_data_energy_edit_hint);
                         edit_unit_amount.setHint(R.string.add_data_unit_amount_edit_hint);
                         spinner_unit.setSelection(11); //Litre
+                        vehicle_fuel_type_layout.setVisibility(View.GONE);
                         edit_unit_amount.setVisibility(View.VISIBLE);
                         spinner_unit.setVisibility(View.VISIBLE);
                         break;
                     case 5: //Vehicle
-                        ArrayAdapter<CharSequence> adapter_5 = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type_if_vehicle, R.layout.spinner_item);
+                        ArrayAdapter<CharSequence> adapter_5 = ArrayAdapter.createFromResource(mContext, R.array.unit_list_volume, R.layout.spinner_item);
                         adapter_5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_energy_type.setAdapter(adapter_5);
-                        spinner_energy_type.setSelection(0); //Gasoline
+                        spinner_energy_type.setSelection(11); //Litre
                         ArrayAdapter<CharSequence> adapter_5_1 = ArrayAdapter.createFromResource(mContext, R.array.unit_list_distance, R.layout.spinner_item);
                         adapter_5_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_unit.setAdapter(adapter_5_1);
                         edit_energy.setHint(R.string.add_data_energy_edit_hint_if_vehicle);
                         edit_unit_amount.setHint(R.string.add_data_unit_amount_edit_hint_if_vehicle);
                         edit_unit_amount.setText(String.valueOf(100));
-                        spinner_unit.setSelection(3); //Kilometre
+                        spinner_unit.setSelection(5); //Kilometre
+                        vehicle_fuel_type_layout.setVisibility(View.VISIBLE);
                         edit_unit_amount.setVisibility(View.VISIBLE);
                         spinner_unit.setVisibility(View.VISIBLE);
                         break;
@@ -480,8 +537,9 @@ public class Fragment_Add_Data extends Fragment {
                         ArrayAdapter<CharSequence> adapter_default = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type_electric, R.layout.spinner_item);
                         adapter_default.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_energy_type.setAdapter(adapter_default);
-                        spinner_energy_type.setSelection(0);
+                        spinner_energy_type.setSelection(0); //Watt
                         edit_energy.setHint(R.string.add_data_energy_edit_hint);
+                        vehicle_fuel_type_layout.setVisibility(View.GONE);
                         edit_unit_amount.setVisibility(View.GONE);
                         spinner_unit.setVisibility(View.GONE);
                         break;
@@ -494,8 +552,9 @@ public class Fragment_Add_Data extends Fragment {
             ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(mContext, R.array.spinner_energy_type_electric, R.layout.spinner_item);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_energy_type.setAdapter(adapter);
-            spinner_energy_type.setSelection(0);
+            spinner_energy_type.setSelection(0); //Watt
             edit_energy.setHint(R.string.add_data_energy_edit_hint);
+            vehicle_fuel_type_layout.setVisibility(View.GONE);
             edit_unit_amount.setVisibility(View.GONE);
             spinner_unit.setVisibility(View.GONE);
         }

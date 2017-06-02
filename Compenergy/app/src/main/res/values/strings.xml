@@ -65,7 +65,6 @@
         <item>Ethanol</item>
         <item>Hydrogen</item>
         <item>Methanol</item>
-        <item>Nitromethane</item>
     </string-array>
 
     <string-array name="unit_list_time">

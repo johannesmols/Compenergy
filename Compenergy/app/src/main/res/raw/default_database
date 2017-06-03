@@ -81,7 +81,7 @@
         <favorite>false</favorite>
     </carrier>
     <carrier>
-        <name>China's wind power capacity</name>
+        <name>Chinas wind power capacity</name>
         <category>Power Plants</category>
         <unit>Capacity</unit>
         <energy>168690000000</energy>
@@ -97,7 +97,7 @@
         <favorite>false</favorite>
     </carrier>
     <carrier>
-        <name>Germany's wind power capacity</name>
+        <name>Germanys wind power capacity</name>
         <category>Power Plants</category>
         <unit>Capacity</unit>
         <energy>50019000000</energy>
@@ -113,7 +113,7 @@
         <favorite>false</favorite>
     </carrier>
     <carrier>
-        <name>World's wind power capacity</name>
+        <name>Worlds wind power capacity</name>
         <category>Power Plants</category>
         <unit>Capacity</unit>
         <energy>432883000000</energy>
@@ -169,7 +169,7 @@
         <favorite>false</favorite>
     </carrier>
     <carrier>
-        <name>China's solar power capacity</name>
+        <name>Chinas solar power capacity</name>
         <category>Power Plants</category>
         <unit>Capacity</unit>
         <energy>43530000000</energy>
@@ -177,7 +177,7 @@
         <favorite>false</favorite>
     </carrier>
     <carrier>
-        <name>Germany's solar power capacity</name>
+        <name>Germanys solar power capacity</name>
         <category>Power Plants</category>
         <unit>Capacity</unit>
         <energy>39700000000</energy>
@@ -185,7 +185,7 @@
         <favorite>false</favorite>
     </carrier>
     <carrier>
-        <name>Japan's solar power capacity</name>
+        <name>Japans solar power capacity</name>
         <category>Power Plants</category>
         <unit>Capacity</unit>
         <energy>34410000000</energy>
@@ -201,7 +201,7 @@
         <favorite>false</favorite>
     </carrier>
     <carrier>
-        <name>World's solar power capacity</name>
+        <name>Worlds solar power capacity</name>
         <category>Power Plants</category>
         <unit>Capacity</unit>
         <energy>256000000000</energy>

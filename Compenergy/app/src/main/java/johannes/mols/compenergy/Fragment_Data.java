@@ -120,8 +120,8 @@ public class Fragment_Data extends Fragment {
     ExpandableListView.OnChildClickListener editSelectedItem = new ExpandableListView.OnChildClickListener() {
         @Override
         public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-            //Show Editor here
             Intent editor = new Intent(mContext, ActEditCarrier.class);
+            editor.putExtra(mContext.getResources().getString(R.string.intent_key_for_editor), ((Carrier)adapter.getChild(groupPosition, childPosition)).get_name());
             startActivity(editor);
             return false;
         }

@@ -25,6 +25,7 @@
     <string name="carrier_type_db_volume_consumption">Volume Consumption</string>
     <string name="carrier_type_db_content_mass">Content Mass</string>
     <string name="carrier_type_db_content_volume">Content Volume</string>
+    <string name="carrier_type_vehicle_only_client_side">Vehicle</string>
 
     <!-- String arrays for spinners - DO NOT CHANGE ORDER -->
     <string-array name="spinner_carrier_types">
@@ -34,6 +35,14 @@
         <item>Mass energy content</item>
         <item>Volume energy content</item>
         <item>Vehicle</item>
+    </string-array>
+
+    <string-array name="spinner_carrier_types_without_vehicles">
+        <item>Electric producer</item>
+        <item>Electric consumer</item>
+        <item>Consumer by distance</item>
+        <item>Mass energy content</item>
+        <item>Volume energy content</item>
     </string-array>
 
     <string-array name="spinner_energy_type">
@@ -144,7 +153,19 @@
     <string name="add_data_add_button">Add Item</string>
 
     <!-- Edit Data Activity -->
+    <string name="intent_key_for_editor">CARRIER_DATA</string>
     <string name="edit_data_act_title">Edit Data</string>
+    <string name="edit_data_name_edit_hint">Name</string>
+    <string name="edit_data_category_edit_hint">Category</string>
+    <string name="edit_data_energy_edit_hint">Energy</string>
+    <string name="edit_data_unit_watt">Watt</string>
+    <string name="edit_data_unit_joule">Joule</string>
+    <string name="edit_data_button_title">Edit Item</string>
+    <string name="edit_data_info_type_1">The energy output is defined in Watt</string>
+    <string name="edit_data_info_type_2">The energy consumption is defined in Watt</string>
+    <string name="edit_data_info_type_3">The energy consumption is defined in Joule on 100 Kilometres</string>
+    <string name="edit_data_info_type_4">The energy content is defined in Joule per Kilogram</string>
+    <string name="edit_data_info_type_5">The energy content is defined in Joule per Litre</string>
 
     <!-- Preference screen strings -->
     <string name="pref_database_group_title">Database</string>

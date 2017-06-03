@@ -6,7 +6,9 @@ package johannes.mols.compenergy;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -16,14 +18,31 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 public class ActMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final boolean DEVELOPER_MODE = false;
 
     private Context mContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (DEVELOPER_MODE) {
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                    .detectDiskReads()
+                    .detectDiskWrites()
+                    .detectAll()   // or .detectAll() for all detectable problems
+                    .penaltyLog()
+                    .build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectLeakedSqlLiteObjects()
+                    .detectLeakedClosableObjects()
+                    .penaltyLog()
+                    .penaltyDeath()
+                    .build());
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_main_nav_drawer_layout);
 
@@ -43,7 +62,9 @@ public class ActMain extends AppCompatActivity implements NavigationView.OnNavig
         displaySelectedScreen(R.id.content_act_compare);
 
         //Database
-        createDatabaseIfNotExistent();
+        //createDatabaseIfNotExistent();
+        createDbIfNotExistent createDb = new createDbIfNotExistent();
+        createDb.execute(mContext);
 
         //Check for updated database
         DatabaseHelper db = new DatabaseHelper(this, null, null, 1);
@@ -140,5 +161,26 @@ public class ActMain extends AppCompatActivity implements NavigationView.OnNavig
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         displaySelectedScreen(item.getItemId());
         return true;
+    }
+}
+
+class createDbIfNotExistent extends AsyncTask<Context, Integer, Boolean> {
+
+    @Override
+    protected Boolean doInBackground(Context... params) {
+        Boolean result = false;
+        DatabaseHelper db = new DatabaseHelper(params[0], null, null, 1);   //Constructor automatically creates table if it doesn't exist
+        if (db.getAllCarriers().size() == 0) {                              //Fill database with default items if size is 0, therefore just created
+            db.addDefaultData();                                            //Database will also be refilled if it was emptied and the app was closed without adding new items
+            Log.i("AsyncTask", "Default Data added");
+            result = true;
+        }
+        if(db.getAllDatabaseVersions().size() == 0) {
+            db.addDatabaseVersionNumber();
+            Log.i("AsyncTask", "Added Db Version");
+            result = true;
+        }
+
+        return result;
     }
 }

@@ -155,6 +155,9 @@
     <string name="pref_database_hint_reset">Database reset successful</string>
     <string name="pref_database_hint_reset_failed">Database reset failed</string>
     <string name="pref_database_hint_delete">All data deleted</string>
+    <string name="pref_database_hint_delete_failed">Data deletion failed</string>
+    <string name="pref_database_loading_reset">Resetting database…</string>
+    <string name="pref_database_loading_clear">Clearing database…</string>
 
     <!-- Error messages -->
     <string name="name_already_exists">Name already exists</string>
@@ -165,10 +168,15 @@
     <string name="dialog_no">No</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_ok">Okay</string>
+    <string name="db_update_available">A database update is available</string>
+    <string name="confirm_db_update">Do you want to update to the latest version?\nCustom data will be lost!</string>
     <string name="add_data_input_too_large_title">Input too large</string>
     <string name="add_data_input_too_large_message">One of the input values is too large for our largest datatype. Try using a smaller unit scope</string>
     <string name="data_delete_item_title">Delete</string>
     <string name="data_delete_confirm">Do you want to delete</string>
+    <string name="pref_confirmation">Are you sure?</string>
+    <string name="pref_confirm_reset">Confirm reset</string>
+    <string name="pref_confirm_deletion">Confirm deletion</string>
 
     <!-- Toast messages -->
     <string name="item_deleted">Item deleted</string>

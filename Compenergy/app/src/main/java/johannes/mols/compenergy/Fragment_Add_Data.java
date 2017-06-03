@@ -4,6 +4,7 @@
 
 package johannes.mols.compenergy;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -34,6 +36,7 @@ import java.util.List;
 public class Fragment_Add_Data extends Fragment {
 
     private Context mContext;
+    private InputMethodManager imm;
 
     private EditText edit_name;
     private AutoCompleteTextView edit_category;
@@ -63,6 +66,8 @@ public class Fragment_Add_Data extends Fragment {
         View view = inflater.inflate(R.layout.fragment_add_data_layout, container, false);
 
         mContext = getContext();
+        imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+
         dbHelper = new DatabaseHelper(mContext, null, null, 1);
         edit_name = (EditText) view.findViewById(R.id.fragment_add_data_name_edit);
         edit_category = (InstantAutoComplete) view.findViewById(R.id.fragment_add_data_category_autocomplete_edit);
@@ -221,6 +226,12 @@ public class Fragment_Add_Data extends Fragment {
         edit_category.setText("");
         edit_energy.setText("");
         edit_unit_amount.setText("");
+
+        //Hide keyboard
+        View v = ((Activity)mContext).getCurrentFocus();
+        if(v != null) {
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        }
     }
 
     private boolean addElectricProducer() {

@@ -71,16 +71,16 @@ public class ActMain extends AppCompatActivity implements NavigationView.OnNavig
             public void processFinish(Boolean output) {
                 if(!output) {
                     new AlertDialog.Builder(mContext)
-                            .setTitle("A database update is available")
-                            .setMessage("Do you want to update to the latest version? \nCustom data will be lost!")
-                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            .setTitle(mContext.getResources().getString(R.string.db_update_available))
+                            .setMessage(mContext.getResources().getString(R.string.confirm_db_update))
+                            .setPositiveButton(mContext.getResources().getString(R.string.dialog_yes), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     updateDatabase updateDatabase = new updateDatabase();
                                     updateDatabase.execute(mContext);
                                 }
                             })
-                            .setNegativeButton("No", null)
+                            .setNegativeButton(mContext.getResources().getString(R.string.dialog_no), null)
                             .show();
                 }
             }

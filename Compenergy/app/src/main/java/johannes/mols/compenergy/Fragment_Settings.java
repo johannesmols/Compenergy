@@ -54,9 +54,9 @@ public class Fragment_Settings extends PreferenceFragmentCompat {
             if (preference.getKey().equals(getContext().getString(R.string.pref_database_reset_key))) {
                 final ProgressDialog progDialog = new ProgressDialog(mContext);
                 new AlertDialog.Builder(mContext)
-                        .setTitle("Confirm reset")
-                        .setMessage("Are you sure?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        .setTitle(mContext.getResources().getString(R.string.pref_confirm_reset))
+                        .setMessage(mContext.getResources().getString(R.string.pref_confirmation))
+                        .setPositiveButton(mContext.getResources().getString(R.string.dialog_yes), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 resetDatabase resetDatabase = new resetDatabase(new resetDatabase.AsyncResponse() {
@@ -74,33 +74,84 @@ public class Fragment_Settings extends PreferenceFragmentCompat {
                                 });
                                 resetDatabase.execute(mContext);
                                 if(resetDatabase.getStatus() == AsyncTask.Status.RUNNING) {
-                                    progDialog.setMessage("Database resetting...");
+                                    progDialog.setMessage(mContext.getResources().getString(R.string.pref_database_loading_reset));
                                     progDialog.show();
                                 }
                             }
                         })
-                        .setNegativeButton("No", null)
+                        .setNegativeButton(mContext.getResources().getString(R.string.dialog_no), null)
                         .show();
             }
             else if (preference.getKey().equals(getContext().getString(R.string.pref_database_delete_key))) {
+                final ProgressDialog progDialog = new ProgressDialog(mContext);
                 new AlertDialog.Builder(mContext)
-                        .setTitle("Confirm deletion")
-                        .setMessage("Are you sure?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        .setTitle(mContext.getResources().getString(R.string.pref_confirm_deletion))
+                        .setMessage(mContext.getResources().getString(R.string.pref_confirmation))
+                        .setPositiveButton(mContext.getResources().getString(R.string.dialog_yes), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(getContext(), getContext().getString(R.string.pref_database_hint_delete), Toast.LENGTH_SHORT).show();
-                                DatabaseHelper db = new DatabaseHelper(mContext, null, null, 1);
-                                db.deleteAllCarriers();
+                                clearDatabase clearDatabase = new clearDatabase(new clearDatabase.AsyncResponse() {
+                                    @Override
+                                    public void processFinish(Boolean output) {
+                                        if(output) {
+                                            Log.i("AsyncTask", "Deletion successful");
+                                            Toast.makeText(getContext(), getContext().getString(R.string.pref_database_hint_delete), Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Log.i("AsyncTask", "Deletion failed");
+                                            Toast.makeText(getContext(), getContext().getString(R.string.pref_database_hint_delete_failed), Toast.LENGTH_SHORT).show();
+                                        }
+                                        progDialog.dismiss();
+                                    }
+                                });
+                                clearDatabase.execute(mContext);
+                                if(clearDatabase.getStatus() == AsyncTask.Status.RUNNING) {
+                                    progDialog.setMessage(mContext.getResources().getString(R.string.pref_database_loading_reset));
+                                    progDialog.show();
+                                }
                             }
                         })
-                        .setNegativeButton("No", null)
+                        .setNegativeButton(mContext.getResources().getString(R.string.dialog_no), null)
                         .show();
             }
 
             return false;
         }
     };
+}
+
+class clearDatabase extends AsyncTask<Context, Integer, Boolean> {
+    interface AsyncResponse {
+        void processFinish(Boolean output);
+    }
+
+    private clearDatabase.AsyncResponse delegate = null;
+
+    clearDatabase(clearDatabase.AsyncResponse delegate) {
+        this.delegate = delegate;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+    }
+
+    @Override
+    protected Boolean doInBackground(Context... params) {
+        final Context mContext = params[0];
+        try {
+            DatabaseHelper db = new DatabaseHelper(mContext, null, null, 1);
+            db.deleteAllCarriers();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    protected void onPostExecute(Boolean aBoolean) {
+        delegate.processFinish(aBoolean);
+    }
 }
 
 class resetDatabase extends AsyncTask<Context, Integer, Boolean> {

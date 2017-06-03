@@ -4,12 +4,15 @@
 
 package johannes.mols.compenergy;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.PreferenceFragmentCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,17 +52,31 @@ public class Fragment_Settings extends PreferenceFragmentCompat {
         @Override
         public boolean onPreferenceClick(android.support.v7.preference.Preference preference) {
             if (preference.getKey().equals(getContext().getString(R.string.pref_database_reset_key))) {
+                final ProgressDialog progDialog = new ProgressDialog(mContext);
                 new AlertDialog.Builder(mContext)
                         .setTitle("Confirm reset")
                         .setMessage("Are you sure?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(getContext(), getContext().getString(R.string.pref_database_hint_reset), Toast.LENGTH_SHORT).show();
-                                DatabaseHelper db = new DatabaseHelper(mContext, null, null, 1);
-                                db.dropTables();
-                                db.addDefaultData();
-                                db.addDatabaseVersionNumber();
+                                resetDatabase resetDatabase = new resetDatabase(new resetDatabase.AsyncResponse() {
+                                    @Override
+                                    public void processFinish(Boolean output) {
+                                        if(output) {
+                                            Log.i("AsyncTask", "Reset successful");
+                                            Toast.makeText(getContext(), getContext().getString(R.string.pref_database_hint_reset), Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Log.i("AsyncTask", "Reset failed");
+                                            Toast.makeText(getContext(), getContext().getString(R.string.pref_database_hint_reset_failed), Toast.LENGTH_SHORT).show();
+                                        }
+                                        progDialog.dismiss();
+                                    }
+                                });
+                                resetDatabase.execute(mContext);
+                                if(resetDatabase.getStatus() == AsyncTask.Status.RUNNING) {
+                                    progDialog.setMessage("Database resetting...");
+                                    progDialog.show();
+                                }
                             }
                         })
                         .setNegativeButton("No", null)
@@ -84,4 +101,42 @@ public class Fragment_Settings extends PreferenceFragmentCompat {
             return false;
         }
     };
+}
+
+class resetDatabase extends AsyncTask<Context, Integer, Boolean> {
+
+    interface AsyncResponse {
+        void processFinish(Boolean output);
+    }
+
+    private AsyncResponse delegate = null;
+
+    resetDatabase(AsyncResponse delegate) {
+        this.delegate = delegate;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+    }
+
+    @Override
+    protected Boolean doInBackground(Context... params) {
+        final Context mContext = params[0];
+        try {
+            DatabaseHelper db = new DatabaseHelper(mContext, null, null, 1);
+            db.dropTables();
+            db.addDefaultData();
+            db.addDatabaseVersionNumber();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    protected void onPostExecute(Boolean aBoolean) {
+        delegate.processFinish(aBoolean);
+    }
 }

@@ -6,6 +6,7 @@ package johannes.mols.compenergy;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -53,8 +54,6 @@ public class Fragment_Data extends Fragment {
         mContext = getContext();
         expandableListView = (ExpandableListView) view.findViewById(R.id.fragment_data_expandable_list_view);
         dbHelper = new DatabaseHelper(mContext, null, null, 1);
-
-        adapter = new DataExpandableListAdapter(mContext, categories_list, carriers_list);
 
         displayList();
 
@@ -122,6 +121,8 @@ public class Fragment_Data extends Fragment {
         @Override
         public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
             //Show Editor here
+            Intent editor = new Intent(mContext, ActEditCarrier.class);
+            startActivity(editor);
             return false;
         }
     };

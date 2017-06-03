@@ -143,6 +143,9 @@
     <string name="add_data_unit_amount_edit_hint_if_vehicle">Distance</string>
     <string name="add_data_add_button">Add Item</string>
 
+    <!-- Edit Data Activity -->
+    <string name="edit_data_act_title">Edit Data</string>
+
     <!-- Preference screen strings -->
     <string name="pref_database_group_title">Database</string>
     <string name="pref_database_group_title_key">compenergy.database.title</string>

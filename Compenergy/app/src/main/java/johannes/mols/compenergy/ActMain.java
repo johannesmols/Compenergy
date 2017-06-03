@@ -62,39 +62,30 @@ public class ActMain extends AppCompatActivity implements NavigationView.OnNavig
         displaySelectedScreen(R.id.content_act_compare);
 
         //Database
-        //createDatabaseIfNotExistent();
-        createDbIfNotExistent createDb = new createDbIfNotExistent();
+        createDbAysncIfNotExistent createDb = new createDbAysncIfNotExistent();
         createDb.execute(mContext);
 
         //Check for updated database
-        DatabaseHelper db = new DatabaseHelper(this, null, null, 1);
-        if(!db.isDatabaseCurrent()) {
-            new AlertDialog.Builder(this)
-                    .setTitle("A database update is available")
-                    .setMessage("Do you want to update to the latest version? \nCustom data will be lost!")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //Toast.makeText(this, getString(R.string.pref_database_hint_reset), Toast.LENGTH_SHORT).show();
-                            DatabaseHelper db = new DatabaseHelper(mContext, null, null, 1);
-                            db.dropTables();
-                            db.addDefaultData();
-                            db.setDatabaseVersion();
-                        }
-                    })
-                    .setNegativeButton("No", null)
-                    .show();
-        }
-    }
-
-    private void createDatabaseIfNotExistent() {
-        DatabaseHelper db = new DatabaseHelper(this, null, null, 1); //Constructor automatically creates table if it doesn't exist
-        if (db.getAllCarriers().size() == 0) {                       //Fill database with default items if size is 0, therefore just created
-            db.addDefaultData();                                     //Database will also be refilled if it was emptied and the app was closed without adding new items
-        }
-        if(db.getAllDatabaseVersions().size() == 0) {
-            db.addDatabaseVersionNumber();
-        }
+        checkForDbUpdateAsync checkForDbUpdateAsync = new checkForDbUpdateAsync(new checkForDbUpdateAsync.AsyncResponse() {
+            @Override
+            public void processFinish(Boolean output) {
+                if(!output) {
+                    new AlertDialog.Builder(mContext)
+                            .setTitle("A database update is available")
+                            .setMessage("Do you want to update to the latest version? \nCustom data will be lost!")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    updateDatabase updateDatabase = new updateDatabase();
+                                    updateDatabase.execute(mContext);
+                                }
+                            })
+                            .setNegativeButton("No", null)
+                            .show();
+                }
+            }
+        });
+        checkForDbUpdateAsync.execute(mContext);
     }
 
     @Override
@@ -164,14 +155,14 @@ public class ActMain extends AppCompatActivity implements NavigationView.OnNavig
     }
 }
 
-class createDbIfNotExistent extends AsyncTask<Context, Integer, Boolean> {
+class createDbAysncIfNotExistent extends AsyncTask<Context, Integer, Boolean> {
 
     @Override
     protected Boolean doInBackground(Context... params) {
         Boolean result = false;
-        DatabaseHelper db = new DatabaseHelper(params[0], null, null, 1);   //Constructor automatically creates table if it doesn't exist
-        if (db.getAllCarriers().size() == 0) {                              //Fill database with default items if size is 0, therefore just created
-            db.addDefaultData();                                            //Database will also be refilled if it was emptied and the app was closed without adding new items
+        DatabaseHelper db = new DatabaseHelper(params[0], null, null, 1);
+        if (db.getAllCarriers().size() == 0) {
+            db.addDefaultData();
             Log.i("AsyncTask", "Default Data added");
             result = true;
         }
@@ -182,5 +173,50 @@ class createDbIfNotExistent extends AsyncTask<Context, Integer, Boolean> {
         }
 
         return result;
+    }
+}
+
+class checkForDbUpdateAsync extends AsyncTask<Context, Integer, Boolean> {
+
+    interface AsyncResponse {
+        void processFinish(Boolean output);
+    }
+
+    private AsyncResponse delegate = null;
+
+    checkForDbUpdateAsync(AsyncResponse delegate) {
+        this.delegate = delegate;
+    }
+
+    @Override
+    protected Boolean doInBackground(Context... params) {
+        final Context mContext = params[0];
+        DatabaseHelper db = new DatabaseHelper(mContext, null, null, 1);
+        if(!db.isDatabaseCurrent()) {
+            Log.i("AsyncTask", "Database version NOT current");
+            return false;
+        }
+
+        Log.i("AsyncTask", "Database version current");
+        return true;
+    }
+
+    @Override
+    protected void onPostExecute(Boolean aBoolean) {
+        delegate.processFinish(aBoolean);
+    }
+}
+
+class updateDatabase extends AsyncTask<Context, Integer, Boolean> {
+
+    @Override
+    protected Boolean doInBackground(Context... params) {
+        final Context mContext = params[0];
+        DatabaseHelper db = new DatabaseHelper(mContext, null, null, 1);
+        db.dropTables();
+        db.addDefaultData();
+        db.setDatabaseVersion();
+        Log.i("AsyncTask", "Updated database");
+        return true;
     }
 }

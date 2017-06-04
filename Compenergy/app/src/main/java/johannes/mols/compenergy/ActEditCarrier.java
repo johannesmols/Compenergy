@@ -212,10 +212,6 @@ public class ActEditCarrier extends AppCompatActivity {
                 /*
                  * EDIT HERE - TODO
                  *
-                 * (x) Save original name at the beginning to exclude it from the validation if this name already exists
-                 * (x) Add "Too Long" dialog
-                 * (x) Add Error message to name input
-                 * (x) Save ID and update the item using the ID because the name can be different
                  * Add a Favorite Button to the toolbar
                  * Editor opens when long-clicking on item, this is supposed to not show the activity, it's supposed to show the delete dialog
                  *
@@ -227,28 +223,35 @@ public class ActEditCarrier extends AppCompatActivity {
     };
 
     private boolean updateItem() {
-        Carrier new_carrier = new Carrier(edit_name.getText().toString(), autoComplete_category.getText().toString(), null, Long.parseLong(edit_energy.getText().toString()), true, editableCarrier.get_favorite());
-        switch (spinner_type.getSelectedItemPosition()) {
-            case 0: //Capacity
-                new_carrier.set_unit(getResources().getString(R.string.carrier_type_db_capacity));
-                break;
-            case 1: //Consumption
-                new_carrier.set_unit(getResources().getString(R.string.carrier_type_db_consumption));
-                break;
-            case 2: //Volume consumption
-                new_carrier.set_unit(getResources().getString(R.string.carrier_type_db_volume_consumption));
-                break;
-            case 3: //Content mass
-                new_carrier.set_unit(getResources().getString(R.string.carrier_type_db_content_mass));
-                break;
-            case 4: //Content volume
-                new_carrier.set_unit(getResources().getString(R.string.carrier_type_db_content_volume));
-                break;
-            default:
+        if(!(new BigDecimal(edit_energy.getText().toString()).compareTo(BigDecimal.valueOf(Long.MAX_VALUE)) == 1)) {
+            BigDecimal  energy = new BigDecimal(edit_energy.getText().toString());
+            if(energy.longValue() == 0) {
                 return false;
+            }
+            Carrier new_carrier = new Carrier(edit_name.getText().toString(), autoComplete_category.getText().toString(), null, energy.longValue(), true, editableCarrier.get_favorite());
+            switch (spinner_type.getSelectedItemPosition()) {
+                case 0: //Capacity
+                    new_carrier.set_unit(getResources().getString(R.string.carrier_type_db_capacity));
+                    break;
+                case 1: //Consumption
+                    new_carrier.set_unit(getResources().getString(R.string.carrier_type_db_consumption));
+                    break;
+                case 2: //Volume consumption
+                    new_carrier.set_unit(getResources().getString(R.string.carrier_type_db_volume_consumption));
+                    break;
+                case 3: //Content mass
+                    new_carrier.set_unit(getResources().getString(R.string.carrier_type_db_content_mass));
+                    break;
+                case 4: //Content volume
+                    new_carrier.set_unit(getResources().getString(R.string.carrier_type_db_content_volume));
+                    break;
+                default:
+                    return false;
+            }
+            dbHelper.updateCarrier(editableCarrier.get_id(), new_carrier);
+            return true;
         }
-        dbHelper.updateCarrier(editableCarrier.get_id(), new_carrier);
-        return true;
+        return false;
     }
 
     private void showErrorInputTooLong() {

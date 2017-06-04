@@ -195,7 +195,7 @@
     <string name="db_update_available">A database update is available</string>
     <string name="confirm_db_update">Do you want to update to the latest version?\nCustom data will be lost!</string>
     <string name="add_data_input_too_large_title">Input too large</string>
-    <string name="add_data_input_too_large_message">One of the input values is too large for our largest datatype. Try using a smaller unit scope</string>
+    <string name="add_data_input_too_large_message">One of the input values is too large for our largest datatype. Try using smaller values</string>
     <string name="data_delete_item_title">Delete</string>
     <string name="data_delete_confirm">Do you want to delete</string>
     <string name="pref_confirmation">Are you sure?</string>

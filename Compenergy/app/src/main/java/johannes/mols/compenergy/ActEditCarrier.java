@@ -7,15 +7,26 @@ package johannes.mols.compenergy;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
+import android.text.TextWatcher;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,7 +34,10 @@ public class ActEditCarrier extends AppCompatActivity {
 
     private Context mContext = this;
     private DatabaseHelper dbHelper = new DatabaseHelper(mContext, null, null, 1);
+
     private Carrier editableCarrier;
+    private List<String> alreadyExistentCarriersNameList;
+    private String editableCarrierName;
 
     private EditText edit_name;
     private InstantAutoComplete autoComplete_category;
@@ -32,6 +46,8 @@ public class ActEditCarrier extends AppCompatActivity {
     private EditText edit_energy;
     private TextView text_unit_info;
     private Button button_edit;
+
+    private String blockCharacterSet = "'"; //Can cause SQL errors
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +71,24 @@ public class ActEditCarrier extends AppCompatActivity {
         text_unit_info = (TextView) findViewById(R.id.edit_data_energy_type);
         button_edit = (Button) findViewById(R.id.edit_data_edit_button);
 
+        edit_name.setOnTouchListener(editNameOnTouchListener);
+        autoComplete_category.setOnTouchListener(editCategoryOnTouchListener);
+        spinner_type.setOnItemSelectedListener(spinnerTypeItemSelectedListener);
+
+        button_edit.setOnClickListener(editButtonClickListener);
+
+        edit_name.addTextChangedListener(editNameTextWatcher);
+
+        edit_name.setFilters(new InputFilter[] { filter });
+        autoComplete_category.setFilters(new InputFilter[] { filter });
+        edit_energy.setFilters(new InputFilter[] { filter });
+
         //Get the carrier
         final Intent intent = getIntent();
         final String target_name = intent.getStringExtra(getResources().getString(R.string.intent_key_for_editor));
         editableCarrier = dbHelper.getCarriersWithName(target_name).get(0);
+        editableCarrierName = editableCarrier.get_name();
+        alreadyExistentCarriersNameList = new ArrayList<>(dbHelper.getAllCarriersAsStringList());
 
         fillComponentsWithData();
     }
@@ -116,4 +146,209 @@ public class ActEditCarrier extends AppCompatActivity {
 
         edit_energy.setText(String.valueOf(editableCarrier.get_energy()));
     }
+
+    AdapterView.OnItemSelectedListener spinnerTypeItemSelectedListener = new AdapterView.OnItemSelectedListener() {
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            String[] types = parent.getResources().getStringArray(R.array.spinner_carrier_types_without_vehicles);
+            if(types.length >= position + 1) {
+                switch (position) {
+                    case 0: //Electric producer
+                        text_info.setText(getResources().getString(R.string.edit_data_info_type_1));
+                        text_unit_info.setText(getResources().getString(R.string.edit_data_unit_watt));
+                        break;
+                    case 1: //Electric consumer
+                        text_info.setText(getResources().getString(R.string.edit_data_info_type_2));
+                        text_unit_info.setText(getResources().getString(R.string.edit_data_unit_watt));
+                        break;
+                    case 2: //Energy by distance
+                        text_info.setText(getResources().getString(R.string.edit_data_info_type_3));
+                        text_unit_info.setText(getResources().getString(R.string.edit_data_unit_joule));
+                        break;
+                    case 3: //Mass energy content
+                        text_info.setText(getResources().getString(R.string.edit_data_info_type_4));
+                        text_unit_info.setText(getResources().getString(R.string.edit_data_unit_joule));
+                        break;
+                    case 4: //Volume energy content
+                        text_info.setText(getResources().getString(R.string.edit_data_info_type_5));
+                        text_unit_info.setText(getResources().getString(R.string.edit_data_unit_joule));
+                        break;
+                }
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
+
+    View.OnClickListener editButtonClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if(inputNotEmpty()) {
+                if(containsCaseInsensitive(edit_name.getText().toString(), alreadyExistentCarriersNameList)) {
+                    //Already existent, check if name is the original
+                    if(edit_name.getText().toString().equalsIgnoreCase(editableCarrierName)) {
+                        //Update object
+                        if(updateItem()) {
+                            //setResult(RESULT_OK);
+                            finish();
+                        } else {
+                            showErrorInputTooLong();
+                        }
+                    }
+                } else {
+                    //Update object
+                    if(updateItem()) {
+                        //setResult(RESULT_OK);
+                        finish();
+                    } else {
+                        showErrorInputTooLong();
+                    }
+                }
+
+                /*
+                 * EDIT HERE - TODO
+                 *
+                 * (x) Save original name at the beginning to exclude it from the validation if this name already exists
+                 * (x) Add "Too Long" dialog
+                 * (x) Add Error message to name input
+                 * (x) Save ID and update the item using the ID because the name can be different
+                 * Add a Favorite Button to the toolbar
+                 * Editor opens when long-clicking on item, this is supposed to not show the activity, it's supposed to show the delete dialog
+                 *
+                 */
+            } else {
+                Toast.makeText(mContext, mContext.getResources().getString(R.string.invalid_input), Toast.LENGTH_LONG).show();
+            }
+        }
+    };
+
+    private boolean updateItem() {
+        Carrier new_carrier = new Carrier(edit_name.getText().toString(), autoComplete_category.getText().toString(), null, Long.parseLong(edit_energy.getText().toString()), true, editableCarrier.get_favorite());
+        switch (spinner_type.getSelectedItemPosition()) {
+            case 0: //Capacity
+                new_carrier.set_unit(getResources().getString(R.string.carrier_type_db_capacity));
+                break;
+            case 1: //Consumption
+                new_carrier.set_unit(getResources().getString(R.string.carrier_type_db_consumption));
+                break;
+            case 2: //Volume consumption
+                new_carrier.set_unit(getResources().getString(R.string.carrier_type_db_volume_consumption));
+                break;
+            case 3: //Content mass
+                new_carrier.set_unit(getResources().getString(R.string.carrier_type_db_content_mass));
+                break;
+            case 4: //Content volume
+                new_carrier.set_unit(getResources().getString(R.string.carrier_type_db_content_volume));
+                break;
+            default:
+                return false;
+        }
+        dbHelper.updateCarrier(editableCarrier.get_id(), new_carrier);
+        return true;
+    }
+
+    private void showErrorInputTooLong() {
+        new AlertDialog.Builder(mContext)
+                .setTitle(mContext.getResources().getString(R.string.add_data_input_too_large_title))
+                .setMessage(mContext.getResources().getString(R.string.add_data_input_too_large_message))
+                .setNeutralButton(mContext.getResources().getString(R.string.dialog_ok), null)
+                .show();
+    }
+
+    //Returns true if all input data is valid
+    private boolean inputNotEmpty() {
+        return !(edit_name.getText().toString().trim().length() == 0 ||
+                autoComplete_category.getText().toString().trim().length() == 0 ||
+                edit_energy.getText().toString().trim().length() == 0 ||
+                new BigDecimal(edit_energy.getText().toString()).compareTo(BigDecimal.ZERO) == 0);
+                //containsCaseInsensitive(edit_name.getText().toString(), alreadyExistentCarriersNameList));
+    }
+
+    private boolean containsCaseInsensitive(String s, List<String> list) {
+        for(String string : list) {
+            if(string.equalsIgnoreCase(s)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    TextWatcher editNameTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if(containsCaseInsensitive(s.toString(), alreadyExistentCarriersNameList)) {
+                if(editableCarrierName.equalsIgnoreCase(edit_name.getText().toString())) {
+                    edit_name.setError(null);
+                } else {
+                    edit_name.setError(mContext.getResources().getString(R.string.name_already_exists));
+                }
+            } else {
+                edit_name.setError(null);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+
+    View.OnTouchListener editNameOnTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            //final int DRAWABLE_LEFT = 0;
+            //final int DRAWABLE_TOP = 1;
+            final int DRAWABLE_RIGHT = 2;
+            //final int DRAWABLE_BOTTOM = 3;
+
+            if(event.getAction() == MotionEvent.ACTION_UP) {
+                if(event.getRawX() >= (edit_name.getRight() - edit_name.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                    edit_name.setText("");
+                    return true;
+                }
+            }
+            return false;
+        }
+    };
+
+    View.OnTouchListener editCategoryOnTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            //final int DRAWABLE_LEFT = 0;
+            //final int DRAWABLE_TOP = 1;
+            final int DRAWABLE_RIGHT = 2;
+            //final int DRAWABLE_BOTTOM = 3;
+
+            if(event.getAction() == MotionEvent.ACTION_UP) {
+                if(event.getRawX() >= (autoComplete_category.getRight() - autoComplete_category.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                    autoComplete_category.setText("");
+                    return true;
+                }
+            }
+            return false;
+        }
+    };
+
+    /* --- Input Filter --- */
+
+    private InputFilter filter = new InputFilter() {
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+
+            if (source != null && blockCharacterSet.contains(("" + source))) {
+                return "";
+            }
+            return null;
+        }
+    };
 }

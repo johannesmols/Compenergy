@@ -127,6 +127,14 @@ public class Fragment_Data extends Fragment {
         }
     };
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        /*if(resultCode == Activity.RESULT_OK) {
+            Toast.makeText(mContext, "result ok", Toast.LENGTH_SHORT).show();
+        }*/
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     AdapterView.OnItemLongClickListener deleteSelectedItem = new AdapterView.OnItemLongClickListener() {
         @SuppressWarnings("deprecation")
         @Override

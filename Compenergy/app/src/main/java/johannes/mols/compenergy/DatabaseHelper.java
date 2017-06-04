@@ -289,16 +289,16 @@ class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //Update a dataset
-    void updateCarrier(Carrier carrier, Carrier new_carrier) {
+    void updateCarrier(int id, Carrier new_carrier) {
         try (SQLiteDatabase db = getWritableDatabase()) {
             ContentValues values = new ContentValues();
             values.put(CARRIER_NAME, new_carrier.get_name());
-            values.put(CARRIER_CATEGORY, carrier.get_category());
-            values.put(CARRIER_UNIT, carrier.get_unit());
-            values.put(CARRIER_ENERGY, carrier.get_energy());
-            values.put(CARRIER_CUSTOM, carrier.get_custom());
-            values.put(CARRIER_FAVORITE, carrier.get_favorite());
-            db.update(TABLE_CARRIERS_NAME, values, CARRIER_NAME + "='" + carrier.get_name() + "'", null);
+            values.put(CARRIER_CATEGORY, new_carrier.get_category());
+            values.put(CARRIER_UNIT, new_carrier.get_unit());
+            values.put(CARRIER_ENERGY, new_carrier.get_energy());
+            values.put(CARRIER_CUSTOM, new_carrier.get_custom());
+            values.put(CARRIER_FAVORITE, new_carrier.get_favorite());
+            db.update(TABLE_CARRIERS_NAME, values, CARRIER_ID + "=" + id, null);
             db.close();
         }
     }

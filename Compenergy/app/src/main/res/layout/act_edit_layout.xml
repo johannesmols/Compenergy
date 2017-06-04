@@ -19,7 +19,18 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            android:fitsSystemWindows="false"/>
+            android:fitsSystemWindows="false" >
+
+            <CheckBox
+                android:id="@+id/edit_data_toolbar_favorite_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="20dp"
+                android:button="@drawable/fav_check"
+                android:text="" />
+
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 

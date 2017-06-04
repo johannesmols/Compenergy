@@ -20,6 +20,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -46,6 +48,7 @@ public class ActEditCarrier extends AppCompatActivity {
     private EditText edit_energy;
     private TextView text_unit_info;
     private Button button_edit;
+    private CheckBox fav_checkbox;
 
     private String blockCharacterSet = "'"; //Can cause SQL errors
 
@@ -70,12 +73,15 @@ public class ActEditCarrier extends AppCompatActivity {
         edit_energy = (EditText) findViewById(R.id.edit_data_energy_edit);
         text_unit_info = (TextView) findViewById(R.id.edit_data_energy_type);
         button_edit = (Button) findViewById(R.id.edit_data_edit_button);
+        fav_checkbox = (CheckBox) findViewById(R.id.edit_data_toolbar_favorite_toggle);
 
         edit_name.setOnTouchListener(editNameOnTouchListener);
         autoComplete_category.setOnTouchListener(editCategoryOnTouchListener);
         spinner_type.setOnItemSelectedListener(spinnerTypeItemSelectedListener);
 
         button_edit.setOnClickListener(editButtonClickListener);
+
+        fav_checkbox.setOnCheckedChangeListener(fav_checked_change_listener);
 
         edit_name.addTextChangedListener(editNameTextWatcher);
 
@@ -145,6 +151,12 @@ public class ActEditCarrier extends AppCompatActivity {
         }
 
         edit_energy.setText(String.valueOf(editableCarrier.get_energy()));
+
+        if(editableCarrier.get_favorite()) {
+            fav_checkbox.setChecked(true);
+        } else {
+            fav_checkbox.setChecked(false);
+        }
     }
 
     AdapterView.OnItemSelectedListener spinnerTypeItemSelectedListener = new AdapterView.OnItemSelectedListener() {
@@ -208,14 +220,6 @@ public class ActEditCarrier extends AppCompatActivity {
                         showErrorInputTooLong();
                     }
                 }
-
-                /*
-                 * EDIT HERE - TODO
-                 *
-                 * Add a Favorite Button to the toolbar
-                 * Editor opens when long-clicking on item, this is supposed to not show the activity, it's supposed to show the delete dialog
-                 *
-                 */
             } else {
                 Toast.makeText(mContext, mContext.getResources().getString(R.string.invalid_input), Toast.LENGTH_LONG).show();
             }
@@ -338,6 +342,26 @@ public class ActEditCarrier extends AppCompatActivity {
                 }
             }
             return false;
+        }
+    };
+
+    CompoundButton.OnCheckedChangeListener fav_checked_change_listener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            Carrier new_carrier = editableCarrier;
+            if (isChecked) {
+                if (!new_carrier.get_favorite()) {
+                    //update to true
+                    new_carrier.set_favorite(true);
+                    dbHelper.updateCarrier(editableCarrier.get_id(), new_carrier);
+                }
+            } else {
+                if (new_carrier.get_favorite()) {
+                    //update to false
+                    new_carrier.set_favorite(false);
+                    dbHelper.updateCarrier(editableCarrier.get_id(), new_carrier);
+                }
+            }
         }
     };
 

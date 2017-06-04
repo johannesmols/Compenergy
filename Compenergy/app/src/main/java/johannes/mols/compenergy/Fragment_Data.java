@@ -120,22 +120,22 @@ public class Fragment_Data extends Fragment {
             Collections.sort(l, comparator);
     }
 
-    ExpandableListView.OnChildClickListener editSelectedItem = new ExpandableListView.OnChildClickListener() {
-        @Override
-        public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-            Intent editor = new Intent(mContext, ActEditCarrier.class);
-            editor.putExtra(mContext.getResources().getString(R.string.intent_key_for_editor), ((Carrier)adapter.getChild(groupPosition, childPosition)).get_name());
-            startActivityForResult(editor, REQUEST_CODE_EDIT);
-            return false;
-        }
-    };
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == Activity.RESULT_OK) {
             displayList();
         }
     }
+
+    ExpandableListView.OnChildClickListener editSelectedItem = new ExpandableListView.OnChildClickListener() {
+        @Override
+        public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+            Intent editor = new Intent(mContext, ActEditCarrier.class);
+            editor.putExtra(mContext.getResources().getString(R.string.intent_key_for_editor), ((Carrier)adapter.getChild(groupPosition, childPosition)).get_name());
+            startActivityForResult(editor, REQUEST_CODE_EDIT);
+            return true; //indicates that the event is consumed, meaning the long click listener can't be triggered too
+        }
+    };
 
     AdapterView.OnItemLongClickListener deleteSelectedItem = new AdapterView.OnItemLongClickListener() {
         @SuppressWarnings("deprecation")
@@ -163,7 +163,7 @@ public class Fragment_Data extends Fragment {
                         .setNegativeButton(mContext.getResources().getString(R.string.dialog_no), null)
                         .show();
             }
-            return false;
+            return true;
         }
     };
 }

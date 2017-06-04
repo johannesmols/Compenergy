@@ -4,6 +4,7 @@
 
 package johannes.mols.compenergy;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -39,6 +40,8 @@ public class Fragment_Data extends Fragment {
     private DataExpandableListAdapter adapter;
 
     private DatabaseHelper dbHelper;
+
+    private static final int REQUEST_CODE_EDIT = 0x539;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -122,17 +125,16 @@ public class Fragment_Data extends Fragment {
         public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
             Intent editor = new Intent(mContext, ActEditCarrier.class);
             editor.putExtra(mContext.getResources().getString(R.string.intent_key_for_editor), ((Carrier)adapter.getChild(groupPosition, childPosition)).get_name());
-            startActivity(editor);
+            startActivityForResult(editor, REQUEST_CODE_EDIT);
             return false;
         }
     };
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        /*if(resultCode == Activity.RESULT_OK) {
-            Toast.makeText(mContext, "result ok", Toast.LENGTH_SHORT).show();
-        }*/
-        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == Activity.RESULT_OK) {
+            displayList();
+        }
     }
 
     AdapterView.OnItemLongClickListener deleteSelectedItem = new AdapterView.OnItemLongClickListener() {

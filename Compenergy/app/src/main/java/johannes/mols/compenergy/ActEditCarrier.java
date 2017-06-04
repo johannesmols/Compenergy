@@ -193,7 +193,7 @@ public class ActEditCarrier extends AppCompatActivity {
                     if(edit_name.getText().toString().equalsIgnoreCase(editableCarrierName)) {
                         //Update object
                         if(updateItem()) {
-                            //setResult(RESULT_OK);
+                            setResult(RESULT_OK);
                             finish();
                         } else {
                             showErrorInputTooLong();
@@ -202,7 +202,7 @@ public class ActEditCarrier extends AppCompatActivity {
                 } else {
                     //Update object
                     if(updateItem()) {
-                        //setResult(RESULT_OK);
+                        setResult(RESULT_OK);
                         finish();
                     } else {
                         showErrorInputTooLong();

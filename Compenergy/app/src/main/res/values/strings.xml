@@ -201,15 +201,21 @@
     <string name="pref_confirmation">Are you sure?</string>
     <string name="pref_confirm_reset">Confirm reset</string>
     <string name="pref_confirm_deletion">Confirm deletion</string>
+    <string name="dialog_no_internet_browser">No internet browser found</string>
+    <string name="dialog_no_email_app">No E-Mail application found</string>
 
     <!-- Toast messages -->
     <string name="item_deleted">Item deleted</string>
     <string name="item_added_to_db">Item added to the database</string>
 
     <!-- About screen -->
-    <string name="about_title_app_name">App name:</string>
-    <string name="about_app_version_key">compenergy.about.version</string>
-    <string name="about_app_version_title">App Version</string>
+    <string name="about_placeholder_value">Value</string>
+    <string name="about_author_title">Author</string>
+    <string name="about_author_value">Johannes Mols</string>
+    <string name="about_contact_title">Contact E-Mail</string>
+    <string name="about_contact_value">compenergy.app@googlemail.com</string>
+    <string name="about_app_version_title">Version</string>
+    <string name="about_app_build_title">Build Number</string>
 
     <!-- Placeholders -->
     <string name="placeholder_item_listview">Item Name</string>

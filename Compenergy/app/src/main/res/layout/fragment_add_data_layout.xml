@@ -11,134 +11,155 @@
     android:paddingTop="8dp"
     android:paddingBottom="8dp" >
 
-    <EditText
-        android:id="@+id/fragment_add_data_name_edit"
+    <ScrollView
+        tools:ignore="UselessParent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="@string/add_data_name_edit_hint"
-        android:layout_marginBottom="8dp"
-        android:drawableEnd="@drawable/ic_close_black_24dp" />
-
-    <johannes.mols.compenergy.InstantAutoComplete
-        android:id="@+id/fragment_add_data_category_autocomplete_edit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="@string/add_data_category_edit_hint"
-        android:layout_marginBottom="8dp"
-        android:drawableEnd="@drawable/ic_close_black_24dp" />
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp" >
-
-        <EditText
-            android:visibility="invisible"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:ignore="LabelFor,TextFields" />
-
-        <Spinner
-            android:id="@+id/fragment_add_data_type_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            style="@style/Widget.AppCompat.Spinner.Underlined"/>
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/fragment_add_data_fuel_type_spinner_frame_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp" >
-
-        <EditText
-            android:visibility="invisible"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:ignore="LabelFor,TextFields" />
-
-        <Spinner
-            android:id="@+id/fragment_add_data_vehicle_fuel_type_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            style="@style/Widget.AppCompat.Spinner.Underlined"/>
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp">
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:descendantFocusability="beforeDescendants" >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
+            android:layout_height="wrap_content"
+            android:padding="0dp"
+            android:orientation="vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:descendantFocusability="beforeDescendants">
 
             <EditText
-                android:id="@+id/fragment_add_data_energy_edit"
-                android:layout_width="0dp"
+                android:id="@+id/fragment_add_data_name_edit"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:hint="@string/add_data_energy_edit_hint"
-                android:layout_weight="5"
-                android:layout_gravity="start" />
+                android:inputType="text"
+                android:hint="@string/add_data_name_edit_hint"
+                android:layout_marginBottom="8dp"
+                android:drawableEnd="@drawable/ic_close_black_24dp" />
 
-            <Spinner
-                android:id="@+id/fragment_add_data_energy_type_spinner"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:layout_gravity="end"
-                style="@style/Widget.AppCompat.Spinner.Underlined" >
+            <johannes.mols.compenergy.InstantAutoComplete
+                android:id="@+id/fragment_add_data_category_autocomplete_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="@string/add_data_category_edit_hint"
+                android:layout_marginBottom="8dp"
+                android:drawableEnd="@drawable/ic_close_black_24dp" />
 
-            </Spinner>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp" >
+
+                <EditText
+                    android:visibility="invisible"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:ignore="LabelFor,TextFields" />
+
+                <Spinner
+                    android:id="@+id/fragment_add_data_type_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fragment_add_data_fuel_type_spinner_frame_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp" >
+
+                <EditText
+                    android:visibility="invisible"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:ignore="LabelFor,TextFields" />
+
+                <Spinner
+                    android:id="@+id/fragment_add_data_vehicle_fuel_type_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    tools:ignore="UselessParent">
+
+                    <EditText
+                        android:id="@+id/fragment_add_data_energy_edit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:hint="@string/add_data_energy_edit_hint"
+                        android:layout_weight="5"
+                        android:layout_gravity="start" />
+
+                    <Spinner
+                        android:id="@+id/fragment_add_data_energy_type_spinner"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:layout_gravity="end"
+                        style="@style/Widget.AppCompat.Spinner.Underlined" >
+
+                    </Spinner>
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:ignore="UselessParent" >
+
+                    <EditText
+                        android:id="@+id/fragment_add_data_unit_amount_edit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:hint="@string/add_data_unit_amount_edit_hint"
+                        android:layout_weight="5"
+                        android:layout_gravity="start" />
+
+                    <Spinner
+                        android:id="@+id/fragment_add_data_unit_spinner"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:layout_gravity="end"
+                        style="@style/Widget.AppCompat.Spinner.Underlined" >
+
+                    </Spinner>
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/fragment_add_data_add_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_data_add_button"/>
 
         </LinearLayout>
 
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:ignore="UselessParent" >
-
-            <EditText
-                android:id="@+id/fragment_add_data_unit_amount_edit"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:hint="@string/add_data_unit_amount_edit_hint"
-                android:layout_weight="5"
-                android:layout_gravity="start" />
-
-            <Spinner
-                android:id="@+id/fragment_add_data_unit_spinner"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:layout_gravity="end"
-                style="@style/Widget.AppCompat.Spinner.Underlined" >
-
-            </Spinner>
-
-        </LinearLayout>
-
-    </FrameLayout>
-
-    <Button
-        android:id="@+id/fragment_add_data_add_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add_data_add_button"/>
+    </ScrollView>
 
 </LinearLayout>

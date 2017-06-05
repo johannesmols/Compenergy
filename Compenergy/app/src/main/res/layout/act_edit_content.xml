@@ -14,60 +14,68 @@
     tools:context="johannes.mols.compenergy.ActEditCarrier"
     tools:showIn="@layout/act_edit_layout" >
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:descendantFocusability="beforeDescendants"
         tools:ignore="UselessParent">
 
-        <EditText
-            android:id="@+id/edit_data_name_edit"
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="@string/edit_data_name_edit_hint"
-            android:layout_marginBottom="8dp"
-            android:drawableEnd="@drawable/ic_close_black_24dp" />
-
-        <johannes.mols.compenergy.InstantAutoComplete
-            android:id="@+id/edit_data_category_autocomplete_edit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="@string/edit_data_category_edit_hint"
-            android:layout_marginBottom="8dp"
-            android:drawableEnd="@drawable/ic_close_black_24dp" />
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp" >
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            tools:ignore="UselessParent">
 
             <EditText
-                android:visibility="invisible"
+                android:id="@+id/edit_data_name_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:ignore="LabelFor,TextFields" />
+                android:inputType="text"
+                android:hint="@string/edit_data_name_edit_hint"
+                android:layout_marginBottom="8dp"
+                android:drawableEnd="@drawable/ic_close_black_24dp" />
 
-            <Spinner
-                android:id="@+id/edit_data_type_spinner"
+            <johannes.mols.compenergy.InstantAutoComplete
+                android:id="@+id/edit_data_category_autocomplete_edit"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                style="@style/Widget.AppCompat.Spinner.Underlined"/>
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="@string/edit_data_category_edit_hint"
+                android:layout_marginBottom="8dp"
+                android:drawableEnd="@drawable/ic_close_black_24dp" />
 
-        </FrameLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="8dp">
+                <EditText
+                    android:visibility="invisible"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:ignore="LabelFor,TextFields" />
+
+                <Spinner
+                    android:id="@+id/edit_data_type_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"/>
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
 
                 <EditText
                     android:id="@+id/edit_data_energy_edit"
@@ -90,21 +98,23 @@
 
                 </TextView>
 
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/edit_data_type_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/primary_text_light"
+                android:layout_marginBottom="8dp" />
+
+            <Button
+                android:id="@+id/edit_data_edit_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_data_button_title"/>
+
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/edit_data_type_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/primary_text_light"
-            android:layout_marginBottom="8dp" />
-
-        <Button
-            android:id="@+id/edit_data_edit_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/edit_data_button_title"/>
-
-    </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

@@ -208,6 +208,8 @@
 
     <!-- About screen -->
     <string name="about_title_app_name">App name:</string>
+    <string name="about_app_version_key">compenergy.about.version</string>
+    <string name="about_app_version_title">App Version</string>
 
     <!-- Placeholders -->
     <string name="placeholder_item_listview">Item Name</string>

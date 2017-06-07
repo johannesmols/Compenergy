@@ -20,9 +20,9 @@ public class Fragment_Compare extends Fragment {
         View view = inflater.inflate(R.layout.fragment_compare_layout, container, false);
 
         View rootLayout = view.findViewById(R.id.fragment_compare_root_layout);
-        GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.TL_BR, new int[] {0xFFFFEE58, 0xFFBB6689});
+        GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, new int[] {0xFFFFEE58, 0xFFBB6689});
         gd.setCornerRadius(0f);
-        rootLayout.setBackground(gd);
+        //rootLayout.setBackground(gd);
 
         return view;
     }

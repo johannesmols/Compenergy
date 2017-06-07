@@ -53,14 +53,10 @@ public class ActEditCarrier extends AppCompatActivity {
 
     private String blockCharacterSet = "'"; //Can cause SQL errors
 
-    private InputMethodManager imm;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_edit_layout);
-
-        imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
 
         //Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_edit);

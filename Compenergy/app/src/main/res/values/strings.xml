@@ -222,6 +222,15 @@
     <string name="placeholder_header_listview">Header</string>
     <string name="placeholder_item_name">Carrier Name</string>
     <string name="placeholder_item_energy">Energy</string>
+    <string name="placeholder_item_unit">unit</string>
+
+    <string name="placeholder_test_item_1_name">BMW M4 (2017)</string>
+    <string name="placeholder_test_item_1_energy">287.28 MJ</string>
+    <string name="placeholder_test_item_1_unit">on 100 km</string>
+
+    <string name="placeholder_test_item_2_name">Worlds solar power capacity</string>
+    <string name="placeholder_test_item_2_energy">256 GW</string>
+    <string name="placeholder_test_item_2_unit">power capacity</string>
 
     <!-- Content Descriptions -->
     <string name="content_description_list_view_header">Minimize or maximize this category</string>

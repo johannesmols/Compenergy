@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:baselineAligned="false"
-    android:background="@drawable/gradient_animation_list">
+    android:background="@drawable/gradient_animation_list" >
 
     <RelativeLayout
         android:id="@+id/fragment_compare_upper_layout"

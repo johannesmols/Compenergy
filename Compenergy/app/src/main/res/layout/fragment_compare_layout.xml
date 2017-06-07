@@ -9,12 +9,13 @@
     android:baselineAligned="false"
     android:background="@drawable/gradient_animation_list" >
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/fragment_compare_upper_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="top|start"
+        android:orientation="vertical"
         android:padding="16dp" >
 
         <TextView
@@ -27,19 +28,13 @@
             android:textStyle="normal"
             android:maxLines="1"
             android:ellipsize="end"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="false"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="false"
-            android:layout_centerHorizontal="true"
             android:text="@string/placeholder_test_item_1_name" />
 
         <LinearLayout
             android:id="@+id/fragment_compare_upper_item_linear_layout_amount_and_unit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@id/fragment_compare_upper_item_name">
+            android:orientation="horizontal" >
 
             <TextView
                 android:id="@+id/fragment_compare_upper_item_energy"
@@ -68,7 +63,7 @@
 
         </LinearLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/fragment_compare_middle_layout"
@@ -154,30 +149,14 @@
 
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/fragment_compare_lower_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="bottom|end"
+        android:orientation="vertical"
         android:padding="16dp" >
-
-        <TextView
-            android:id="@+id/fragment_compare_lower_item_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="textEnd"
-            android:textSize="45sp"
-            android:textColor="@color/dark_text"
-            android:textStyle="normal"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:layout_alignParentStart="false"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="false"
-            android:layout_alignParentBottom="false"
-            android:layout_below="@+id/fragment_compare_lower_item_linear_layout_amount_and_unit"
-            android:text="@string/placeholder_test_item_2_name" />
 
         <LinearLayout
             android:id="@+id/fragment_compare_lower_item_linear_layout_amount_and_unit"
@@ -213,6 +192,18 @@
 
         </LinearLayout>
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/fragment_compare_lower_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd"
+            android:textSize="45sp"
+            android:textColor="@color/dark_text"
+            android:textStyle="normal"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="@string/placeholder_test_item_2_name" />
+
+    </LinearLayout>
 
 </LinearLayout>

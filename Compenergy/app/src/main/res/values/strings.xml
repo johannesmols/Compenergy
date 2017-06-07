@@ -220,8 +220,11 @@
     <!-- Placeholders -->
     <string name="placeholder_item_listview">Item Name</string>
     <string name="placeholder_header_listview">Header</string>
+    <string name="placeholder_item_name">Carrier Name</string>
+    <string name="placeholder_item_energy">Energy</string>
 
     <!-- Content Descriptions -->
     <string name="content_description_list_view_header">Minimize or maximize this category</string>
     <string name="content_description_nav_drawer_icon">Application icon</string>
+    <string name="content_description_compare_color_bucket">Change the item color</string>
 </resources>

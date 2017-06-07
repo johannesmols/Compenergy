@@ -1,19 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_compare_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:baselineAligned="false" >
 
-    <TextView
-        android:id="@+id/fragment_compare_txt_test"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+    <RelativeLayout
+        android:id="@+id/fragment_compare_upper_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Compare Fragment"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        android:textAlignment="center" />
+        android:layout_weight="1"
+        android:gravity="top|start"
+        android:padding="8dp" >
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/fragment_compare_upper_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="textStart"
+            android:textSize="36sp"
+            android:textColor="@color/dark_text"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="false"
+            android:layout_centerHorizontal="true"
+            android:text="@string/placeholder_item_name" />
+
+        <TextView
+            android:id="@+id/fragment_compare_upper_item_energy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="textStart"
+            android:textSize="22sp"
+            android:textColor="@color/gray_text"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/fragment_compare_upper_item_name"
+            android:text="@string/placeholder_item_energy" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/fragment_compare_middle_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="8dp" >
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/fragment_compare_lower_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="bottom|end"
+        android:padding="8dp" >
+
+        <TextView
+            android:id="@+id/fragment_compare_lower_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd"
+            android:textSize="36sp"
+            android:textColor="@color/dark_text"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentBottom="false"
+            android:text="@string/placeholder_item_name" />
+
+    </RelativeLayout>
+
+</LinearLayout>

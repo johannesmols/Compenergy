@@ -17,6 +17,7 @@ import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -52,10 +53,14 @@ public class ActEditCarrier extends AppCompatActivity {
 
     private String blockCharacterSet = "'"; //Can cause SQL errors
 
+    private InputMethodManager imm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_edit_layout);
+
+        imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
 
         //Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_edit);
@@ -195,6 +200,13 @@ public class ActEditCarrier extends AppCompatActivity {
 
         }
     };
+
+    @Override
+    protected void onPause() {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(edit_name.getWindowToken(), 0);
+        super.onPause();
+    }
 
     View.OnClickListener editButtonClickListener = new View.OnClickListener() {
         @Override

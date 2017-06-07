@@ -36,7 +36,7 @@
                 android:textAllCaps="true"
                 android:text="@string/about_author_title"
                 android:textAlignment="textStart"
-                android:textColor="@color/about_header_text"  />
+                android:textColor="@color/gray_text"  />
 
             <TextView
                 android:id="@+id/fragment_about_author_value"
@@ -48,7 +48,7 @@
                 android:text="@string/about_placeholder_value"
                 android:textAllCaps="false"
                 android:textAlignment="textStart"
-                android:textColor="@color/about_value_text"  />
+                android:textColor="@color/dark_text"  />
 
             <TextView
                 android:id="@+id/fragment_about_contact_title"
@@ -60,7 +60,7 @@
                 android:textAllCaps="true"
                 android:text="@string/about_contact_title"
                 android:textAlignment="textStart"
-                android:textColor="@color/about_header_text"  />
+                android:textColor="@color/gray_text"  />
 
             <TextView
                 android:id="@+id/fragment_about_contact_value"
@@ -72,7 +72,7 @@
                 android:text="@string/about_placeholder_value"
                 android:textAllCaps="false"
                 android:textAlignment="textStart"
-                android:textColor="@color/about_value_text"  />
+                android:textColor="@color/dark_text"  />
 
             <TextView
                 android:id="@+id/fragment_about_version_title"
@@ -84,7 +84,7 @@
                 android:textAllCaps="true"
                 android:text="@string/about_app_version_title"
                 android:textAlignment="textStart"
-                android:textColor="@color/about_header_text"  />
+                android:textColor="@color/gray_text"  />
 
             <TextView
                 android:id="@+id/fragment_about_version_value"
@@ -96,7 +96,7 @@
                 android:text="@string/about_placeholder_value"
                 android:textAllCaps="false"
                 android:textAlignment="textStart"
-                android:textColor="@color/about_value_text"  />
+                android:textColor="@color/dark_text"  />
 
             <TextView
                 android:id="@+id/fragment_about_build_title"
@@ -108,7 +108,7 @@
                 android:textAllCaps="true"
                 android:text="@string/about_app_build_title"
                 android:textAlignment="textStart"
-                android:textColor="@color/about_header_text"  />
+                android:textColor="@color/gray_text"  />
 
             <TextView
                 android:id="@+id/fragment_about_build_value"
@@ -120,7 +120,7 @@
                 android:text="@string/about_placeholder_value"
                 android:textAllCaps="false"
                 android:textAlignment="textStart"
-                android:textColor="@color/about_value_text"  />
+                android:textColor="@color/dark_text"  />
 
         </RelativeLayout>
 

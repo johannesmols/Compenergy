@@ -4,6 +4,6 @@
     <color name="colorPrimaryDark">#387002</color>
     <color name="colorAccent">#99d066</color>
 
-    <color name="about_value_text">#212121</color>
-    <color name="about_header_text">#757575</color>
+    <color name="dark_text">#212121</color>
+    <color name="gray_text">#757575</color>
 </resources>

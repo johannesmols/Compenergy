@@ -18,6 +18,7 @@ import android.text.Html;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -38,6 +39,7 @@ public class Fragment_Data extends Fragment {
     private List<String> categories_list;
     private HashMap<String, List<Carrier>> carriers_list;
     private DataExpandableListAdapter adapter;
+    private EditText searchEditText;
 
     private DatabaseHelper dbHelper;
 
@@ -62,7 +64,8 @@ public class Fragment_Data extends Fragment {
 
         expandAllGroups();
 
-        EditText searchEditText = (EditText) view.findViewById(R.id.fragment_data_search);
+        searchEditText = (EditText) view.findViewById(R.id.fragment_data_search);
+        searchEditText.setOnTouchListener(editSearchOnTouchListener);
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -164,6 +167,24 @@ public class Fragment_Data extends Fragment {
                         .show();
             }
             return true;
+        }
+    };
+
+    View.OnTouchListener editSearchOnTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            //final int DRAWABLE_LEFT = 0;
+            //final int DRAWABLE_TOP = 1;
+            final int DRAWABLE_RIGHT = 2;
+            //final int DRAWABLE_BOTTOM = 3;
+
+            if(event.getAction() == MotionEvent.ACTION_UP) {
+                if(event.getRawX() >= (searchEditText.getRight() - searchEditText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                    searchEditText.setText("");
+                    return true;
+                }
+            }
+            return false;
         }
     };
 }

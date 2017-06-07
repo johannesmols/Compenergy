@@ -7,6 +7,7 @@ package johannes.mols.compenergy;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -225,6 +226,11 @@ class DatabaseHelper extends SQLiteOpenHelper {
          */
 
         return list;
+    }
+
+    int getCarrierCount() {
+        SQLiteDatabase db = getReadableDatabase();
+        return (int)DatabaseUtils.queryNumEntries(db, TABLE_CARRIERS_NAME);
     }
 
     boolean isDatabaseCurrent() {

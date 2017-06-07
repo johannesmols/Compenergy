@@ -11,18 +11,33 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
+
+import java.util.Random;
 
 public class Fragment_Compare extends Fragment {
 
     private Context mContext;
-
+    private DatabaseHelper dbHelper;
     private AnimationDrawable animationDrawable;
+
+    private TextView upperItemName;
+    private TextView lowerItemName;
+    private TextView upperItemEnergy;
+    private TextView lowerItemEnergy;
+    private TextView upperItemEnergyUnit;
+    private TextView lowerItemEnergyUnit;
+    private TextView upperItemCompareValue;
+    private TextView lowerItemCompareValue;
+    private TextView upperItemCompareUnit;
+    private TextView lowerItemCompareUnit;
 
     @Nullable
     @Override
@@ -30,6 +45,18 @@ public class Fragment_Compare extends Fragment {
         View view = inflater.inflate(R.layout.fragment_compare_layout, container, false);
 
         mContext = getContext();
+        dbHelper = new DatabaseHelper(mContext, null, null, 1);
+
+        upperItemName = (TextView) view.findViewById(R.id.fragment_compare_upper_item_name);
+        lowerItemName = (TextView) view.findViewById(R.id.fragment_compare_lower_item_name);
+        upperItemEnergy = (TextView) view.findViewById(R.id.fragment_compare_upper_item_energy);
+        lowerItemEnergy = (TextView) view.findViewById(R.id.fragment_compare_lower_item_energy);
+        upperItemEnergyUnit = (TextView) view.findViewById(R.id.fragment_compare_upper_item_energy_compare_unit);
+        lowerItemEnergyUnit = (TextView) view.findViewById(R.id.fragment_compare_lower_item_energy_compare_unit);
+        upperItemCompareValue = (TextView) view.findViewById(R.id.fragment_compare_upper_item_compare_value);
+        lowerItemCompareValue = (TextView) view.findViewById(R.id.fragment_compare_lower_item_compare_value);
+        upperItemCompareUnit = (TextView) view.findViewById(R.id.fragment_compare_upper_item_unit);
+        lowerItemCompareUnit = (TextView) view.findViewById(R.id.fragment_compare_lower_item_unit);
 
         //See if the fragment is opened for the first time
         String key = "compenergy.compare.first_start";
@@ -79,7 +106,41 @@ public class Fragment_Compare extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.fragment_compare_toolbar_shuffle:
+                shuffle();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+    private void getItem(String name) {
+
+    }
+
+    private void displayItem(boolean upperOrLower) {
+
+    }
+
+    private void compareItems() {
+
+    }
+
     private void shuffle() {
-        Toast.makeText(mContext, "first start", Toast.LENGTH_SHORT).show();
+        int itemCount = dbHelper.getCarrierCount();
+        int max = itemCount - 1;
+        int min = 0;
+        int item1, item2;
+        Random r = new Random();
+        item1 = r.nextInt(max - min) + min;
+        do {
+            item2 = r.nextInt(max - min) + min;
+        } while (item2 == item1);
+
+        Log.i("Random Items", String.valueOf(item1) + ", " + String.valueOf(item2));
     }
 }

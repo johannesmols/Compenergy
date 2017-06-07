@@ -4,6 +4,8 @@
 
 package johannes.mols.compenergy;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -14,8 +16,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 public class Fragment_Compare extends Fragment {
+
+    private Context mContext;
 
     private AnimationDrawable animationDrawable;
 
@@ -23,6 +28,17 @@ public class Fragment_Compare extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_compare_layout, container, false);
+
+        mContext = getContext();
+
+        //See if the fragment is opened for the first time
+        String key = "compenergy.compare.first_start";
+        SharedPreferences prefs = getActivity().getSharedPreferences(key, Context.MODE_PRIVATE);
+        if(prefs.getBoolean(key, true)) {
+            //First started
+            shuffle();
+        }
+        prefs.edit().putBoolean(key, false).apply();
 
         setHasOptionsMenu(true);
 
@@ -61,5 +77,9 @@ public class Fragment_Compare extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.fragment_compare_toolbar, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    private void shuffle() {
+        Toast.makeText(mContext, "first start", Toast.LENGTH_SHORT).show();
     }
 }

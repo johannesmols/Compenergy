@@ -6,6 +6,7 @@ package johannes.mols.compenergy;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -45,6 +46,11 @@ public class ActMain extends AppCompatActivity implements NavigationView.OnNavig
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_main_nav_drawer_layout);
+
+        //Set Preferences to start of the app
+        String key = "compenergy.compare.first_start";
+        SharedPreferences prefs = this.getSharedPreferences(key, Context.MODE_PRIVATE);
+        prefs.edit().putBoolean(key, true).apply();
 
         //Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

@@ -144,6 +144,10 @@ class DatabaseHelper extends SQLiteOpenHelper {
         return getCarriers("1");
     }
 
+    List<Carrier> getCarrierWithID(int id) {
+        return getCarriers(CARRIER_ID + "='" + id + "'");
+    }
+
     List<Carrier> getCarriersWithName(String name) {
         return getCarriers(CARRIER_NAME + "='" + name + "'");
     }
@@ -195,6 +199,25 @@ class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return categories;
+    }
+
+    List<Integer> getIdList() {
+        List<Integer> ids = new ArrayList<>();
+        try (SQLiteDatabase db = getWritableDatabase()) {
+            String query = "SELECT * FROM " + TABLE_CARRIERS_NAME + ";";
+
+            Cursor c = db.rawQuery(query, null);
+            c.moveToFirst();
+
+            while (!c.isAfterLast()) {
+                ids.add(c.getInt(c.getColumnIndex(CARRIER_ID)));
+                c.moveToNext();
+            }
+            c.close();
+            db.close();
+        }
+
+        return ids;
     }
 
     List<Object> getCombinedCategoryCarrierList() {

@@ -28,7 +28,7 @@
             android:textStyle="normal"
             android:maxLines="1"
             android:ellipsize="end"
-            android:text="@string/placeholder_test_item_1_name" />
+            android:text="@string/placeholder_item_name" />
 
         <LinearLayout
             android:id="@+id/fragment_compare_upper_item_linear_layout_amount_and_unit"
@@ -46,7 +46,7 @@
                 android:textStyle="normal"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:text="@string/placeholder_test_item_1_energy" />
+                android:text="@string/placeholder_item_energy" />
 
             <TextView
                 android:id="@+id/fragment_compare_upper_item_energy_compare_unit"
@@ -59,7 +59,7 @@
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:layout_marginStart="8dp"
-                android:text="@string/placeholder_test_item_1_unit"/>
+                android:text="@string/placeholder_item_unit"/>
 
         </LinearLayout>
 
@@ -90,7 +90,7 @@
                 android:textStyle="normal"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:text="@string/placeholder_test_item_1_compare_value"/>
+                android:text="@string/placeholder_compare_value"/>
 
             <TextView
                 android:id="@+id/fragment_compare_upper_item_unit"
@@ -101,7 +101,7 @@
                 android:textColor="@color/gray_text"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:text="@string/placeholder_test_item_1_compare_unit"/>
+                android:text="@string/placeholder_item_unit"/>
 
         </LinearLayout>
 
@@ -131,7 +131,7 @@
                 android:textColor="@color/gray_text"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:text="@string/placeholder_test_item_2_compare_unit"/>
+                android:text="@string/placeholder_item_unit"/>
 
             <TextView
                 android:id="@+id/fragment_compare_lower_item_compare_value"
@@ -143,7 +143,7 @@
                 android:textStyle="normal"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:text="@string/placeholder_test_item_2_compare_value"/>
+                android:text="@string/placeholder_compare_value"/>
 
         </LinearLayout>
 
@@ -166,19 +166,6 @@
             android:gravity="end">
 
             <TextView
-                android:id="@+id/fragment_compare_lower_item_energy_compare_unit"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="bottom"
-                android:textSize="20sp"
-                android:textColor="@color/gray_text"
-                android:textStyle="normal"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:layout_marginEnd="8dp"
-                android:text="@string/placeholder_test_item_2_unit"/>
-
-            <TextView
                 android:id="@+id/fragment_compare_lower_item_energy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -188,7 +175,20 @@
                 android:textStyle="normal"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:text="@string/placeholder_test_item_2_energy" />
+                android:layout_marginEnd="8dp"
+                android:text="@string/placeholder_item_energy" />
+
+            <TextView
+                android:id="@+id/fragment_compare_lower_item_energy_compare_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                android:textSize="20sp"
+                android:textColor="@color/gray_text"
+                android:textStyle="normal"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@string/placeholder_item_unit"/>
 
         </LinearLayout>
 
@@ -202,7 +202,7 @@
             android:textStyle="normal"
             android:maxLines="1"
             android:ellipsize="end"
-            android:text="@string/placeholder_test_item_2_name" />
+            android:text="@string/placeholder_item_name" />
 
     </LinearLayout>
 

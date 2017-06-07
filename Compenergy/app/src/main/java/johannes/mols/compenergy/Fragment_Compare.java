@@ -11,7 +11,6 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
 import java.util.Random;
 
 public class Fragment_Compare extends Fragment {
@@ -118,12 +118,61 @@ public class Fragment_Compare extends Fragment {
         }
     }
 
-    private void getItem(String name) {
-
+    private Carrier getItem(Integer id) {
+        return dbHelper.getCarrierWithID(id).get(0);
     }
 
-    private void displayItem(boolean upperOrLower) {
+    private void displayItem(boolean upperOrLower, Carrier item) {
+        if(upperOrLower) {
+            //Name
+            upperItemName.setText(item.get_name());
 
+            //Energy
+            upperItemEnergy.setText(Util.format(item.get_energy()));
+            if(item.get_unit().equalsIgnoreCase(getString(R.string.carrier_type_db_capacity)) || item.get_unit().equalsIgnoreCase(getString(R.string.carrier_type_db_consumption))) {
+                upperItemEnergy.append(getString(R.string.watt_lower_case));
+            } else {
+                upperItemEnergy.append(getString(R.string.joule_lower_case));
+            }
+
+            //Energy unit
+            if (item.get_unit().equalsIgnoreCase(getString(R.string.carrier_type_db_capacity))) {
+                upperItemEnergyUnit.setText(getString(R.string.compare_type_capacity));
+            } else if (item.get_unit().equalsIgnoreCase(getString(R.string.carrier_type_db_consumption))) {
+                upperItemEnergyUnit.setText(getString(R.string.compare_type_consumption));
+            } else if (item.get_unit().equalsIgnoreCase(getString(R.string.carrier_type_db_volume_consumption))) {
+                upperItemEnergyUnit.setText(getString(R.string.compare_type_volume_consumption));
+            } else if (item.get_unit().equalsIgnoreCase(getString(R.string.carrier_type_db_content_mass))) {
+                upperItemEnergyUnit.setText(getString(R.string.compare_type_mass_content));
+            } else if (item.get_unit().equalsIgnoreCase(getString(R.string.carrier_type_db_content_volume))) {
+                upperItemEnergyUnit.setText(getString(R.string.compare_type_volume_content));
+            }
+        }
+        else {
+            //Name
+            lowerItemName.setText(item.get_name());
+
+            //Energy
+            lowerItemEnergy.setText(Util.format(item.get_energy()));
+            if(item.get_unit().equalsIgnoreCase(getString(R.string.carrier_type_db_capacity)) || item.get_unit().equalsIgnoreCase(getString(R.string.carrier_type_db_consumption))) {
+                lowerItemEnergy.append(getString(R.string.watt_lower_case));
+            } else {
+                lowerItemEnergy.append(getString(R.string.joule_lower_case));
+            }
+
+            //Energy unit
+            if (item.get_unit().equalsIgnoreCase(getString(R.string.carrier_type_db_capacity))) {
+                lowerItemEnergyUnit.setText(getString(R.string.compare_type_capacity));
+            } else if (item.get_unit().equalsIgnoreCase(getString(R.string.carrier_type_db_consumption))) {
+                lowerItemEnergyUnit.setText(getString(R.string.compare_type_consumption));
+            } else if (item.get_unit().equalsIgnoreCase(getString(R.string.carrier_type_db_volume_consumption))) {
+                lowerItemEnergyUnit.setText(getString(R.string.compare_type_volume_consumption));
+            } else if (item.get_unit().equalsIgnoreCase(getString(R.string.carrier_type_db_content_mass))) {
+                lowerItemEnergyUnit.setText(getString(R.string.compare_type_mass_content));
+            } else if (item.get_unit().equalsIgnoreCase(getString(R.string.carrier_type_db_content_volume))) {
+                lowerItemEnergyUnit.setText(getString(R.string.compare_type_volume_content));
+            }
+        }
     }
 
     private void compareItems() {
@@ -131,16 +180,22 @@ public class Fragment_Compare extends Fragment {
     }
 
     private void shuffle() {
-        int itemCount = dbHelper.getCarrierCount();
-        int max = itemCount - 1;
+        List<Integer> id_list = dbHelper.getIdList();
+        int idx1, idx2;
+        int max = id_list.size() - 1;
         int min = 0;
-        int item1, item2;
         Random r = new Random();
-        item1 = r.nextInt(max - min) + min;
+        idx1 = r.nextInt(max - min) + min;
         do {
-            item2 = r.nextInt(max - min) + min;
-        } while (item2 == item1);
+            idx2 = r.nextInt(max - min) + min;
+        } while (idx2 == idx1);
+        int id1 = id_list.get(idx1);
+        int id2 = id_list.get(idx2);
 
-        Log.i("Random Items", String.valueOf(item1) + ", " + String.valueOf(item2));
+        Carrier item1 = getItem(id1);
+        Carrier item2 = getItem(id2);
+
+        displayItem(true, item1);
+        displayItem(false, item2);
     }
 }

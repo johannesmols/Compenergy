@@ -140,6 +140,15 @@
         <item>Nautical mile</item>
     </string-array>
 
+    <!-- Compare Fragment -->
+    <string name="joule_lower_case">joule</string>
+    <string name="watt_lower_case">watt</string>
+    <string name="compare_type_capacity">capacity</string>
+    <string name="compare_type_consumption">consumption</string>
+    <string name="compare_type_volume_consumption">on 100 km</string>
+    <string name="compare_type_mass_content">per kilogram</string>
+    <string name="compare_type_volume_content">per litre</string>
+
     <!-- Data Fragment -->
     <string name="data_search_hint">Search for an item…</string>
 
@@ -223,17 +232,7 @@
     <string name="placeholder_item_name">Carrier Name</string>
     <string name="placeholder_item_energy">Energy</string>
     <string name="placeholder_item_unit">unit</string>
-
-    <string name="placeholder_test_item_1_name">BMW M4 (2017)</string>
-    <string name="placeholder_test_item_1_energy">287.28 MJ</string>
-    <string name="placeholder_test_item_1_unit">on 100 km</string>
-    <string name="placeholder_test_item_1_compare_value">3107</string>
-    <string name="placeholder_test_item_1_compare_unit">kilometre</string>
-    <string name="placeholder_test_item_2_name">Worlds solar power capacity</string>
-    <string name="placeholder_test_item_2_energy">256 GW</string>
-    <string name="placeholder_test_item_2_unit">power capacity</string>
-    <string name="placeholder_test_item_2_compare_value">34.8664</string>
-    <string name="placeholder_test_item_2_compare_unit">milliseconds</string>
+    <string name="placeholder_compare_value">Value</string>
 
     <!-- Content Descriptions -->
     <string name="content_description_list_view_header">Minimize or maximize this category</string>

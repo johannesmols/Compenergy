@@ -172,7 +172,7 @@
         <name>Chinas solar power capacity</name>
         <category>Power Plants</category>
         <unit>Capacity</unit>
-        <energy>43530000000</energy>
+        <energy>78070000000</energy>
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>
@@ -180,7 +180,7 @@
         <name>Germanys solar power capacity</name>
         <category>Power Plants</category>
         <unit>Capacity</unit>
-        <energy>39700000000</energy>
+        <energy>41220000000</energy>
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>
@@ -188,7 +188,7 @@
         <name>Japans solar power capacity</name>
         <category>Power Plants</category>
         <unit>Capacity</unit>
-        <energy>34410000000</energy>
+        <energy>42750000000</energy>
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>
@@ -196,7 +196,7 @@
         <name>United States solar power capacity</name>
         <category>Power Plants</category>
         <unit>Capacity</unit>
-        <energy>25620000000</energy>
+        <energy>40300000000</energy>
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>
@@ -204,7 +204,7 @@
         <name>Worlds solar power capacity</name>
         <category>Power Plants</category>
         <unit>Capacity</unit>
-        <energy>256000000000</energy>
+        <energy>303000000000</energy>
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>

@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:baselineAligned="false" >
+    android:baselineAligned="false"
+    android:background="@drawable/gradient_animation_list">
 
     <RelativeLayout
         android:id="@+id/fragment_compare_upper_layout"
@@ -69,14 +70,89 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/fragment_compare_middle_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:padding="8dp" >
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="8dp">
 
-    </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/fragment_compare_middle_upper_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="start|top" >
+
+            <TextView
+                android:id="@+id/fragment_compare_upper_item_compare_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="32sp"
+                android:textColor="@color/dark_text"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@string/placeholder_test_item_1_compare_value"/>
+
+            <TextView
+                android:id="@+id/fragment_compare_upper_item_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/gray_text"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@string/placeholder_test_item_1_compare_unit"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/fragment_compare_middle_compare_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_swap_vert_black_24dp"
+            android:rotation="-45"
+            android:scaleX="2"
+            android:scaleY="2"
+            android:contentDescription="@string/content_description_compare_arrows" />
+
+        <LinearLayout
+            android:id="@+id/fragment_compare_middle_lower_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="end|bottom" >
+
+            <TextView
+                android:id="@+id/fragment_compare_lower_item_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/gray_text"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@string/placeholder_test_item_2_compare_unit"/>
+
+            <TextView
+                android:id="@+id/fragment_compare_lower_item_compare_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end|bottom"
+                android:textSize="32sp"
+                android:textColor="@color/dark_text"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@string/placeholder_test_item_2_compare_value"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/fragment_compare_lower_layout"

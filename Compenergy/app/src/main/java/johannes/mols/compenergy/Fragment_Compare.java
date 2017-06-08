@@ -11,6 +11,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -176,7 +177,19 @@ public class Fragment_Compare extends Fragment {
     }
 
     private void compareItems(Carrier c1, Carrier c2) {
-        List<String> result = CompareCarriers.compareCarriers(c1, c2);
+        List<String> result = CompareCarriers.compareCarriers(mContext, c1, c2); //0: Value for upper item; 1: Value for lower item; 2: Unit for upper item; 3: Unit for lower item
+        if(result != null) {
+            upperItemCompareValue.setText(result.get(0));
+            lowerItemCompareValue.setText(result.get(1));
+            upperItemCompareUnit.setText(result.get(2));
+            lowerItemCompareUnit.setText(result.get(3));
+        } else {
+            upperItemCompareValue.setText("");
+            lowerItemCompareValue.setText("");
+            upperItemCompareUnit.setText("");
+            lowerItemCompareUnit.setText("");
+            Log.e("Unexpected", "Unexpected error in comparison");
+        }
     }
 
     private void shuffle() {

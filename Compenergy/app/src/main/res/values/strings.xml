@@ -239,4 +239,8 @@
     <string name="content_description_nav_drawer_icon">Application icon</string>
     <string name="content_description_compare_color_bucket">Change the item color</string>
     <string name="content_description_compare_arrows">Compare items</string>
+
+    <!-- Comparison strings -->
+    <string name="compare_capacity_capacity_larger">times bigger</string>
+    <string name="compare_capacity_capacity_smaller">percentage</string>
 </resources>

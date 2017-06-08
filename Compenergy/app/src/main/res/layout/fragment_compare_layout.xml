@@ -5,9 +5,8 @@
     android:id="@+id/fragment_compare_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:baselineAligned="false"
-    android:background="@drawable/gradient_animation_list" >
+    android:background="@drawable/gradient_animation_list"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/fragment_compare_upper_layout"

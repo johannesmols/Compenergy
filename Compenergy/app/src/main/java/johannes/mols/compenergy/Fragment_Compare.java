@@ -122,7 +122,7 @@ public class Fragment_Compare extends Fragment {
         return dbHelper.getCarrierWithID(id).get(0);
     }
 
-    private void displayItem(boolean upperOrLower, Carrier item) {
+    private void displayItemInfo(boolean upperOrLower, Carrier item) {
         if(upperOrLower) {
             //Name
             upperItemName.setText(item.get_name());
@@ -175,8 +175,8 @@ public class Fragment_Compare extends Fragment {
         }
     }
 
-    private void compareItems() {
-
+    private void compareItems(Carrier c1, Carrier c2) {
+        List<String> result = CompareCarriers.compareCarriers(c1, c2);
     }
 
     private void shuffle() {
@@ -195,7 +195,9 @@ public class Fragment_Compare extends Fragment {
         Carrier item1 = getItem(id1);
         Carrier item2 = getItem(id2);
 
-        displayItem(true, item1);
-        displayItem(false, item2);
+        displayItemInfo(true, item1);
+        displayItemInfo(false, item2);
+
+        compareItems(item1, item2);
     }
 }

@@ -193,24 +193,26 @@ public class Fragment_Compare extends Fragment {
     }
 
     private void shuffle() {
-        List<Integer> id_list = dbHelper.getIdList();
-        int idx1, idx2;
-        int max = id_list.size() - 1;
-        int min = 0;
-        Random r = new Random();
-        idx1 = r.nextInt(max - min) + min;
-        do {
-            idx2 = r.nextInt(max - min) + min;
-        } while (idx2 == idx1);
-        int id1 = id_list.get(idx1);
-        int id2 = id_list.get(idx2);
+        if(!(dbHelper.getCarrierCount() == 0)) {
+            List<Integer> id_list = dbHelper.getIdList();
+            int idx1, idx2;
+            int max = id_list.size() - 1;
+            int min = 0;
+            Random r = new Random();
+            idx1 = r.nextInt(max - min) + min;
+            do {
+                idx2 = r.nextInt(max - min) + min;
+            } while (idx2 == idx1);
+            int id1 = id_list.get(idx1);
+            int id2 = id_list.get(idx2);
 
-        Carrier item1 = getItem(id1);
-        Carrier item2 = getItem(id2);
+            Carrier item1 = getItem(id1);
+            Carrier item2 = getItem(id2);
 
-        displayItemInfo(true, item1);
-        displayItemInfo(false, item2);
+            displayItemInfo(true, item1);
+            displayItemInfo(false, item2);
 
-        compareItems(item1, item2);
+            compareItems(item1, item2);
+        }
     }
 }

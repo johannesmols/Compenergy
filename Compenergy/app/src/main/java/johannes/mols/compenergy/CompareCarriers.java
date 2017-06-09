@@ -21,8 +21,12 @@ class CompareCarriers {
     private static String unit_mass_content;
     private static String unit_volume_content;
 
+    private static DatabaseHelper dbHelper;
+
     private static void setup(Context context) {
         mContext = context;
+
+        dbHelper = new DatabaseHelper(mContext, null, null, 1);
 
         unit_capacity = mContext.getString(R.string.carrier_type_db_capacity);
         unit_consumption = mContext.getString(R.string.carrier_type_db_consumption);
@@ -33,6 +37,10 @@ class CompareCarriers {
 
     static List<String> compareCarriers(Context context, Carrier c1, Carrier c2) {
         setup(context);
+
+        if(dbHelper.getCarrierCount() == 0) {
+            return null;
+        }
 
         if(c1 == null || c2 == null || c1.get_energy() == 0 || c2.get_energy() == 0) {
             return null;

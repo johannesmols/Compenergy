@@ -9,7 +9,7 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.widget.AutoCompleteTextView;
 
-public class InstantAutoComplete extends AutoCompleteTextView {
+public class InstantAutoComplete extends android.support.v7.widget.AppCompatAutoCompleteTextView {
 
     public InstantAutoComplete(Context context) {
         super(context);

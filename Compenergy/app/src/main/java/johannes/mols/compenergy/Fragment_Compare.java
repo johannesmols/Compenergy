@@ -86,6 +86,20 @@ public class Fragment_Compare extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        //Load saved items
+        String key1 = "compenergy.compare.upper_item";
+        String key2 = "compenergy.compare.lower_item";
+        SharedPreferences pref1 = getActivity().getSharedPreferences(key1, Context.MODE_PRIVATE);
+        SharedPreferences pref2 = getActivity().getSharedPreferences(key2, Context.MODE_PRIVATE);
+        try {
+            Carrier upper = dbHelper.getCarriersWithName(pref1.getString(key1, "")).get(0);
+            Carrier lower = dbHelper.getCarriersWithName(pref2.getString(key2, "")).get(0);
+            compareItems(upper, lower);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         if(animationDrawable != null && !animationDrawable.isRunning()) {
             animationDrawable.start();
@@ -94,6 +108,14 @@ public class Fragment_Compare extends Fragment {
 
     @Override
     public void onPause() {
+        //Save current items
+        String key1 = "compenergy.compare.upper_item";
+        String key2 = "compenergy.compare.lower_item";
+        SharedPreferences prefs1 = mContext.getSharedPreferences(key1, Context.MODE_PRIVATE);
+        SharedPreferences prefs2 = mContext.getSharedPreferences(key2, Context.MODE_PRIVATE);
+        prefs1.edit().putString(key1, upperItemName.getText().toString()).apply();
+        prefs2.edit().putString(key2, lowerItemName.getText().toString()).apply();
+
         super.onPause();
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
         if(animationDrawable != null && animationDrawable.isRunning()) {
@@ -192,7 +214,7 @@ public class Fragment_Compare extends Fragment {
         }
     }
 
-    private void shuffle() {
+    public void shuffle() {
         if(dbHelper.getCarrierCount() > 0) {
             List<Integer> id_list = dbHelper.getIdList();
             int idx1, idx2;

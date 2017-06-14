@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 class CompareCarriers {
 
@@ -36,6 +37,71 @@ class CompareCarriers {
     }
 
     static List<String> compareCarriers(Context context, Carrier c1, Carrier c2) {
+        setup(context);
+
+        if(dbHelper.getCarrierCount() == 0 || c1 == null || c2 == null || c1.get_energy() == 0 || c2.get_energy() == 0) {
+            return null;
+        }
+
+        //Find a random amount for the upper item which will be compared with the lower item
+        int amount;
+        int max, min;
+        if(c1.get_unit().equalsIgnoreCase(unit_capacity)) {
+            //Time in seconds
+            max = 60 * 60; //One hour
+            min = 60;      //One minute
+        } else if (c1.get_unit().equalsIgnoreCase(unit_consumption)) {
+            //Time in seconds
+            max = 60 * 60; //One hour
+            min = 60;      //One minute
+        } else if (c1.get_unit().equalsIgnoreCase(unit_volume_consumption)) {
+            //Kilometer
+            max = 1000;
+            min = 1;
+        } else if (c1.get_unit().equalsIgnoreCase(unit_mass_content)) {
+            //Kilogram
+            max = 1000; //One ton
+            min = 1;
+        } else if (c1.get_unit().equalsIgnoreCase(unit_volume_content)) {
+            //Litre
+            max = 1000;
+            min = 1;
+        } else {
+            return null;
+        }
+        amount = randomRange(max, min);
+
+        return null;
+    }
+
+    //Comparing with given amounts
+    static List<String> compareCarriers(Context context, Carrier c1, Carrier c2, Long amount1, String unit1, Long amount2, String unit2) {
+        setup(context);
+
+        if(dbHelper.getCarrierCount() == 0 || c1 == null || c2 == null || c1.get_energy() == 0 || c2.get_energy() == 0 || amount1 <= 0 || amount2 <= 0 || unit1.trim().isEmpty() || unit2.trim().isEmpty()) {
+            return null;
+        }
+
+        return null;
+    }
+
+    private List<String> compareWithFixedUnitUpper(Carrier c1, Carrier c2, int amount) {
+        return null;
+    }
+
+    private List<String> compareWithFixedUnitLower(Carrier c1, Carrier c2, int amount) {
+        return null;
+    }
+
+    private static int randomRange(int max, int min) {
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
+    }
+
+
+
+    //Comparing without given amounts
+    static List<String> compareCarriersOld(Context context, Carrier c1, Carrier c2) {
         setup(context);
 
         if(dbHelper.getCarrierCount() == 0) {

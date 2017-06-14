@@ -27,6 +27,7 @@ class CompareCarriers {
     private static String com_percentage;
     private static String com_times_larger;
     private static String com_time;
+    private static String com_seconds;
 
     private static DatabaseHelper dbHelper;
 
@@ -45,6 +46,7 @@ class CompareCarriers {
         com_percentage = mContext.getString(R.string.com_percentage);
         com_times_larger = mContext.getString(R.string.com_times_larger);
         com_time = mContext.getString(R.string.com_time);
+        com_seconds = mContext.getString(R.string.com_seconds);
     }
 
     static List<String> compareCarriers(Context context, Carrier c1, Carrier c2) {
@@ -151,8 +153,8 @@ class CompareCarriers {
                 BigDecimal time = producer_joule.divide(e2, 2, BigDecimal.ROUND_HALF_UP);
                 result.add(0, df.format(amount)); //Upper time
                 result.add(1, df.format(time)); //Lower time
-                result.add(2, com_time);
-                result.add(3, com_time);
+                result.add(2, com_seconds);
+                result.add(3, com_seconds);
                 return result;
             }
             else if (cat2.equalsIgnoreCase(unit_volume_consumption)) {

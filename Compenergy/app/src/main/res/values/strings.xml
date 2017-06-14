@@ -150,8 +150,10 @@
     <string name="compare_type_volume_content">per litre</string>
 
     <!-- Comparing words -->
+    <string name="com_values_equal">values equal</string>
     <string name="com_percentage">percentage</string>
     <string name="com_times_larger">times larger</string>
+    <string name="com_time">time</string>
 
     <!-- Data Fragment -->
     <string name="data_search_hint">Search for an item…</string>

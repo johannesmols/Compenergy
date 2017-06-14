@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 class CompareCarriers {
@@ -22,8 +23,10 @@ class CompareCarriers {
     private static String unit_mass_content;
     private static String unit_volume_content;
 
+    private static String com_values_equal;
     private static String com_percentage;
     private static String com_times_larger;
+    private static String com_time;
 
     private static DatabaseHelper dbHelper;
 
@@ -38,8 +41,10 @@ class CompareCarriers {
         unit_mass_content = mContext.getString(R.string.carrier_type_db_content_mass);
         unit_volume_content = mContext.getString(R.string.carrier_type_db_content_volume);
 
+        com_values_equal = mContext.getString(R.string.com_values_equal);
         com_percentage = mContext.getString(R.string.com_percentage);
         com_times_larger = mContext.getString(R.string.com_times_larger);
+        com_time = mContext.getString(R.string.com_time);
     }
 
     static List<String> compareCarriers(Context context, Carrier c1, Carrier c2) {
@@ -77,7 +82,7 @@ class CompareCarriers {
         }
         amount = randomRange(max, min);
 
-        return compareWithFixedUnitUpper(c1, c2, amount);
+        return compareWithFixedUnitUpper(c1, c2, (long)amount);
     }
 
     //Comparing with given amounts
@@ -100,7 +105,7 @@ class CompareCarriers {
     }
 
     //Compare with a certain amount given for the upper item
-    private static List<String> compareWithFixedUnitUpper(Carrier c1, Carrier c2, int amount) {
+    private static List<String> compareWithFixedUnitUpper(Carrier c1, Carrier c2, long amount) {
         List<String> result = new ArrayList<>();
         BigDecimal e1 = new BigDecimal(c1.get_energy());
         BigDecimal e2 = new BigDecimal(c2.get_energy());
@@ -123,13 +128,13 @@ class CompareCarriers {
                     result.add(2, mContext.getString(R.string.compare_capacity_capacity_larger));
                     result.add(3, mContext.getString(R.string.compare_capacity_capacity_smaller));
                     return result;
-                } else if(e1.compareTo(e2) == 0) {
-                    result.add(0, "1.0");
-                    result.add(1, "1.0");
-                    result.add(2, "values equal");
-                    result.add(3, "values equal");
+                } else if(e1.compareTo(e2) == 0) { //same
+                    result.add(0, String.format(Locale.getDefault(), "%f.1f", 1.0));
+                    result.add(1, String.format(Locale.getDefault(), "%f.1f", 1.0));
+                    result.add(2, com_values_equal);
+                    result.add(3, com_values_equal);
                     return result;
-                } else {
+                } else { //smaller
                     BigDecimal percentage = e1.divide(e2, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
                     result.add(0, df.format(percentage) + " %");
                     BigDecimal timesBigger = e2.divide(e1, 2, BigDecimal.ROUND_HALF_UP);
@@ -141,6 +146,14 @@ class CompareCarriers {
             }
             else if (cat2.equalsIgnoreCase(unit_consumption)) {
                 //Upper is electric producer, lower is electric consumer. Calculate how long the consumer can run with some time of producing
+                //Amount = Time of producer => Time of consumer = Joule of producer (watt * time (amount)) / Wattage of consumer
+                BigDecimal producer_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal time = producer_joule.divide(e2, 2, BigDecimal.ROUND_HALF_UP);
+                result.add(0, df.format(amount)); //Upper time
+                result.add(1, df.format(time)); //Lower time
+                result.add(2, com_time);
+                result.add(3, com_time);
+                return result;
             }
             else if (cat2.equalsIgnoreCase(unit_volume_consumption)) {
 

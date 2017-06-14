@@ -148,9 +148,7 @@ public class ActMain extends AppCompatActivity implements NavigationView.OnNavig
 
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
-        if(fragmentManager.findFragmentByTag(fragment.getTag()) == null) {
-            fragmentManager.beginTransaction().replace(R.id.content_act_compare, fragment).commit();
-        }
+        fragmentManager.beginTransaction().replace(R.id.content_act_compare, fragment).commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

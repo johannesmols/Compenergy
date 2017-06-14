@@ -40,6 +40,9 @@ public class Fragment_Compare extends Fragment {
     private TextView upperItemCompareUnit;
     private TextView lowerItemCompareUnit;
 
+    private final String key_upper = "compenergy.compare.upper_item";
+    private final String key_lower = "compenergy.compare.lower_item";
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,8 +66,19 @@ public class Fragment_Compare extends Fragment {
         String key = "compenergy.compare.first_start";
         SharedPreferences prefs = getActivity().getSharedPreferences(key, Context.MODE_PRIVATE);
         if(prefs.getBoolean(key, true)) {
-            //First started
+            //First started, shuffle
             shuffle();
+        } else {
+            //Load old carriers
+            SharedPreferences pref1 = getActivity().getSharedPreferences(key_upper, Context.MODE_PRIVATE);
+            SharedPreferences pref2 = getActivity().getSharedPreferences(key_lower, Context.MODE_PRIVATE);
+            try {
+                Carrier upper = dbHelper.getCarriersWithName(pref1.getString(key_upper, "")).get(0);
+                Carrier lower = dbHelper.getCarriersWithName(pref2.getString(key_lower, "")).get(0);
+                compareItems(upper, lower);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         prefs.edit().putBoolean(key, false).apply();
 
@@ -87,19 +101,6 @@ public class Fragment_Compare extends Fragment {
     public void onResume() {
         super.onResume();
 
-        //Load saved items
-        String key1 = "compenergy.compare.upper_item";
-        String key2 = "compenergy.compare.lower_item";
-        SharedPreferences pref1 = getActivity().getSharedPreferences(key1, Context.MODE_PRIVATE);
-        SharedPreferences pref2 = getActivity().getSharedPreferences(key2, Context.MODE_PRIVATE);
-        try {
-            Carrier upper = dbHelper.getCarriersWithName(pref1.getString(key1, "")).get(0);
-            Carrier lower = dbHelper.getCarriersWithName(pref2.getString(key2, "")).get(0);
-            compareItems(upper, lower);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         if(animationDrawable != null && !animationDrawable.isRunning()) {
             animationDrawable.start();
@@ -108,14 +109,6 @@ public class Fragment_Compare extends Fragment {
 
     @Override
     public void onPause() {
-        //Save current items
-        String key1 = "compenergy.compare.upper_item";
-        String key2 = "compenergy.compare.lower_item";
-        SharedPreferences prefs1 = mContext.getSharedPreferences(key1, Context.MODE_PRIVATE);
-        SharedPreferences prefs2 = mContext.getSharedPreferences(key2, Context.MODE_PRIVATE);
-        prefs1.edit().putString(key1, upperItemName.getText().toString()).apply();
-        prefs2.edit().putString(key2, lowerItemName.getText().toString()).apply();
-
         super.onPause();
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
         if(animationDrawable != null && animationDrawable.isRunning()) {
@@ -199,6 +192,9 @@ public class Fragment_Compare extends Fragment {
     }
 
     private void compareItems(Carrier c1, Carrier c2) {
+        displayItemInfo(true, c1);
+        displayItemInfo(false, c2);
+
         List<String> result = CompareCarriers.compareCarriers(mContext, c1, c2); //0: Value for upper item; 1: Value for lower item; 2: Unit for upper item; 3: Unit for lower item
         if(result != null) {
             upperItemCompareValue.setText(result.get(0));
@@ -212,9 +208,15 @@ public class Fragment_Compare extends Fragment {
             lowerItemCompareUnit.setText("");
             Log.e("Unexpected", "Unexpected error in comparison");
         }
+
+        //Save which items are compared
+        SharedPreferences prefs1 = mContext.getSharedPreferences(key_upper, Context.MODE_PRIVATE);
+        SharedPreferences prefs2 = mContext.getSharedPreferences(key_lower, Context.MODE_PRIVATE);
+        prefs1.edit().putString(key_upper, upperItemName.getText().toString()).apply();
+        prefs2.edit().putString(key_lower, lowerItemName.getText().toString()).apply();
     }
 
-    public void shuffle() {
+    private void shuffle() {
         if(dbHelper.getCarrierCount() > 0) {
             List<Integer> id_list = dbHelper.getIdList();
             int idx1, idx2;
@@ -230,9 +232,6 @@ public class Fragment_Compare extends Fragment {
 
             Carrier item1 = getItem(id1);
             Carrier item2 = getItem(id2);
-
-            displayItemInfo(true, item1);
-            displayItemInfo(false, item2);
 
             compareItems(item1, item2);
         } else {

@@ -149,6 +149,10 @@
     <string name="compare_type_mass_content">per kilogram</string>
     <string name="compare_type_volume_content">per litre</string>
 
+    <!-- Comparing words -->
+    <string name="com_percentage">percentage</string>
+    <string name="com_times_larger">times larger</string>
+
     <!-- Data Fragment -->
     <string name="data_search_hint">Search for an item…</string>
 

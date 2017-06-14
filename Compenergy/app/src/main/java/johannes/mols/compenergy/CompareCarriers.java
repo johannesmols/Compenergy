@@ -22,6 +22,9 @@ class CompareCarriers {
     private static String unit_mass_content;
     private static String unit_volume_content;
 
+    private static String com_percentage;
+    private static String com_times_larger;
+
     private static DatabaseHelper dbHelper;
 
     private static void setup(Context context) {
@@ -34,6 +37,9 @@ class CompareCarriers {
         unit_volume_consumption = mContext.getString(R.string.carrier_type_db_volume_consumption);
         unit_mass_content = mContext.getString(R.string.carrier_type_db_content_mass);
         unit_volume_content = mContext.getString(R.string.carrier_type_db_content_volume);
+
+        com_percentage = mContext.getString(R.string.com_percentage);
+        com_times_larger = mContext.getString(R.string.com_times_larger);
     }
 
     static List<String> compareCarriers(Context context, Carrier c1, Carrier c2) {
@@ -55,12 +61,12 @@ class CompareCarriers {
             max = 60 * 60; //One hour
             min = 60;      //One minute
         } else if (c1.get_unit().equalsIgnoreCase(unit_volume_consumption)) {
-            //Kilometer
+            //Kilometre
             max = 1000;
             min = 1;
         } else if (c1.get_unit().equalsIgnoreCase(unit_mass_content)) {
             //Kilogram
-            max = 1000; //One ton
+            max = 1000;
             min = 1;
         } else if (c1.get_unit().equalsIgnoreCase(unit_volume_content)) {
             //Litre
@@ -71,31 +77,178 @@ class CompareCarriers {
         }
         amount = randomRange(max, min);
 
-        return null;
+        return compareWithFixedUnitUpper(c1, c2, amount);
     }
 
     //Comparing with given amounts
-    static List<String> compareCarriers(Context context, Carrier c1, Carrier c2, Long amount1, String unit1, Long amount2, String unit2) {
+    static List<String> compareCarriers(Context context, Carrier c1, Carrier c2, int amount, String unit, boolean upperOrLower) {
         setup(context);
 
-        if(dbHelper.getCarrierCount() == 0 || c1 == null || c2 == null || c1.get_energy() == 0 || c2.get_energy() == 0 || amount1 <= 0 || amount2 <= 0 || unit1.trim().isEmpty() || unit2.trim().isEmpty()) {
+        if(dbHelper.getCarrierCount() == 0 || c1 == null || c2 == null || c1.get_energy() == 0 || c2.get_energy() == 0 || amount <= 0 || unit.trim().isEmpty()) {
+            return null;
+        }
+
+        //Convert input unit to normalized input
+
+        if(upperOrLower) {
+            compareWithFixedUnitUpper(c1, c2, amount);
+        } else {
+            compareWithFixedUnitLower(c1, c2, amount);
+        }
+
+        return null;
+    }
+
+    //Compare with a certain amount given for the upper item
+    private static List<String> compareWithFixedUnitUpper(Carrier c1, Carrier c2, int amount) {
+        List<String> result = new ArrayList<>();
+        BigDecimal e1 = new BigDecimal(c1.get_energy());
+        BigDecimal e2 = new BigDecimal(c2.get_energy());
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+        df.setMinimumFractionDigits(2);
+        df.setGroupingUsed(false);
+
+        String cat1 = c1.get_unit();
+        String cat2 = c2.get_unit();
+
+        if (cat1.equalsIgnoreCase(unit_capacity)) {
+            if (cat2.equalsIgnoreCase(unit_capacity)) {
+                //Both capacitors, can ignore amount
+                if(e1.compareTo(e2) == 1) { //larger
+                    BigDecimal timesBigger = e1.divide(e2, 2, BigDecimal.ROUND_HALF_UP);
+                    result.add(0, df.format(timesBigger));
+                    BigDecimal percentage = e2.divide(e1, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
+                    result.add(1, df.format(percentage) + " %");
+                    result.add(2, mContext.getString(R.string.compare_capacity_capacity_larger));
+                    result.add(3, mContext.getString(R.string.compare_capacity_capacity_smaller));
+                    return result;
+                } else if(e1.compareTo(e2) == 0) {
+                    result.add(0, "1.0");
+                    result.add(1, "1.0");
+                    result.add(2, "values equal");
+                    result.add(3, "values equal");
+                    return result;
+                } else {
+                    BigDecimal percentage = e1.divide(e2, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
+                    result.add(0, df.format(percentage) + " %");
+                    BigDecimal timesBigger = e2.divide(e1, 2, BigDecimal.ROUND_HALF_UP);
+                    result.add(1, df.format(timesBigger));
+                    result.add(2, mContext.getString(R.string.compare_capacity_capacity_smaller));
+                    result.add(3, mContext.getString(R.string.compare_capacity_capacity_larger));
+                    return result;
+                }
+            }
+            else if (cat2.equalsIgnoreCase(unit_consumption)) {
+                //Upper is electric producer, lower is electric consumer. Calculate how long the consumer can run with some time of producing
+            }
+            else if (cat2.equalsIgnoreCase(unit_volume_consumption)) {
+
+            }
+            else if (cat2.equalsIgnoreCase(unit_mass_content)) {
+
+            }
+            else if (cat2.equalsIgnoreCase(unit_volume_content)) {
+
+            }
+            else {
+                return null;
+            }
+        }
+        else if (cat1.equalsIgnoreCase(unit_consumption)) {
+            if (cat2.equalsIgnoreCase(unit_capacity)) {
+
+            }
+            else if (cat2.equalsIgnoreCase(unit_consumption)) {
+
+            }
+            else if (cat2.equalsIgnoreCase(unit_volume_consumption)) {
+
+            }
+            else if (cat2.equalsIgnoreCase(unit_mass_content)) {
+
+            }
+            else if (cat2.equalsIgnoreCase(unit_volume_content)) {
+
+            }
+            else {
+                return null;
+            }
+        }
+        else if (cat1.equalsIgnoreCase(unit_volume_consumption)) {
+            if (cat2.equalsIgnoreCase(unit_capacity)) {
+
+            }
+            else if (cat2.equalsIgnoreCase(unit_consumption)) {
+
+            }
+            else if (cat2.equalsIgnoreCase(unit_volume_consumption)) {
+
+            }
+            else if (cat2.equalsIgnoreCase(unit_mass_content)) {
+
+            }
+            else if (cat2.equalsIgnoreCase(unit_volume_content)) {
+
+            }
+            else {
+                return null;
+            }
+        }
+        else if (cat1.equalsIgnoreCase(unit_mass_content)) {
+            if (cat2.equalsIgnoreCase(unit_capacity)) {
+
+            }
+            else if (cat2.equalsIgnoreCase(unit_consumption)) {
+
+            }
+            else if (cat2.equalsIgnoreCase(unit_volume_consumption)) {
+
+            }
+            else if (cat2.equalsIgnoreCase(unit_mass_content)) {
+
+            }
+            else if (cat2.equalsIgnoreCase(unit_volume_content)) {
+
+            }
+            else {
+                return null;
+            }
+        }
+        else if (cat1.equalsIgnoreCase(unit_volume_content)) {
+            if (cat2.equalsIgnoreCase(unit_capacity)) {
+
+            }
+            else if (cat2.equalsIgnoreCase(unit_consumption)) {
+
+            }
+            else if (cat2.equalsIgnoreCase(unit_volume_consumption)) {
+
+            }
+            else if (cat2.equalsIgnoreCase(unit_mass_content)) {
+
+            }
+            else if (cat2.equalsIgnoreCase(unit_volume_content)) {
+
+            }
+            else {
+                return null;
+            }
+        }
+        else {
             return null;
         }
 
         return null;
     }
 
-    private List<String> compareWithFixedUnitUpper(Carrier c1, Carrier c2, int amount) {
-        return null;
-    }
-
-    private List<String> compareWithFixedUnitLower(Carrier c1, Carrier c2, int amount) {
+    //Compare with a certain amount given for the lower item
+    private static List<String> compareWithFixedUnitLower(Carrier c1, Carrier c2, int amount) {
         return null;
     }
 
     private static int randomRange(int max, int min) {
-        Random r = new Random();
-        return r.nextInt((max - min) + 1) + min;
+        return new Random().nextInt((max - min) + 1) + min;
     }
 
 

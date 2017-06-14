@@ -195,7 +195,7 @@ public class Fragment_Compare extends Fragment {
         displayItemInfo(true, c1);
         displayItemInfo(false, c2);
 
-        List<String> result = CompareCarriers.compareCarriersOld(mContext, c1, c2); //0: Value for upper item; 1: Value for lower item; 2: Unit for upper item; 3: Unit for lower item
+        List<String> result = CompareCarriers.compareCarriers(mContext, c1, c2); //0: Value for upper item; 1: Value for lower item; 2: Unit for upper item; 3: Unit for lower item
         if(result != null) {
             upperItemCompareValue.setText(result.get(0));
             lowerItemCompareValue.setText(result.get(1));

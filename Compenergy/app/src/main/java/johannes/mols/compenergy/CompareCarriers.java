@@ -31,6 +31,7 @@ class CompareCarriers {
     private static String com_minutes;
     private static String com_hours;
     private static String com_days;
+    private static String com_km;
 
     private static DatabaseHelper dbHelper;
     private static DecimalFormat df;
@@ -58,6 +59,7 @@ class CompareCarriers {
         com_minutes = mContext.getString(R.string.com_minutes);
         com_hours = mContext.getString(R.string.com_hours);
         com_days = mContext.getString(R.string.com_days);
+        com_km = mContext.getString(R.string.com_km);
     }
 
     static List<String> compareCarriers(Context context, Carrier c1, Carrier c2) {
@@ -168,7 +170,17 @@ class CompareCarriers {
                 return result;
             }
             else if (cat2.equalsIgnoreCase(unit_volume_consumption)) {
+                //Upper is electric producer, lower is consumer by distance. Calculate how far the consumer can move with some time of producing
+                //Amount = Time of producer => Distance of consumer = Joule of producer (watt * time (amount)) / Consumption of consumer * 100 (consumption is in 100km)
+                BigDecimal producer_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal distance = producer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100.0));
+                String[] upperResult = findBestTimeUnit(amount);
 
+                result.add(0, upperResult[0]);
+                result.add(1, df.format(distance));
+                result.add(2, upperResult[1]);
+                result.add(3, com_km);
+                return result;
             }
             else if (cat2.equalsIgnoreCase(unit_mass_content)) {
 

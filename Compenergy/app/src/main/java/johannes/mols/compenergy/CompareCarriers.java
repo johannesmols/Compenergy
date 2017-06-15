@@ -28,13 +28,21 @@ class CompareCarriers {
     private static String com_times_larger;
     private static String com_time;
     private static String com_seconds;
+    private static String com_minutes;
+    private static String com_hours;
+    private static String com_days;
 
     private static DatabaseHelper dbHelper;
+    private static DecimalFormat df;
 
     private static void setup(Context context) {
         mContext = context;
 
         dbHelper = new DatabaseHelper(mContext, null, null, 1);
+        df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+        df.setMinimumFractionDigits(2);
+        df.setGroupingUsed(false);
 
         unit_capacity = mContext.getString(R.string.carrier_type_db_capacity);
         unit_consumption = mContext.getString(R.string.carrier_type_db_consumption);
@@ -47,6 +55,9 @@ class CompareCarriers {
         com_times_larger = mContext.getString(R.string.com_times_larger);
         com_time = mContext.getString(R.string.com_time);
         com_seconds = mContext.getString(R.string.com_seconds);
+        com_minutes = mContext.getString(R.string.com_minutes);
+        com_hours = mContext.getString(R.string.com_hours);
+        com_days = mContext.getString(R.string.com_days);
     }
 
     static List<String> compareCarriers(Context context, Carrier c1, Carrier c2) {
@@ -111,10 +122,6 @@ class CompareCarriers {
         List<String> result = new ArrayList<>();
         BigDecimal e1 = new BigDecimal(c1.get_energy());
         BigDecimal e2 = new BigDecimal(c2.get_energy());
-        DecimalFormat df = new DecimalFormat();
-        df.setMaximumFractionDigits(2);
-        df.setMinimumFractionDigits(2);
-        df.setGroupingUsed(false);
 
         String cat1 = c1.get_unit();
         String cat2 = c2.get_unit();
@@ -151,10 +158,13 @@ class CompareCarriers {
                 //Amount = Time of producer => Time of consumer = Joule of producer (watt * time (amount)) / Wattage of consumer
                 BigDecimal producer_joule = e1.multiply(new BigDecimal(amount));
                 BigDecimal time = producer_joule.divide(e2, 2, BigDecimal.ROUND_HALF_UP);
-                result.add(0, df.format(amount)); //Upper time
-                result.add(1, df.format(time)); //Lower time
-                result.add(2, com_seconds);
-                result.add(3, com_seconds);
+                String[] upperResult = findBestTimeUnit(amount);
+                String[] lowerResult = findBestTimeUnit(time.longValue());
+
+                result.add(0, upperResult[0]); //Upper time
+                result.add(1, lowerResult[0]); //Lower time
+                result.add(2, upperResult[1]);
+                result.add(3, lowerResult[1]);
                 return result;
             }
             else if (cat2.equalsIgnoreCase(unit_volume_consumption)) {
@@ -260,6 +270,25 @@ class CompareCarriers {
     //Compare with a certain amount given for the lower item
     private static List<String> compareWithFixedUnitLower(Carrier c1, Carrier c2, int amount) {
         return null;
+    }
+
+    private static String[] findBestTimeUnit(long seconds) {
+        String[] result = new String[2];
+        if (seconds < 60) { //smaller than one minute - display seconds
+            result[0] = df.format(seconds);
+            result[1] = com_seconds;
+        } else if (seconds < 60 * 60) { //smaller than one hour - display minutes
+            result[0] = df.format((double)seconds / 60);
+            result[1] = com_minutes;
+        } else if (seconds < 60 * 60 * 24) { //smaller than one day - display hours
+            result[0] = df.format((double)seconds / (60 * 60));
+            result[1] = com_hours;
+        } else {
+            result[0] = df.format((double)seconds / (60 * 60 * 24));
+            result[1] = com_days;
+        }
+
+        return result;
     }
 
     private static int randomRange(int max, int min) {

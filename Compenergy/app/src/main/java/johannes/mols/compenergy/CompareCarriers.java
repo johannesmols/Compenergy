@@ -8,6 +8,7 @@ import android.content.Context;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -35,6 +36,7 @@ class CompareCarriers {
 
     private static DatabaseHelper dbHelper;
     private static DecimalFormat df;
+    private static DecimalFormatSymbols symbols;
 
     private static void setup(Context context) {
         mContext = context;
@@ -43,7 +45,10 @@ class CompareCarriers {
         df = new DecimalFormat();
         df.setMaximumFractionDigits(2);
         df.setMinimumFractionDigits(2);
-        df.setGroupingUsed(false);
+        df.setGroupingUsed(true);
+        symbols = new DecimalFormatSymbols(Locale.getDefault());
+        symbols = df.getDecimalFormatSymbols();
+        df.setDecimalFormatSymbols(symbols);
 
         unit_capacity = mContext.getString(R.string.carrier_type_db_capacity);
         unit_consumption = mContext.getString(R.string.carrier_type_db_consumption);

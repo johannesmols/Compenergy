@@ -58,10 +58,6 @@ public class Fragment_About extends Fragment {
         @Override
         public void onClick(View v) {
             Util.openEmailApplication(mContext, getString(R.string.about_contact_value), 0);
-            /*Intent email = new Intent(Intent.ACTION_SEND);
-            email.setType("message/rfc822");
-            email.putExtra(Intent.EXTRA_EMAIL, new String[] { getString(R.string.about_contact_value) });
-            startActivity(Intent.createChooser(email, ""));*/
         }
     };
 }

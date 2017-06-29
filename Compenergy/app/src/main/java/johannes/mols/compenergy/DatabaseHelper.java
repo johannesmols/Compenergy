@@ -176,6 +176,10 @@ class DatabaseHelper extends SQLiteOpenHelper {
         return getCarriers(CARRIER_FAVORITE + "=true");
     }
 
+    List<Carrier> getFavoritesWithCategory(String category) {
+        return getCarriers(CARRIER_CATEGORY + "='" + category + "' AND " + CARRIER_FAVORITE + "= 1 ");
+    }
+
     List<Carrier> getCustomCarriers() {
         return getCarriers(CARRIER_CUSTOM + "=true");
     }
@@ -184,6 +188,27 @@ class DatabaseHelper extends SQLiteOpenHelper {
         List<String> categories = new ArrayList<>();
         try (SQLiteDatabase db = getWritableDatabase()) {
             String query = "SELECT DISTINCT " + CARRIER_CATEGORY + " FROM " + TABLE_CARRIERS_NAME + ";";
+
+            Cursor c = db.rawQuery(query, null);
+            c.moveToFirst();
+
+            while (!c.isAfterLast()) {
+                if(c.getString(c.getColumnIndex(CARRIER_CATEGORY)) != null) {
+                    categories.add(c.getString(c.getColumnIndex(CARRIER_CATEGORY)));
+                }
+                c.moveToNext();
+            }
+            c.close();
+            db.close();
+        }
+
+        return categories;
+    }
+
+    List<String> getCategoryListThatContainsFavorites() {
+        List<String> categories = new ArrayList<>();
+        try (SQLiteDatabase db = getWritableDatabase()) {
+            String query = "SELECT DISTINCT " + CARRIER_CATEGORY + " FROM " + TABLE_CARRIERS_NAME + " WHERE " + CARRIER_FAVORITE + "=1;";
 
             Cursor c = db.rawQuery(query, null);
             c.moveToFirst();

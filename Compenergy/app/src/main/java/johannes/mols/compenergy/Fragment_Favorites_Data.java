@@ -36,8 +36,6 @@ public class Fragment_Favorites_Data extends Fragment {
 
     private DatabaseHelper dbHelper;
 
-    private static final int REQUEST_CODE_EDIT = 0x539;
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -99,10 +97,10 @@ public class Fragment_Favorites_Data extends Fragment {
         categories_list = new ArrayList<>();
         carriers_list = new HashMap<>();
 
-        categories_list = dbHelper.getCategoryList();
+        categories_list = dbHelper.getCategoryListThatContainsFavorites();
 
         for(int i = 0; i < categories_list.size(); i++) {
-            List<Carrier> carrierList = dbHelper.getCarriersWithCategory(categories_list.get(i));
+            List<Carrier> carrierList = dbHelper.getFavoritesWithCategory(categories_list.get(i));
             carriers_list.put(categories_list.get(i), carrierList);
         }
 

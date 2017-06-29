@@ -104,7 +104,7 @@ class FavoriteExpandableListAdapter extends BaseExpandableListAdapter {
             }
 
             TextView txtListChild;
-            txtListChild = (TextView) convertView.findViewById(R.id.fragment_favorite_list_view_carrier_name);
+            txtListChild = (TextView) convertView.findViewById(R.id.fragment_favorites_list_view_carrier_name);
 
             txtListChild.setText(carrierName);
             return convertView;

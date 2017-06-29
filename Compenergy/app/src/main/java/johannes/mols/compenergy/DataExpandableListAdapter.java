@@ -114,7 +114,7 @@ class DataExpandableListAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-    void filterData(String query) {
+    void filterData(String query, boolean favoritesOnly) {
         query = query.toLowerCase();
         list_categories = new ArrayList<>(); //Don't use .clear() => it will clear the other original list too, thanks java -.-
         list_carriers = new HashMap<>();
@@ -130,9 +130,19 @@ class DataExpandableListAdapter extends BaseExpandableListAdapter {
             //Filter all data with the given search query. Yes, it's complicated
             List<String> new_categories_list = new ArrayList<>();
             HashMap<String, List<Carrier>> new_carriers_list = new HashMap<>();
-            List<String> all_categories_list = dbHelper.getCategoryList();
+            List<String> all_categories_list;
+            if(!favoritesOnly) {
+                all_categories_list = dbHelper.getCategoryList();
+            } else {
+                all_categories_list = dbHelper.getCategoryListThatContainsFavorites();
+            }
             for(int i = 0; i < all_categories_list.size(); i++) {
-                List<Carrier> carriersWithCategoryList = dbHelper.getCarriersWithCategory(all_categories_list.get(i));
+                List<Carrier> carriersWithCategoryList;
+                if(!favoritesOnly) {
+                    carriersWithCategoryList = dbHelper.getCarriersWithCategory(all_categories_list.get(i));
+                } else {
+                    carriersWithCategoryList = dbHelper.getFavoritesWithCategory(all_categories_list.get(i));
+                }
                 List<Carrier> matchingCarriersInCategory = new ArrayList<>();
                 for(Carrier carrierInCategory : carriersWithCategoryList) {
                     if(carrierInCategory.get_name().toLowerCase().contains(query)) {

@@ -65,7 +65,7 @@ public class Fragment_Favorites_Data extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter.filterData(s.toString());
+                adapter.filterData(s.toString(), true);
                 expandAllGroups();
             }
 

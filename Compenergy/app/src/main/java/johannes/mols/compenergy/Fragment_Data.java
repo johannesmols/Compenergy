@@ -74,7 +74,7 @@ public class Fragment_Data extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter.filterData(s.toString(), false);
+                adapter.filterData(s.toString());
                 expandAllGroups();
             }
 

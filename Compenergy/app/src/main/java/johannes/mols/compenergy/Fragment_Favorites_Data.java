@@ -31,7 +31,7 @@ public class Fragment_Favorites_Data extends Fragment {
     private ExpandableListView expandableListView;
     private List<String> categories_list;
     private HashMap<String, List<Carrier>> carriers_list;
-    private DataExpandableListAdapter adapter;
+    private FavoriteExpandableListAdapter adapter;
     private EditText searchEditText;
 
     private DatabaseHelper dbHelper;
@@ -65,7 +65,7 @@ public class Fragment_Favorites_Data extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter.filterData(s.toString(), true);
+                adapter.filterData(s.toString());
                 expandAllGroups();
             }
 
@@ -87,7 +87,7 @@ public class Fragment_Favorites_Data extends Fragment {
     private void displayList() {
         prepareListData();
 
-        adapter = new DataExpandableListAdapter(mContext, categories_list, carriers_list);
+        adapter = new FavoriteExpandableListAdapter(mContext, categories_list, carriers_list);
         expandableListView.setAdapter(adapter);
 
         expandAllGroups();

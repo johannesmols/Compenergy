@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-class DataExpandableListAdapter extends BaseExpandableListAdapter {
+class FavoriteExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context mContext;
     private List<String> list_categories = new ArrayList<>();
@@ -25,7 +25,7 @@ class DataExpandableListAdapter extends BaseExpandableListAdapter {
     private HashMap<String, List<Carrier>> list_carriers = new HashMap<>();
     private HashMap<String, List<Carrier>> list_carriers_original = new HashMap<>();
 
-    DataExpandableListAdapter(Context context, List<String> categories, HashMap<String, List<Carrier>> carriers) {
+    FavoriteExpandableListAdapter(Context context, List<String> categories, HashMap<String, List<Carrier>> carriers) {
         this.mContext = context;
         this.list_categories = categories;
         this.list_categories_original = categories;
@@ -100,11 +100,11 @@ class DataExpandableListAdapter extends BaseExpandableListAdapter {
 
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) this.mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.listview_item_data_layout, null);
+                convertView = inflater.inflate(R.layout.listview_item_favorite_layout, null);
             }
 
             TextView txtListChild;
-            txtListChild = (TextView) convertView.findViewById(R.id.fragment_data_list_view_carrier_name);
+            txtListChild = (TextView) convertView.findViewById(R.id.fragment_favorite_list_view_carrier_name);
 
             txtListChild.setText(carrierName);
             return convertView;
@@ -132,10 +132,10 @@ class DataExpandableListAdapter extends BaseExpandableListAdapter {
             List<String> new_categories_list = new ArrayList<>();
             HashMap<String, List<Carrier>> new_carriers_list = new HashMap<>();
             List<String> all_categories_list;
-            all_categories_list = dbHelper.getCategoryList();
+            all_categories_list = dbHelper.getCategoryListThatContainsFavorites();
             for(int i = 0; i < all_categories_list.size(); i++) {
                 List<Carrier> carriersWithCategoryList;
-                carriersWithCategoryList = dbHelper.getCarriersWithCategory(all_categories_list.get(i));
+                carriersWithCategoryList = dbHelper.getFavoritesWithCategory(all_categories_list.get(i));
                 List<Carrier> matchingCarriersInCategory = new ArrayList<>();
                 for(Carrier carrierInCategory : carriersWithCategoryList) {
                     if(carrierInCategory.get_name().toLowerCase().contains(query)) {

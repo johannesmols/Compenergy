@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) Johannes Mols 2017.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:descendantFocusability="blocksDescendants" >
+
+        <TextView
+            android:id="@+id/fragment_favorite_list_view_carrier_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/placeholder_item_listview"
+            android:textSize="18sp"
+            android:textStyle="normal"
+            android:textColor="@android:color/primary_text_light"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+</RelativeLayout>

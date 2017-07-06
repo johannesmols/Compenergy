@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 
@@ -113,7 +114,7 @@ public class Fragment_Favorites extends Fragment {
             Collections.sort(l, comparator);
     }
 
-    private void toggleCarrier(Carrier c) {
+    private boolean toggleCarrier(Carrier c) {
         Carrier item = dbHelper.getCarriersWithName(c.get_name()).get(0);
         if(item.get_favorite()) {
             item.set_favorite(false);
@@ -122,6 +123,7 @@ public class Fragment_Favorites extends Fragment {
         }
         dbHelper.updateCarrier(item.get_id(), item);
         updateToggle(item);
+        return item.get_favorite();
     }
 
     private void updateToggle(Carrier c) {
@@ -139,7 +141,9 @@ public class Fragment_Favorites extends Fragment {
         @Override
         public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
             Carrier item = (Carrier) adapter.getChild(groupPosition, childPosition);
-            toggleCarrier(item);
+            boolean result = toggleCarrier(item);
+            CheckBox checkBox = (CheckBox) v.findViewById(R.id.fragment_favorites_toggle);
+            checkBox.setChecked(result);
             return true; //indicates that the event is consumed, meaning the long click listener can't be triggered too
         }
     };

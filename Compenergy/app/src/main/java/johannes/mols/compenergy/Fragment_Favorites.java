@@ -24,7 +24,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class Fragment_Favorites_Data extends Fragment {
+public class Fragment_Favorites extends Fragment {
 
     private Context mContext;
 
@@ -75,6 +75,8 @@ public class Fragment_Favorites_Data extends Fragment {
             }
         });
 
+        expandableListView.setOnChildClickListener(toggleFavorite);
+
         return view;
     }
 
@@ -111,12 +113,36 @@ public class Fragment_Favorites_Data extends Fragment {
             Collections.sort(l, comparator);
     }
 
+    private void toggleCarrier(Carrier c) {
+        Carrier item = dbHelper.getCarriersWithName(c.get_name()).get(0);
+        if(item.get_favorite()) {
+            item.set_favorite(false);
+        } else {
+            item.set_favorite(true);
+        }
+        dbHelper.updateCarrier(item.get_id(), item);
+        updateToggle(item);
+    }
+
+    private void updateToggle(Carrier c) {
+
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == Activity.RESULT_OK) {
             displayList();
         }
     }
+
+    ExpandableListView.OnChildClickListener toggleFavorite = new ExpandableListView.OnChildClickListener() {
+        @Override
+        public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+            Carrier item = (Carrier) adapter.getChild(groupPosition, childPosition);
+            toggleCarrier(item);
+            return true; //indicates that the event is consumed, meaning the long click listener can't be triggered too
+        }
+    };
 
     View.OnTouchListener editSearchOnTouchListener = new View.OnTouchListener() {
         @Override

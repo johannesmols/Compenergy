@@ -121,7 +121,7 @@ public class ActMain extends AppCompatActivity implements NavigationView.OnNavig
                 break;
             }
             case R.id.nav_favorites: {
-                fragment = new Fragment_Favorites_Data();
+                fragment = new Fragment_Favorites();
                 break;
             }
             case R.id.nav_submit_data: {

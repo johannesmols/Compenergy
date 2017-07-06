@@ -115,19 +115,14 @@ public class Fragment_Favorites extends Fragment {
     }
 
     private boolean toggleCarrier(Carrier c) {
-        Carrier item = dbHelper.getCarriersWithName(c.get_name()).get(0);
+        Carrier item = dbHelper.getCarrierWithID(c.get_id()).get(0);
         if(item.get_favorite()) {
             item.set_favorite(false);
         } else {
             item.set_favorite(true);
         }
         dbHelper.updateCarrier(item.get_id(), item);
-        updateToggle(item);
         return item.get_favorite();
-    }
-
-    private void updateToggle(Carrier c) {
-
     }
 
     @Override

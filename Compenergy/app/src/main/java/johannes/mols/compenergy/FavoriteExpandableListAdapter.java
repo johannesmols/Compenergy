@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ import java.util.List;
 class FavoriteExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context mContext;
+    private DatabaseHelper dbHelper;
     private List<String> list_categories = new ArrayList<>();
     private List<String> list_categories_original = new ArrayList<>();
     private HashMap<String, List<Carrier>> list_carriers = new HashMap<>();
@@ -27,6 +29,7 @@ class FavoriteExpandableListAdapter extends BaseExpandableListAdapter {
 
     FavoriteExpandableListAdapter(Context context, List<String> categories, HashMap<String, List<Carrier>> carriers) {
         this.mContext = context;
+        this.dbHelper = new DatabaseHelper(mContext, null, null, 1);
         this.list_categories = categories;
         this.list_categories_original = categories;
         this.list_carriers = carriers;
@@ -94,9 +97,11 @@ class FavoriteExpandableListAdapter extends BaseExpandableListAdapter {
 
     @SuppressLint("InflateParams")
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-            final String carrierName = ((Carrier)getChild(groupPosition, childPosition)).get_name();
+            final Carrier item = ((Carrier)getChild(groupPosition, childPosition));
+
+            final String carrierName = item.get_name();
 
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) this.mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -105,6 +110,22 @@ class FavoriteExpandableListAdapter extends BaseExpandableListAdapter {
 
             TextView txtListChild;
             txtListChild = (TextView) convertView.findViewById(R.id.fragment_favorites_list_view_carrier_name);
+
+            final CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.fragment_favorites_toggle);
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Carrier refreshed_item = dbHelper.getCarrierWithID(item.get_id()).get(0);
+                    if(refreshed_item.get_favorite()) {
+                        refreshed_item.set_favorite(false);
+                        checkBox.setChecked(false);
+                    } else {
+                        refreshed_item.set_favorite(true);
+                        checkBox.setChecked(true);
+                    }
+                    dbHelper.updateCarrier(refreshed_item.get_id(), refreshed_item);
+                }
+            });
 
             txtListChild.setText(carrierName);
             return convertView;

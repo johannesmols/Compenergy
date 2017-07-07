@@ -23,7 +23,7 @@ class CustomComparators {
     static class CarrierComparator implements Comparator<Carrier> {
         @Override
         public int compare(Carrier c1, Carrier c2) {
-            return c1.get_name().compareTo(c2.get_name());
+            return c1.get_name().compareToIgnoreCase(c2.get_name());
         }
     }
 }

@@ -26,7 +26,7 @@ class CompareCarriers {
 
     private static String com_values_equal;
     private static String com_percentage;
-    private static String com_times_larger;
+    private static String com_times_bigger;
     private static String com_time;
     private static String com_seconds;
     private static String com_minutes;
@@ -58,7 +58,7 @@ class CompareCarriers {
 
         com_values_equal = mContext.getString(R.string.com_values_equal);
         com_percentage = mContext.getString(R.string.com_percentage);
-        com_times_larger = mContext.getString(R.string.com_times_larger);
+        com_times_bigger = mContext.getString(R.string.com_times_bigger);
         com_time = mContext.getString(R.string.com_time);
         com_seconds = mContext.getString(R.string.com_seconds);
         com_minutes = mContext.getString(R.string.com_minutes);
@@ -141,8 +141,8 @@ class CompareCarriers {
                     result.add(0, df.format(timesBigger));
                     BigDecimal percentage = e2.divide(e1, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
                     result.add(1, df.format(percentage) + " %");
-                    result.add(2, mContext.getString(R.string.compare_capacity_capacity_larger));
-                    result.add(3, mContext.getString(R.string.compare_capacity_capacity_smaller));
+                    result.add(2, com_times_bigger);
+                    result.add(3, com_percentage);
                     return result;
                 } else if(e1.compareTo(e2) == 0) { //same
                     result.add(0, String.format(Locale.getDefault(), "%f.1f", 1.0));
@@ -155,8 +155,8 @@ class CompareCarriers {
                     result.add(0, df.format(percentage) + " %");
                     BigDecimal timesBigger = e2.divide(e1, 2, BigDecimal.ROUND_HALF_UP);
                     result.add(1, df.format(timesBigger));
-                    result.add(2, mContext.getString(R.string.compare_capacity_capacity_smaller));
-                    result.add(3, mContext.getString(R.string.compare_capacity_capacity_larger));
+                    result.add(2, com_percentage);
+                    result.add(3, com_times_bigger);
                     return result;
                 }
             }

@@ -152,7 +152,7 @@
     <!-- Comparing words -->
     <string name="com_values_equal">values equal</string>
     <string name="com_percentage">percentage</string>
-    <string name="com_times_larger">times larger</string>
+    <string name="com_times_bigger">times bigger</string>
     <string name="com_time">time</string>
     <string name="com_seconds">seconds</string>
     <string name="com_minutes">minutes</string>
@@ -250,10 +250,6 @@
     <string name="content_description_nav_drawer_icon">Application icon</string>
     <string name="content_description_compare_color_bucket">Change the item color</string>
     <string name="content_description_compare_arrows">Compare items</string>
-
-    <!-- Comparison strings -->
-    <string name="compare_capacity_capacity_larger">times bigger</string>
-    <string name="compare_capacity_capacity_smaller">percentage</string>
 
     <!-- Help text -->
     <string name="help_text"><b>1. This is the help</b>\n\nHere is some random placeholder text</string>

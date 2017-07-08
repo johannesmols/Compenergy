@@ -88,6 +88,9 @@ public class Fragment_Compare extends Fragment {
         animationDrawable.setEnterFadeDuration(5000);
         animationDrawable.setExitFadeDuration(5000);
 
+        upperItemName.setOnClickListener(upperNameClick);
+        lowerItemName.setOnClickListener(lowerNameClick);
+
         return view;
     }
 
@@ -238,4 +241,18 @@ public class Fragment_Compare extends Fragment {
             Log.e("Error", "No items in the database");
         }
     }
+
+    View.OnClickListener upperNameClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            
+        }
+    };
+
+    View.OnClickListener lowerNameClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+        }
+    };
 }

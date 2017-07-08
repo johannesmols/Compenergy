@@ -189,6 +189,9 @@
     <string name="edit_data_info_type_4">The energy content is defined in Joule per Kilogram</string>
     <string name="edit_data_info_type_5">The energy content is defined in Joule per Litre</string>
 
+    <!-- Select Data Activity -->
+    <string name="intent_key_for_selector">SELECTOR_DATA</string>
+
     <!-- Preference screen strings -->
     <string name="pref_database_group_title">Database</string>
     <string name="pref_database_group_title_key">compenergy.database.title</string>

@@ -4,7 +4,9 @@
 
 package johannes.mols.compenergy;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.AnimationDrawable;
@@ -42,6 +44,8 @@ public class Fragment_Compare extends Fragment {
 
     private final String key_upper = "compenergy.compare.upper_item";
     private final String key_lower = "compenergy.compare.lower_item";
+
+    private static final int REQUEST_CODE_SELECT = 0x7ce;
 
     @Nullable
     @Override
@@ -245,14 +249,25 @@ public class Fragment_Compare extends Fragment {
     View.OnClickListener upperNameClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            
+            Intent selector = new Intent(mContext, ActSelectItem.class);
+            selector.putExtra(mContext.getResources().getString(R.string.intent_key_for_selector), true); //true = upper; false = lower
+            startActivityForResult(selector, REQUEST_CODE_SELECT);
         }
     };
 
     View.OnClickListener lowerNameClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            Intent selector = new Intent(mContext, ActSelectItem.class);
+            selector.putExtra(mContext.getResources().getString(R.string.intent_key_for_selector), false); //true = upper; false = lower
+            startActivityForResult(selector, REQUEST_CODE_SELECT);
         }
     };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            //Show selected item
+        }
+    }
 }

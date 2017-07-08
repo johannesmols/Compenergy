@@ -160,6 +160,7 @@
     <string name="com_days">days</string>
     <string name="com_km">kilometre</string>
     <string name="com_kg">kilogram</string>
+    <string name="com_litre">litre</string>
 
     <!-- Data Fragment -->
     <string name="data_search_hint">Search for an item…</string>

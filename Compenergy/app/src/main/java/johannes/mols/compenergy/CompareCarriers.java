@@ -34,6 +34,7 @@ class CompareCarriers {
     private static String com_days;
     private static String com_km;
     private static String com_kg;
+    private static String com_litre;
 
     private static DatabaseHelper dbHelper;
     private static DecimalFormat df;
@@ -67,6 +68,7 @@ class CompareCarriers {
         com_days = mContext.getString(R.string.com_days);
         com_km = mContext.getString(R.string.com_km);
         com_kg = mContext.getString(R.string.com_kg);
+        com_litre = mContext.getString(R.string.com_litre);
     }
 
     static List<String> compareCarriers(Context context, Carrier c1, Carrier c2) {
@@ -201,7 +203,17 @@ class CompareCarriers {
                 return result;
             }
             else if (cat2.equalsIgnoreCase(unit_volume_content)) {
+                //Upper is electric producer, lower is energy content by volume. Calculate how much time of producing is worth how much volume of the second item
+                //Amount = Time of producer => Volume of volume content = Joule of producer (watt * time (amount)) / Volume energy content per litre in Joule
+                BigDecimal producer_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal volume = producer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
+                String[] upperResult = findBestTimeUnit(amount);
 
+                result.add(0, upperResult[0]);
+                result.add(1, df.format(volume));
+                result.add(2, upperResult[1]);
+                result.add(3, com_litre);
+                return result;
             }
             else {
                 return null;

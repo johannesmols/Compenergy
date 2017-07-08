@@ -17,4 +17,23 @@
     tools:context="johannes.mols.compenergy.ActSelectItem"
     tools:showIn="@layout/act_select_item_layout" >
 
+    <EditText
+        android:id="@+id/act_select_item_data_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/data_search_hint"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:drawableEnd="@drawable/ic_close_black_24dp" />
+
+    <ExpandableListView
+        android:id="@+id/act_select_expandable_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/act_select_item_data_search"
+        android:groupIndicator="@null" />
+
 </RelativeLayout>

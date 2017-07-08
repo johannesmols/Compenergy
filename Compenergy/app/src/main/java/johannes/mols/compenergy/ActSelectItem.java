@@ -112,9 +112,11 @@ public class ActSelectItem extends AppCompatActivity {
         Collections.sort(categories_list, CustomComparators.ALPHABETICAL_ORDER);
 
         //Insert Favorite List
-        categories_list.add(0, getString(R.string.act_selection_fav_group_title));
         List<Carrier> favoriteList = dbHelper.getFavoriteCarriers();
-        carriers_list.put(getString(R.string.act_selection_fav_group_title), favoriteList);
+        if(favoriteList.size() > 0) {
+            categories_list.add(0, getString(R.string.act_selection_fav_group_title));
+            carriers_list.put(getString(R.string.act_selection_fav_group_title), favoriteList);
+        }
 
         //Continue with sorting the carriers list
         CustomComparators.CarrierComparator comparator = new CustomComparators.CarrierComparator();

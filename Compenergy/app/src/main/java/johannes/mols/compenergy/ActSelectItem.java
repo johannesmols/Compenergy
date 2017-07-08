@@ -4,6 +4,8 @@
 
 package johannes.mols.compenergy;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -48,6 +50,8 @@ public class ActSelectItem extends AppCompatActivity {
         dbHelper = new DatabaseHelper(this, null, null, 1);
 
         displayList();
+
+        expandableListView.setOnChildClickListener(itemSelectionListener);
 
         searchEditText = (EditText) findViewById(R.id.act_select_item_data_search);
         searchEditText.setOnTouchListener(selectionSearchOnTouchListener);
@@ -139,6 +143,18 @@ public class ActSelectItem extends AppCompatActivity {
                 }
             }
             return false;
+        }
+    };
+
+    ExpandableListView.OnChildClickListener itemSelectionListener = new ExpandableListView.OnChildClickListener() {
+        @Override
+        public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+            Carrier clickedItem = ((Carrier) adapter.getChild(groupPosition, childPosition));
+            Intent result = new Intent();
+            result.putExtra(getString(R.string.act_selection_intent_result_key_do_not_change), clickedItem.get_id());
+            setResult(Activity.RESULT_OK, result);
+            finish();
+            return false; //indicates that the event is not consumed, other events can still be triggered
         }
     };
 }

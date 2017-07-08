@@ -193,6 +193,7 @@
     <string name="intent_key_for_selector">SELECTOR_DATA</string>
     <string name="act_selection_title">Select an item</string>
     <string name="act_selection_fav_group_title">Favorites</string>
+    <string name="act_selection_intent_result_key_do_not_change">item</string>
 
     <!-- Preference screen strings -->
     <string name="pref_database_group_title">Database</string>

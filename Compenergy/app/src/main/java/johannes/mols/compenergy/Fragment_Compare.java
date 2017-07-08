@@ -46,6 +46,7 @@ public class Fragment_Compare extends Fragment {
     private final String key_lower = "compenergy.compare.lower_item";
 
     private static final int REQUEST_CODE_SELECT = 0x7ce;
+    private boolean upperOrLower = true;
 
     @Nullable
     @Override
@@ -250,7 +251,7 @@ public class Fragment_Compare extends Fragment {
         @Override
         public void onClick(View v) {
             Intent selector = new Intent(mContext, ActSelectItem.class);
-            selector.putExtra(mContext.getResources().getString(R.string.intent_key_for_selector), true); //true = upper; false = lower
+            upperOrLower = true;
             startActivityForResult(selector, REQUEST_CODE_SELECT);
         }
     };
@@ -259,15 +260,30 @@ public class Fragment_Compare extends Fragment {
         @Override
         public void onClick(View v) {
             Intent selector = new Intent(mContext, ActSelectItem.class);
-            selector.putExtra(mContext.getResources().getString(R.string.intent_key_for_selector), false); //true = upper; false = lower
+            upperOrLower = false;
             startActivityForResult(selector, REQUEST_CODE_SELECT);
         }
     };
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             //Show selected item
+            SharedPreferences pref1 = getActivity().getSharedPreferences(key_upper, Context.MODE_PRIVATE);
+            SharedPreferences pref2 = getActivity().getSharedPreferences(key_lower, Context.MODE_PRIVATE);
+            int selectedID = data.getIntExtra(getString(R.string.act_selection_intent_result_key_do_not_change), -1);
+            if(upperOrLower) {
+                //Upper item changed
+                Carrier upperItem = dbHelper.getCarrierWithID(selectedID).get(0);
+                Carrier lowerItem = dbHelper.getCarriersWithName(pref2.getString(key_lower, "")).get(0);
+                compareItems(upperItem, lowerItem);
+            } else {
+                //Lower item changed
+                Carrier upperItem = dbHelper.getCarriersWithName(pref1.getString(key_upper, "")).get(0);
+                Carrier lowerItem = dbHelper.getCarrierWithID(selectedID).get(0);
+                compareItems(upperItem, lowerItem);
+            }
         }
     }
 }

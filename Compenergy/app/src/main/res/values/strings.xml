@@ -159,6 +159,7 @@
     <string name="com_hours">hours</string>
     <string name="com_days">days</string>
     <string name="com_km">kilometre</string>
+    <string name="com_kg">kilogram</string>
 
     <!-- Data Fragment -->
     <string name="data_search_hint">Search for an item…</string>

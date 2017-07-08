@@ -33,6 +33,7 @@ class CompareCarriers {
     private static String com_hours;
     private static String com_days;
     private static String com_km;
+    private static String com_kg;
 
     private static DatabaseHelper dbHelper;
     private static DecimalFormat df;
@@ -65,6 +66,7 @@ class CompareCarriers {
         com_hours = mContext.getString(R.string.com_hours);
         com_days = mContext.getString(R.string.com_days);
         com_km = mContext.getString(R.string.com_km);
+        com_kg = mContext.getString(R.string.com_kg);
     }
 
     static List<String> compareCarriers(Context context, Carrier c1, Carrier c2) {
@@ -113,8 +115,6 @@ class CompareCarriers {
             return null;
         }
 
-        //Convert input unit to normalized input
-
         if(upperOrLower) {
             compareWithFixedUnitUpper(c1, c2, amount);
         } else {
@@ -126,7 +126,7 @@ class CompareCarriers {
 
     //Compare with a certain amount given for the upper item
     private static List<String> compareWithFixedUnitUpper(Carrier c1, Carrier c2, long amount) {
-        List<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>(); //0=upper value; 1=lower value; 2=upper unit; 3=lower unit
         BigDecimal e1 = new BigDecimal(c1.get_energy());
         BigDecimal e2 = new BigDecimal(c2.get_energy());
 
@@ -188,7 +188,17 @@ class CompareCarriers {
                 return result;
             }
             else if (cat2.equalsIgnoreCase(unit_mass_content)) {
+                //Upper is electric producer, lower is energy content by mass. Calculate how much time of producing is worth how much weight of the second item
+                //Amount = Time of producer => Weight of mass content = Joule of producer (watt * time (amount)) / Mass energy content per kg in Joule
+                BigDecimal producer_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal weight = producer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
+                String[] upperResult = findBestTimeUnit(amount);
 
+                result.add(0, upperResult[0]);
+                result.add(1, df.format(weight));
+                result.add(2, upperResult[1]);
+                result.add(3, com_kg);
+                return result;
             }
             else if (cat2.equalsIgnoreCase(unit_volume_content)) {
 

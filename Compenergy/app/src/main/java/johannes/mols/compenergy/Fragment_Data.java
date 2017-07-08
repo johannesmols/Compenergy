@@ -62,8 +62,6 @@ public class Fragment_Data extends Fragment {
 
         displayList();
 
-        expandAllGroups();
-
         searchEditText = (EditText) view.findViewById(R.id.fragment_data_search);
         searchEditText.setOnTouchListener(editSearchOnTouchListener);
         searchEditText.addTextChangedListener(new TextWatcher() {

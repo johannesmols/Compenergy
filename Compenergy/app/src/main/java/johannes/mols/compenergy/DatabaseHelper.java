@@ -173,7 +173,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     List<Carrier> getFavoriteCarriers() {
-        return getCarriers(CARRIER_FAVORITE + "=true");
+        return getCarriers(CARRIER_FAVORITE + "=1");
     }
 
     List<Carrier> getFavoritesWithCategory(String category) {

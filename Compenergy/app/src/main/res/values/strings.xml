@@ -191,6 +191,7 @@
 
     <!-- Select Data Activity -->
     <string name="intent_key_for_selector">SELECTOR_DATA</string>
+    <string name="act_selection_fav_group_title">Favorites</string>
 
     <!-- Preference screen strings -->
     <string name="pref_database_group_title">Database</string>

@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,7 +19,7 @@ public class ActSelectItem extends AppCompatActivity {
     private ExpandableListView expandableListView;
     private List<String> categories_list;
     private HashMap<String, List<Carrier>> carriers_list;
-    private DataExpandableListAdapter adapter;
+    private SelectionExpandableListAdapter adapter;
     private EditText searchEditText;
 
     private DatabaseHelper dbHelper;
@@ -29,5 +31,47 @@ public class ActSelectItem extends AppCompatActivity {
 
         expandableListView = (ExpandableListView) findViewById(R.id.act_select_expandable_list_view);
         dbHelper = new DatabaseHelper(this, null, null, 1);
+
+        displayList();
+    }
+
+    private void expandAllGroups() {
+        for(int i = 0; i < adapter.getGroupCount(); i++) {
+            expandableListView.expandGroup(i);
+        }
+    }
+
+    private void displayList() {
+        prepareListData();
+
+        adapter = new SelectionExpandableListAdapter(this, categories_list, carriers_list);
+        expandableListView.setAdapter(adapter);
+
+        expandAllGroups();
+    }
+
+    private void prepareListData() {
+        categories_list = new ArrayList<>();
+        carriers_list = new HashMap<>();
+
+        categories_list = dbHelper.getCategoryList();
+
+        for(int i = 0; i < categories_list.size(); i++) {
+            List<Carrier> carrierList = dbHelper.getCarriersWithCategory(categories_list.get(i));
+            carriers_list.put(categories_list.get(i), carrierList);
+        }
+
+        //Sort the categories list before inserting the favorite list at the start, it has to stay at Index 0
+        Collections.sort(categories_list, CustomComparators.ALPHABETICAL_ORDER);
+
+        //Insert Favorite List
+        categories_list.add(0, getString(R.string.act_selection_fav_group_title));
+        List<Carrier> favoriteList = dbHelper.getFavoriteCarriers();
+        carriers_list.put(getString(R.string.act_selection_fav_group_title), favoriteList);
+
+        //Continue with sorting the carriers list
+        CustomComparators.CarrierComparator comparator = new CustomComparators.CarrierComparator();
+        for (List<Carrier> l : carriers_list.values())
+            Collections.sort(l, comparator);
     }
 }

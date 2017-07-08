@@ -61,7 +61,7 @@ public class ActEditCarrier extends AppCompatActivity {
         //Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_edit);
         setSupportActionBar(toolbar);
-        if(getSupportActionBar() != null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 

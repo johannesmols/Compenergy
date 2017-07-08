@@ -6,6 +6,8 @@ package johannes.mols.compenergy;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 
@@ -29,10 +31,31 @@ public class ActSelectItem extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_select_item_layout);
 
+        //Toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_select_item);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        this.setTitle(getString(R.string.act_selection_title));
+
         expandableListView = (ExpandableListView) findViewById(R.id.act_select_expandable_list_view);
         dbHelper = new DatabaseHelper(this, null, null, 1);
 
         displayList();
+    }
+
+    //Back button in toolbar
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void expandAllGroups() {

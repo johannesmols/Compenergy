@@ -35,7 +35,9 @@
         <activity
             android:name=".ActEditCarrier"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".ActSelectItem"></activity>
+        <activity
+            android:name=".ActSelectItem"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

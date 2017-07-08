@@ -7,7 +7,11 @@ package johannes.mols.compenergy;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 
@@ -21,7 +25,7 @@ public class ActSelectItem extends AppCompatActivity {
     private ExpandableListView expandableListView;
     private List<String> categories_list;
     private HashMap<String, List<Carrier>> carriers_list;
-    private SelectionExpandableListAdapter adapter;
+    private DataExpandableListAdapter adapter;
     private EditText searchEditText;
 
     private DatabaseHelper dbHelper;
@@ -44,6 +48,26 @@ public class ActSelectItem extends AppCompatActivity {
         dbHelper = new DatabaseHelper(this, null, null, 1);
 
         displayList();
+
+        searchEditText = (EditText) findViewById(R.id.act_select_item_data_search);
+        searchEditText.setOnTouchListener(selectionSearchOnTouchListener);
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter.filterData(s.toString());
+                expandAllGroups();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     //Back button in toolbar
@@ -67,7 +91,7 @@ public class ActSelectItem extends AppCompatActivity {
     private void displayList() {
         prepareListData();
 
-        adapter = new SelectionExpandableListAdapter(this, categories_list, carriers_list);
+        adapter = new DataExpandableListAdapter(this, categories_list, carriers_list);
         expandableListView.setAdapter(adapter);
 
         expandAllGroups();
@@ -97,4 +121,22 @@ public class ActSelectItem extends AppCompatActivity {
         for (List<Carrier> l : carriers_list.values())
             Collections.sort(l, comparator);
     }
+
+    View.OnTouchListener selectionSearchOnTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            //final int DRAWABLE_LEFT = 0;
+            //final int DRAWABLE_TOP = 1;
+            final int DRAWABLE_RIGHT = 2;
+            //final int DRAWABLE_BOTTOM = 3;
+
+            if(event.getAction() == MotionEvent.ACTION_UP) {
+                if(event.getRawX() >= (searchEditText.getRight() - searchEditText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                    searchEditText.setText("");
+                    return true;
+                }
+            }
+            return false;
+        }
+    };
 }

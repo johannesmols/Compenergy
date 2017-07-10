@@ -626,6 +626,14 @@
         <favorite>false</favorite>
     </carrier>
     <carrier>
+        <name>BMW M3 (1990)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>300960000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
         <name>BMW M6 (2016)</name>
         <category>Cars</category>
         <unit>Volume Consumption</unit>

@@ -456,7 +456,19 @@
         <favorite>false</favorite>
     </carrier>
 
+    <!-- Organs -->
+
+    <carrier>
+        <name>Human heart</name>
+        <category>Organs</category>
+        <unit>Capacity</unit>
+        <energy>2</energy> //it's actually 1.33 Watt
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+
     <!-- Cars -->
+
     <carrier>
         <name>Alfa Romeo Giulia (2016)</name>
         <category>Cars</category>
@@ -905,6 +917,5 @@
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>
-
 
 </carriers>

@@ -833,5 +833,78 @@
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>
+    <carrier>
+        <name>Fiat Punto (2012)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>194940000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Fiat Multipla (1999)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>294120000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Ford Escort (1996)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>238140000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Ford F-150 (2015)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>410400000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Ford Fiesta (2017)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>132300000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Ford Focus (2014)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>232560000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Ford GT (2005)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>502740000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Ford GT (2017)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>574560000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Ford Mustang (2015)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>461700000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+
 
 </carriers>

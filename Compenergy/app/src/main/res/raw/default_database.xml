@@ -665,5 +665,173 @@
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>
+    <carrier>
+        <name>Bugatti Veyron (2011)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>790020000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Bugatti Chiron (2016)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>769500000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Chevrolet Corvette (2014)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>424080000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Chevrolet Corvette (2014)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>424080000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Chrysler PT Cruiser (2003)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>338580000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Citroen Berlingo (2015)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>218880000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Citroen C3 (2016)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>139860000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Dacia Sandero (2016)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>143640000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Dacia Duster (2013)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>218880000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Dodge Challenger Hellcat (2017)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>601920000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Dodge Viper RTII (2008)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>663480000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Ferrari 458 Speciale (2013)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>403560000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Ferrari 458 Italia (2009)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>454860000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Ferrari 599 (2006)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>728460000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Ferrari 488 Spider (2015)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>389880000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Ferrari California (2014)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>359100000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Ferrari Enzo (2002)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>786600000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Ferrari F12 (2012)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>513000000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Ferrari FF (2012)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>526680000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Fiat 500L (2017)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>147420000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Fiat Cinquecento (1994)</name>
+        <category>Cars</category>
+        <unit>Volume Consumption</unit>
+        <energy>212040000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
 
 </carriers>

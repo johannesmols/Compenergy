@@ -5,8 +5,11 @@
       <w>alfa</w>
       <w>avant</w>
       <w>aysnc</w>
+      <w>berlingo</w>
       <w>butanol</w>
       <w>chinas</w>
+      <w>chiron</w>
+      <w>cinquecento</w>
       <w>compenergy</w>
       <w>consump</w>
       <w>dataset</w>
@@ -16,6 +19,7 @@
       <w>dimethyl</w>
       <w>dstart</w>
       <w>electronvolt</w>
+      <w>enzo</w>
       <w>fessenheim</w>
       <w>fukushima</w>
       <w>germanys</w>
@@ -23,6 +27,7 @@
       <w>gigajoule</w>
       <w>gigawatt</w>
       <w>guri</w>
+      <w>italia</w>
       <w>kariwa</w>
       <w>kashiwazaki</w>
       <w>kilocalorie</w>
@@ -35,7 +40,10 @@
       <w>nitromethane</w>
       <w>nlist</w>
       <w>prog</w>
+      <w>rtii</w>
+      <w>sandero</w>
       <w>signum</w>
+      <w>speciale</w>
       <w>spritmonitor</w>
       <w>spyder</w>
       <w>tagname</w>
@@ -44,6 +52,7 @@
       <w>timepsan</w>
       <w>timespan</w>
       <w>vert</w>
+      <w>veyron</w>
       <w>xiluodu</w>
     </words>
   </dictionary>

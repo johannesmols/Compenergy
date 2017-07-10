@@ -154,9 +154,9 @@ public class Fragment_Compare extends Fragment {
             //Energy
             upperItemEnergy.setText(Util.format(item.get_energy()));
             if(item.get_unit().equalsIgnoreCase(getString(R.string.carrier_type_db_capacity)) || item.get_unit().equalsIgnoreCase(getString(R.string.carrier_type_db_consumption))) {
-                upperItemEnergy.append(getString(R.string.watt_lower_case));
+                upperItemEnergy.append(" " + getString(R.string.watt_lower_case));
             } else {
-                upperItemEnergy.append(getString(R.string.joule_lower_case));
+                upperItemEnergy.append(" " + getString(R.string.joule_lower_case));
             }
 
             //Energy unit
@@ -179,9 +179,9 @@ public class Fragment_Compare extends Fragment {
             //Energy
             lowerItemEnergy.setText(Util.format(item.get_energy()));
             if(item.get_unit().equalsIgnoreCase(getString(R.string.carrier_type_db_capacity)) || item.get_unit().equalsIgnoreCase(getString(R.string.carrier_type_db_consumption))) {
-                lowerItemEnergy.append(getString(R.string.watt_lower_case));
+                lowerItemEnergy.append(" " + getString(R.string.watt_lower_case));
             } else {
-                lowerItemEnergy.append(getString(R.string.joule_lower_case));
+                lowerItemEnergy.append(" " + getString(R.string.joule_lower_case));
             }
 
             //Energy unit

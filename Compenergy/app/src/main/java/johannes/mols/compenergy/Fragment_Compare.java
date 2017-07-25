@@ -42,7 +42,7 @@ public class Fragment_Compare extends Fragment {
     private DatabaseHelper dbHelper;
     private AnimationDrawable animationDrawable;
     private static DecimalFormat df;
-    private static DecimalFormatSymbols symbols;
+    private static DecimalFormat df_value;
 
     private TextView upperItemName;
     private TextView lowerItemName;
@@ -116,12 +116,15 @@ public class Fragment_Compare extends Fragment {
 
         //Number formatting
         df = new DecimalFormat();
-        //df.setMaximumFractionDigits(2);
-        //df.setMinimumFractionDigits(2);
         df.setGroupingUsed(true);
-        symbols = new DecimalFormatSymbols(Locale.getDefault());
-        symbols = df.getDecimalFormatSymbols();
+        DecimalFormatSymbols symbols = df.getDecimalFormatSymbols();
         df.setDecimalFormatSymbols(symbols);
+
+        df_value = new DecimalFormat();
+        df_value.setGroupingUsed(false);
+        DecimalFormatSymbols symbols_value = new DecimalFormatSymbols(Locale.getDefault());
+        symbols_value.setDecimalSeparator('.');
+        df_value.setDecimalFormatSymbols(symbols_value);
 
         key_upper = mContext.getString(R.string.key_upper);
         key_lower = mContext.getString(R.string.key_lower);
@@ -362,6 +365,10 @@ public class Fragment_Compare extends Fragment {
 
         final EditText edit = (EditText) dialogView.findViewById(R.id.dialog_change_value_edit);
         edit.setText(df.format(current_value));
+
+        //Need to add more info and unit selection
+        //Time is currently displayed in seconds for example
+
         edit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

@@ -146,6 +146,7 @@ class CompareCarriers {
                 if(e1.compareTo(e2) == 1) { //larger
                     saveAsUpperCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
                     saveAsLowerCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+
                     BigDecimal timesBigger = e1.divide(e2, 2, BigDecimal.ROUND_HALF_UP);
                     result.add(0, df.format(timesBigger));
                     BigDecimal percentage = e2.divide(e1, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
@@ -156,6 +157,7 @@ class CompareCarriers {
                 } else if(e1.compareTo(e2) == 0) { //same
                     saveAsUpperCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
                     saveAsLowerCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+
                     result.add(0, String.format(Locale.getDefault(), "%.1f", 1.0));
                     result.add(1, String.format(Locale.getDefault(), "%.1f", 1.0));
                     result.add(2, com_values_equal);
@@ -164,6 +166,7 @@ class CompareCarriers {
                 } else { //smaller
                     saveAsUpperCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
                     saveAsLowerCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+
                     BigDecimal percentage = e1.divide(e2, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
                     result.add(0, df.format(percentage) + " %");
                     BigDecimal timesBigger = e2.divide(e1, 2, BigDecimal.ROUND_HALF_UP);
@@ -181,6 +184,9 @@ class CompareCarriers {
                 String[] upperResult = findBestTimeUnit(amount);
                 String[] lowerResult = findBestTimeUnit(time.longValue());
 
+                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsLowerCompareResult(time);
+
                 result.add(0, upperResult[0]); //Upper time
                 result.add(1, lowerResult[0]); //Lower time
                 result.add(2, upperResult[1]);
@@ -193,6 +199,9 @@ class CompareCarriers {
                 BigDecimal producer_joule = e1.multiply(new BigDecimal(amount));
                 BigDecimal distance = producer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100.0));
                 String[] upperResult = findBestTimeUnit(amount);
+
+                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsLowerCompareResult(distance);
 
                 result.add(0, upperResult[0]);
                 result.add(1, df.format(distance));
@@ -207,6 +216,9 @@ class CompareCarriers {
                 BigDecimal weight = producer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
                 String[] upperResult = findBestTimeUnit(amount);
 
+                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsLowerCompareResult(weight);
+
                 result.add(0, upperResult[0]);
                 result.add(1, df.format(weight));
                 result.add(2, upperResult[1]);
@@ -219,6 +231,9 @@ class CompareCarriers {
                 BigDecimal producer_joule = e1.multiply(new BigDecimal(amount));
                 BigDecimal volume = producer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
                 String[] upperResult = findBestTimeUnit(amount);
+
+                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsLowerCompareResult(volume);
 
                 result.add(0, upperResult[0]);
                 result.add(1, df.format(volume));
@@ -239,6 +254,9 @@ class CompareCarriers {
                 String[] upperResult = findBestTimeUnit(amount);
                 String[] lowerResult = findBestTimeUnit(time.longValue());
 
+                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsLowerCompareResult(time);
+
                 result.add(0, upperResult[0]); //Upper time
                 result.add(1, lowerResult[0]); //Lower time
                 result.add(2, upperResult[1]);
@@ -248,6 +266,9 @@ class CompareCarriers {
             else if (cat2.equalsIgnoreCase(unit_consumption)) {
                 //Both consumers, can ignore amount
                 if(e1.compareTo(e2) == 1) { //larger
+                    saveAsUpperCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+                    saveAsLowerCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+
                     BigDecimal timesBigger = e1.divide(e2, 2, BigDecimal.ROUND_HALF_UP);
                     result.add(0, df.format(timesBigger));
                     BigDecimal percentage = e2.divide(e1, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
@@ -256,12 +277,18 @@ class CompareCarriers {
                     result.add(3, com_percentage);
                     return result;
                 } else if (e1.compareTo(e2) == 0) { //same
+                    saveAsUpperCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+                    saveAsLowerCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+
                     result.add(0, String.format(Locale.getDefault(), "%.1f", 1.0));
                     result.add(1, String.format(Locale.getDefault(), "%.1f", 1.0));
                     result.add(2, com_values_equal);
                     result.add(3, com_values_equal);
                     return result;
                 } else { //smaller
+                    saveAsUpperCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+                    saveAsLowerCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+
                     BigDecimal percentage = e1.divide(e2, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
                     result.add(0, df.format(percentage) + " %");
                     BigDecimal timesBigger = e2.divide(e1, 2, BigDecimal.ROUND_HALF_UP);
@@ -278,6 +305,9 @@ class CompareCarriers {
                 BigDecimal distance = electric_consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100.0));
                 String[] upperResult = findBestTimeUnit(amount);
 
+                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsLowerCompareResult(distance);
+
                 result.add(0, upperResult[0]);
                 result.add(1, df.format(distance));
                 result.add(2, upperResult[1]);
@@ -291,6 +321,9 @@ class CompareCarriers {
                 BigDecimal weight = consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
                 String[] upperResult = findBestTimeUnit(amount);
 
+                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsLowerCompareResult(weight);
+
                 result.add(0, upperResult[0]);
                 result.add(1, df.format(weight));
                 result.add(2, upperResult[1]);
@@ -303,6 +336,9 @@ class CompareCarriers {
                 BigDecimal consumer_joule = e1.multiply(new BigDecimal(amount));
                 BigDecimal volume = consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
                 String[] upperResult = findBestTimeUnit(amount);
+
+                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsLowerCompareResult(volume);
 
                 result.add(0, upperResult[0]);
                 result.add(1, df.format(volume));
@@ -322,6 +358,9 @@ class CompareCarriers {
                 BigDecimal time = volume_consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
                 String[] lowerResult = findBestTimeUnit(time.longValue());
 
+                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsLowerCompareResult(time);
+
                 result.add(0, df.format(amount));
                 result.add(1, lowerResult[0]);
                 result.add(2, com_km);
@@ -335,6 +374,9 @@ class CompareCarriers {
                 BigDecimal time = volume_consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
                 String[] lowerResult = findBestTimeUnit(time.longValue());
 
+                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsLowerCompareResult(time);
+
                 result.add(0, df.format(amount));
                 result.add(1, lowerResult[0]);
                 result.add(2, com_km);
@@ -344,6 +386,9 @@ class CompareCarriers {
             else if (cat2.equalsIgnoreCase(unit_volume_consumption)) {
                 //Both consumers by distance, can ignore amount
                 if(e1.compareTo(e2) == 1) { //larger
+                    saveAsUpperCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+                    saveAsLowerCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+
                     BigDecimal timesBigger = e1.divide(e2, 2, BigDecimal.ROUND_HALF_UP);
                     result.add(0, df.format(timesBigger));
                     BigDecimal percentage = e2.divide(e1, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
@@ -352,12 +397,18 @@ class CompareCarriers {
                     result.add(3, com_percentage);
                     return result;
                 } else if (e1.compareTo(e2) == 0) { //same
+                    saveAsUpperCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+                    saveAsLowerCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+
                     result.add(0, String.format(Locale.getDefault(), "%.1f", 1.0));
                     result.add(1, String.format(Locale.getDefault(), "%.1f", 1.0));
                     result.add(2, com_values_equal);
                     result.add(3, com_values_equal);
                     return result;
                 } else { //smaller
+                    saveAsUpperCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+                    saveAsLowerCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+
                     BigDecimal percentage = e1.divide(e2, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
                     result.add(0, df.format(percentage) + " %");
                     BigDecimal timesBigger = e2.divide(e1, 2, BigDecimal.ROUND_HALF_UP);
@@ -373,6 +424,9 @@ class CompareCarriers {
                 BigDecimal volume_consumer_joule = e1.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(amount));
                 BigDecimal mass = volume_consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
 
+                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsLowerCompareResult(mass);
+
                 result.add(0, df.format(amount));
                 result.add(1, df.format(mass));
                 result.add(2, com_km);
@@ -384,6 +438,9 @@ class CompareCarriers {
                 //Amount = Distance in km => Volume of lower item to equal distance consumption = Consumption of consumer on distance (consumption in joule / 100 * amount (distance in km)) / joule of volume content per litre
                 BigDecimal volume_consumer_joule = e1.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(amount));
                 BigDecimal volume = volume_consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
+
+                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsLowerCompareResult(volume);
 
                 result.add(0, df.format(amount));
                 result.add(1, df.format(volume));
@@ -403,6 +460,9 @@ class CompareCarriers {
                 BigDecimal time = mass_content_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
                 String[] lowerResult = findBestTimeUnit(time.longValue());
 
+                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsLowerCompareResult(time);
+
                 result.add(0, df.format(amount));
                 result.add(1, lowerResult[0]);
                 result.add(2, com_kg);
@@ -415,6 +475,9 @@ class CompareCarriers {
                 BigDecimal mass_content_joule = e1.multiply(new BigDecimal(amount));
                 BigDecimal time = mass_content_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
                 String[] lowerResult = findBestTimeUnit(time.longValue());
+
+                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsLowerCompareResult(time);
 
                 result.add(0, df.format(amount));
                 result.add(1, lowerResult[0]);
@@ -429,6 +492,9 @@ class CompareCarriers {
                 BigDecimal joule_per_km_of_consumer = e2.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP);
                 BigDecimal distance = mass_content_joule.divide(joule_per_km_of_consumer, 2, BigDecimal.ROUND_HALF_UP);
 
+                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsLowerCompareResult(distance);
+
                 result.add(0, df.format(amount));
                 result.add(1, df.format(distance));
                 result.add(2, com_kg);
@@ -438,6 +504,9 @@ class CompareCarriers {
             else if (cat2.equalsIgnoreCase(unit_mass_content)) {
                 //Both mass energy content, can ignore amount
                 if(e1.compareTo(e2) == 1) { //larger
+                    saveAsUpperCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+                    saveAsLowerCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+
                     BigDecimal timesBigger = e1.divide(e2, 2, BigDecimal.ROUND_HALF_UP);
                     result.add(0, df.format(timesBigger));
                     BigDecimal percentage = e2.divide(e1, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
@@ -446,12 +515,18 @@ class CompareCarriers {
                     result.add(3, com_percentage);
                     return result;
                 } else if (e1.compareTo(e2) == 0) { //same
+                    saveAsUpperCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+                    saveAsLowerCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+
                     result.add(0, String.format(Locale.getDefault(), "%.1f", 1.0));
                     result.add(1, String.format(Locale.getDefault(), "%.1f", 1.0));
                     result.add(2, com_values_equal);
                     result.add(3, com_values_equal);
                     return result;
                 } else { //smaller
+                    saveAsUpperCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+                    saveAsLowerCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+
                     BigDecimal percentage = e1.divide(e2, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
                     result.add(0, df.format(percentage) + " %");
                     BigDecimal timesBigger = e2.divide(e1, 2, BigDecimal.ROUND_HALF_UP);
@@ -466,6 +541,9 @@ class CompareCarriers {
                 //Amount = Mass of item in kg => Volume of lower item in litre = joule for mass (mass in kg * amount (kg)) / joule for volume per litre
                 BigDecimal mass_content_joule = e1.multiply(new BigDecimal(amount));
                 BigDecimal volume = mass_content_joule.divide(e2, 2, BigDecimal.ROUND_HALF_UP);
+
+                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsLowerCompareResult(volume);
 
                 result.add(0, df.format(amount));
                 result.add(1, df.format(volume));
@@ -485,6 +563,9 @@ class CompareCarriers {
                 BigDecimal time = volume_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
                 String[] lowerResult = findBestTimeUnit(time.longValue());
 
+                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsLowerCompareResult(time);
+
                 result.add(0, df.format(amount));
                 result.add(1, lowerResult[0]);
                 result.add(2, com_litre);
@@ -497,6 +578,9 @@ class CompareCarriers {
                 BigDecimal volume_joule = e1.multiply(new BigDecimal(amount));
                 BigDecimal time = volume_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
                 String[] lowerResult = findBestTimeUnit(time.longValue());
+
+                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsLowerCompareResult(time);
 
                 result.add(0, df.format(amount));
                 result.add(1, lowerResult[0]);
@@ -511,6 +595,9 @@ class CompareCarriers {
                 BigDecimal consumption_per_km = e2.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP);
                 BigDecimal distance = volume_joule.divide(consumption_per_km, 10, BigDecimal.ROUND_HALF_UP);
 
+                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsLowerCompareResult(distance);
+
                 result.add(0, df.format(amount));
                 result.add(1, df.format(distance));
                 result.add(2, com_litre);
@@ -523,6 +610,9 @@ class CompareCarriers {
                 BigDecimal volume_content_joule = e1.multiply(new BigDecimal(amount));
                 BigDecimal mass = volume_content_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
 
+                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsLowerCompareResult(mass);
+
                 result.add(0, df.format(amount));
                 result.add(1, df.format(mass));
                 result.add(2, com_litre);
@@ -532,6 +622,9 @@ class CompareCarriers {
             else if (cat2.equalsIgnoreCase(unit_volume_content)) {
                 //Both volume energy content, can ignore amount
                 if(e1.compareTo(e2) == 1) { //larger
+                    saveAsUpperCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+                    saveAsLowerCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+
                     BigDecimal timesBigger = e1.divide(e2, 2, BigDecimal.ROUND_HALF_UP);
                     result.add(0, df.format(timesBigger));
                     BigDecimal percentage = e2.divide(e1, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
@@ -540,12 +633,18 @@ class CompareCarriers {
                     result.add(3, com_percentage);
                     return result;
                 } else if (e1.compareTo(e2) == 0) { //same
+                    saveAsUpperCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+                    saveAsLowerCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+
                     result.add(0, String.format(Locale.getDefault(), "%.1f", 1.0));
                     result.add(1, String.format(Locale.getDefault(), "%.1f", 1.0));
                     result.add(2, com_values_equal);
                     result.add(3, com_values_equal);
                     return result;
                 } else { //smaller
+                    saveAsUpperCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+                    saveAsLowerCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+
                     BigDecimal percentage = e1.divide(e2, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
                     result.add(0, df.format(percentage) + " %");
                     BigDecimal timesBigger = e2.divide(e1, 2, BigDecimal.ROUND_HALF_UP);

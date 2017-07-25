@@ -355,10 +355,28 @@ class CompareCarriers {
                 }
             }
             else if (cat2.equalsIgnoreCase(unit_mass_content)) {
+                //Upper is consumer by distance, lower is mass energy content. Calculate the amount of mass of the lower item which is needed to travel the amount of distance with the upper consumer by distance
+                //Amount = Distance in km => Mass of lower item to equal distance consumption = Consumption of consumer on distance (consumption in joule / 100 * amount (distance in km)) / joule of mass content per kg
+                BigDecimal volume_consumer_joule = e1.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(amount));
+                BigDecimal mass = volume_consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
 
+                result.add(0, df.format(amount));
+                result.add(1, df.format(mass));
+                result.add(2, com_km);
+                result.add(3, com_kg);
+                return result;
             }
             else if (cat2.equalsIgnoreCase(unit_volume_content)) {
+                //Upper is consumer by distance, lower is volume energy content. Calculate the amount of volume of the lower item which is needed to travel the amount of distance with the upper consumer by distance
+                //Amount = Distance in km => Volume of lower item to equal distance consumption = Consumption of consumer on distance (consumption in joule / 100 * amount (distance in km)) / joule of volume content per litre
+                BigDecimal volume_consumer_joule = e1.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(amount));
+                BigDecimal volume = volume_consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
 
+                result.add(0, df.format(amount));
+                result.add(1, df.format(volume));
+                result.add(2, com_km);
+                result.add(3, com_litre);
+                return result;
             }
             else {
                 return null;

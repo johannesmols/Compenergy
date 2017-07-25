@@ -118,7 +118,7 @@ class CompareCarriers {
     static List<String> compareCarriers(Context context, Carrier c1, Carrier c2, long amount, boolean upperOrLower) {
         setup(context);
 
-        if(dbHelper.getCarrierCount() == 0 || c1 == null || c2 == null || c1.get_energy() == 0 || c2.get_energy() == 0 || amount <= 0) { // || unit.trim().isEmpty()) {
+        if(dbHelper.getCarrierCount() == 0 || c1 == null || c2 == null || c1.get_energy() == 0 || c2.get_energy() == 0 || amount <= 0) {
             return null;
         }
 

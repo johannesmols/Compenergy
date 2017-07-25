@@ -16,8 +16,6 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -124,6 +122,7 @@ public class Fragment_Compare extends Fragment {
         NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.ENGLISH); //Use dots in all language settings as decimal separator
         df_value = (DecimalFormat) numberFormat;
         df_value.setGroupingUsed(false);
+        df_value.setMaximumFractionDigits(2);
 
         key_upper = mContext.getString(R.string.key_upper);
         key_lower = mContext.getString(R.string.key_lower);
@@ -393,23 +392,6 @@ public class Fragment_Compare extends Fragment {
         //Need to add more info and unit selection
         //Time is currently displayed in seconds for example
 
-        edit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
         dialogBuilder.setTitle(getString(R.string.dialog_edit_value_title));
 
         dialogBuilder.setPositiveButton(getString(R.string.dialog_compare), new DialogInterface.OnClickListener() {
@@ -427,6 +409,7 @@ public class Fragment_Compare extends Fragment {
                 }
             }
         });
+
         dialogBuilder.setNegativeButton(getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

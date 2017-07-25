@@ -410,7 +410,17 @@ class CompareCarriers {
                 return result;
             }
             else if (cat2.equalsIgnoreCase(unit_volume_consumption)) {
+                //Upper is energy content by mass, lower is consumer by distance. Calculate how far the consumer by distance can move with the amount of kg of the upper item
+                //Amount = Mass of item in kg => Distance of consumer by distance = joule of upper item with amount (joule per kg * amount (kg)) / joule per km (joule per 100km / 100)
+                BigDecimal mass_content_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal joule_per_km_of_consumer = e2.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP);
+                BigDecimal distance = mass_content_joule.divide(joule_per_km_of_consumer, 2, BigDecimal.ROUND_HALF_UP);
 
+                result.add(0, df.format(amount));
+                result.add(1, df.format(distance));
+                result.add(2, com_kg);
+                result.add(3, com_km);
+                return result;
             }
             else if (cat2.equalsIgnoreCase(unit_mass_content)) {
 

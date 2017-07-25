@@ -285,7 +285,17 @@ class CompareCarriers {
                 return result;
             }
             else if (cat2.equalsIgnoreCase(unit_volume_content)) {
+                //Upper is electric consumer, lower is energy content by volume. Calculate how much time of consuming is worth how much volume of the second item
+                //Amount = Time of consumer => Volume of volume content = Joule of consumer (watt * time (amount)) / Volume energy content per litre in Joule
+                BigDecimal consumer_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal volume = consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
+                String[] upperResult = findBestTimeUnit(amount);
 
+                result.add(0, upperResult[0]);
+                result.add(1, df.format(volume));
+                result.add(2, upperResult[1]);
+                result.add(3, com_litre);
+                return result;
             }
             else {
                 return null;

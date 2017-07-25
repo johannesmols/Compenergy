@@ -158,6 +158,7 @@
     <string name="com_minutes">minutes</string>
     <string name="com_hours">hours</string>
     <string name="com_days">days</string>
+    <string name="com_years">years</string>
     <string name="com_km">kilometre</string>
     <string name="com_kg">kilogram</string>
     <string name="com_litre">litre</string>

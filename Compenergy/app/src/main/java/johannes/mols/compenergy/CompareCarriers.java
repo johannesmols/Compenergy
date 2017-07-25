@@ -31,6 +31,7 @@ class CompareCarriers {
     private static String com_minutes;
     private static String com_hours;
     private static String com_days;
+    private static String com_years;
     private static String com_km;
     private static String com_kg;
     private static String com_litre;
@@ -64,6 +65,7 @@ class CompareCarriers {
         com_minutes = mContext.getString(R.string.com_minutes);
         com_hours = mContext.getString(R.string.com_hours);
         com_days = mContext.getString(R.string.com_days);
+        com_years = mContext.getString(R.string.com_years);
         com_km = mContext.getString(R.string.com_km);
         com_kg = mContext.getString(R.string.com_kg);
         com_litre = mContext.getString(R.string.com_litre);
@@ -466,7 +468,17 @@ class CompareCarriers {
         }
         else if (cat1.equalsIgnoreCase(unit_volume_content)) {
             if (cat2.equalsIgnoreCase(unit_capacity)) {
+                //Upper is consumer by distance, lower is electric producer. Calculate how long the producer needs to run to have the equal energy as the amount of the upper item in litre
+                //Amount = volume in litre => Time of producer = joules of volume (joule per litre * amount (litre)) / wattage of electric producer
+                BigDecimal volume_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal time = volume_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100.0));
+                String[] lowerResult = findBestTimeUnit(time.longValue());
 
+                result.add(0, df.format(amount));
+                result.add(1, lowerResult[0]);
+                result.add(2, com_litre);
+                result.add(3, lowerResult[1]);
+                return result;
             }
             else if (cat2.equalsIgnoreCase(unit_consumption)) {
 
@@ -507,9 +519,12 @@ class CompareCarriers {
         } else if (seconds < 60 * 60 * 24) { //smaller than one day - display hours
             result[0] = df.format((double)seconds / (60 * 60));
             result[1] = com_hours;
-        } else {
+        } else if (seconds < 60 * 60 * 24 * 365){ //smaller than one year - display days
             result[0] = df.format((double)seconds / (60 * 60 * 24));
             result[1] = com_days;
+        } else { //display years
+            result[0] = df.format((double)seconds / (60 * 60 * 24 * 365));
+            result[1] = com_years;
         }
 
         return result;

@@ -96,6 +96,9 @@ public class Fragment_Compare extends Fragment {
         upperItemName.setOnClickListener(upperNameClick);
         lowerItemName.setOnClickListener(lowerNameClick);
 
+        upperItemCompareValue.setOnClickListener(upperItemCompareValueClick);
+        lowerItemCompareValue.setOnClickListener(lowerItemCompareValueClick);
+
         return view;
     }
 
@@ -278,6 +281,20 @@ public class Fragment_Compare extends Fragment {
             Intent selector = new Intent(mContext, ActSelectItem.class);
             upperOrLower = false;
             startActivityForResult(selector, REQUEST_CODE_SELECT);
+        }
+    };
+
+    View.OnClickListener upperItemCompareValueClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            //Open dialog to change value
+        }
+    };
+
+    View.OnClickListener lowerItemCompareValueClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            //Open dialog to change value
         }
     };
 

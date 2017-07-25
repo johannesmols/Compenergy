@@ -89,7 +89,7 @@ class CompareCarriers {
             min = 60;      //One minute
         } else if (c1.get_unit().equalsIgnoreCase(unit_volume_consumption)) {
             //Kilometre
-            max = 1000;
+            max = 1000000;
             min = 1;
         } else if (c1.get_unit().equalsIgnoreCase(unit_mass_content)) {
             //Kilogram
@@ -303,7 +303,17 @@ class CompareCarriers {
         }
         else if (cat1.equalsIgnoreCase(unit_volume_consumption)) {
             if (cat2.equalsIgnoreCase(unit_capacity)) {
+                //Upper is consumer by distance, lower is electric producer. Calculate how long the producer needs to produce for the distance of the consumer by distance
+                //Amount = Distance in km => Time of producer = Consumption of consumer on distance (consumption in joule / 100 * amount (distance in km)) / wattage of electric producer
+                BigDecimal volume_consumer_joule = e1.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(amount));
+                BigDecimal time = volume_consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
+                String[] lowerResult = findBestTimeUnit(time.longValue());
 
+                result.add(0, df.format(amount));
+                result.add(1, lowerResult[0]);
+                result.add(2, com_km);
+                result.add(3, lowerResult[1]);
+                return result;
             }
             else if (cat2.equalsIgnoreCase(unit_consumption)) {
 

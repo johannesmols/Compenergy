@@ -27,7 +27,6 @@ class CompareCarriers {
     private static String com_values_equal;
     private static String com_percentage;
     private static String com_times_bigger;
-    private static String com_time;
     private static String com_seconds;
     private static String com_minutes;
     private static String com_hours;
@@ -61,7 +60,6 @@ class CompareCarriers {
         com_values_equal = mContext.getString(R.string.com_values_equal);
         com_percentage = mContext.getString(R.string.com_percentage);
         com_times_bigger = mContext.getString(R.string.com_times_bigger);
-        com_time = mContext.getString(R.string.com_time);
         com_seconds = mContext.getString(R.string.com_seconds);
         com_minutes = mContext.getString(R.string.com_minutes);
         com_hours = mContext.getString(R.string.com_hours);
@@ -110,7 +108,7 @@ class CompareCarriers {
     }
 
     //Comparing with given amounts
-    static List<String> compareCarriers(Context context, Carrier c1, Carrier c2, int amount, String unit, boolean upperOrLower) {
+    static List<String> compareCarriers(Context context, Carrier c1, Carrier c2, long amount, String unit, boolean upperOrLower) {
         setup(context);
 
         if(dbHelper.getCarrierCount() == 0 || c1 == null || c2 == null || c1.get_energy() == 0 || c2.get_energy() == 0 || amount <= 0 || unit.trim().isEmpty()) {
@@ -221,7 +219,18 @@ class CompareCarriers {
         }
         else if (cat1.equalsIgnoreCase(unit_consumption)) {
             if (cat2.equalsIgnoreCase(unit_capacity)) {
+                //Upper is electric consumer, lower is electric producer. Calculate how long the producer needs to generate the energy which the consumer uses in the given amount of time
+                //Amount = Time of consumer => Time of producer = Joule of consumer (watt * time (amount)) / Wattage of producer
+                BigDecimal consumer_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal time = consumer_joule.divide(e2, 2, BigDecimal.ROUND_HALF_UP);
+                String[] upperResult = findBestTimeUnit(amount);
+                String[] lowerResult = findBestTimeUnit(time.longValue());
 
+                result.add(0, upperResult[0]); //Upper time
+                result.add(1, lowerResult[0]); //Lower time
+                result.add(2, upperResult[1]);
+                result.add(3, lowerResult[1]);
+                return result;
             }
             else if (cat2.equalsIgnoreCase(unit_consumption)) {
 
@@ -307,7 +316,7 @@ class CompareCarriers {
     }
 
     //Compare with a certain amount given for the lower item
-    private static List<String> compareWithFixedUnitLower(Carrier c1, Carrier c2, int amount) {
+    private static List<String> compareWithFixedUnitLower(Carrier c1, Carrier c2, long amount) {
         return null;
     }
 

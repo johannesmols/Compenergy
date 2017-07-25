@@ -259,7 +259,17 @@ class CompareCarriers {
                 }
             }
             else if (cat2.equalsIgnoreCase(unit_volume_consumption)) {
+                //Upper is electric consumer, lower is consumer by distance. Calculate how far the volume consumer can move with some time of consuming the other item
+                //Amount = Time of consumer => Distance of volume consumer = Joule of consumer (watt * time (amount)) / Consumption of consumer * 100 (consumption is in 100km)
+                BigDecimal electric_consumer_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal distance = electric_consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100.0));
+                String[] upperResult = findBestTimeUnit(amount);
 
+                result.add(0, upperResult[0]);
+                result.add(1, df.format(distance));
+                result.add(2, upperResult[1]);
+                result.add(3, com_km);
+                return result;
             }
             else if (cat2.equalsIgnoreCase(unit_mass_content)) {
 

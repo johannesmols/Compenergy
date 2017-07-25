@@ -918,4 +918,32 @@
         <favorite>false</favorite>
     </carrier>
 
+    <!-- Test -->
+
+    <carrier>
+        <name>Wasserkocher</name>
+        <category>PC</category>
+        <unit>Consumption</unit>
+        <energy>500</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Wasserkocher 2</name>
+        <category>PC</category>
+        <unit>Consumption</unit>
+        <energy>750</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+
+    <carrier>
+        <name>Low energy producer</name>
+        <category>PC</category>
+        <unit>Capacity</unit>
+        <energy>169</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+
 </carriers>

@@ -5,6 +5,7 @@
 package johannes.mols.compenergy;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -36,9 +37,11 @@ class CompareCarriers {
     private static String com_kg;
     private static String com_litre;
 
+    private static String key_comp_upper;
+    private static String key_comp_lower;
+
     private static DatabaseHelper dbHelper;
     private static DecimalFormat df;
-    private static DecimalFormatSymbols symbols;
 
     private static void setup(Context context) {
         mContext = context;
@@ -48,8 +51,7 @@ class CompareCarriers {
         df.setMaximumFractionDigits(2);
         df.setMinimumFractionDigits(2);
         df.setGroupingUsed(true);
-        symbols = new DecimalFormatSymbols(Locale.getDefault());
-        symbols = df.getDecimalFormatSymbols();
+        DecimalFormatSymbols symbols = df.getDecimalFormatSymbols();
         df.setDecimalFormatSymbols(symbols);
 
         unit_capacity = mContext.getString(R.string.carrier_type_db_capacity);
@@ -69,6 +71,9 @@ class CompareCarriers {
         com_km = mContext.getString(R.string.com_km);
         com_kg = mContext.getString(R.string.com_kg);
         com_litre = mContext.getString(R.string.com_litre);
+
+        key_comp_upper = mContext.getString(R.string.key_comp_upper);
+        key_comp_lower = mContext.getString(R.string.key_comp_lower);
     }
 
     static List<String> compareCarriers(Context context, Carrier c1, Carrier c2) {
@@ -582,5 +587,19 @@ class CompareCarriers {
 
     private static int randomRange(int max, int min) {
         return new Random().nextInt((max - min) + 1) + min;
+    }
+
+    private static void saveAsUpperCompareResult(BigDecimal result) {
+        SharedPreferences prefs_upper = mContext.getSharedPreferences(key_comp_upper, Context.MODE_PRIVATE);
+        if (result != null) {
+            prefs_upper.edit().putString(key_comp_upper, result.toString()).apply();
+        }
+    }
+
+    private static void saveAsLowerCompareResult(BigDecimal result) {
+        SharedPreferences prefs_lower = mContext.getSharedPreferences(key_comp_lower, Context.MODE_PRIVATE);
+        if (result != null) {
+            prefs_lower.edit().putString(key_comp_lower, result.toString()).apply();
+        }
     }
 }

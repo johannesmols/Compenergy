@@ -28,7 +28,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class Fragment_Compare extends Fragment {
@@ -36,6 +40,8 @@ public class Fragment_Compare extends Fragment {
     private Context mContext;
     private DatabaseHelper dbHelper;
     private AnimationDrawable animationDrawable;
+    private static DecimalFormat df;
+    private static DecimalFormatSymbols symbols;
 
     private TextView upperItemName;
     private TextView lowerItemName;
@@ -48,8 +54,10 @@ public class Fragment_Compare extends Fragment {
     private TextView upperItemCompareUnit;
     private TextView lowerItemCompareUnit;
 
-    private final String key_upper = "compenergy.compare.upper_item";
-    private final String key_lower = "compenergy.compare.lower_item";
+    private String key_upper;
+    private String key_lower;
+    private String key_comp_upper;
+    private String key_comp_lower;
 
     private static final int REQUEST_CODE_SELECT = 0x7ce;
     private boolean upperOrLower = true;
@@ -104,6 +112,20 @@ public class Fragment_Compare extends Fragment {
 
         upperItemCompareValue.setOnClickListener(upperItemCompareValueClick);
         lowerItemCompareValue.setOnClickListener(lowerItemCompareValueClick);
+
+        //Number formatting
+        df = new DecimalFormat();
+        //df.setMaximumFractionDigits(2);
+        //df.setMinimumFractionDigits(2);
+        df.setGroupingUsed(true);
+        symbols = new DecimalFormatSymbols(Locale.getDefault());
+        symbols = df.getDecimalFormatSymbols();
+        df.setDecimalFormatSymbols(symbols);
+
+        key_upper = mContext.getString(R.string.key_upper);
+        key_lower = mContext.getString(R.string.key_lower);
+        key_comp_upper = mContext.getString(R.string.key_comp_upper);
+        key_comp_lower = mContext.getString(R.string.key_comp_lower);
 
         return view;
     }
@@ -292,60 +314,80 @@ public class Fragment_Compare extends Fragment {
 
     View.OnClickListener upperItemCompareValueClick = new View.OnClickListener() {
         @Override
-        @SuppressLint("InflateParams")
         public void onClick(View v) {
-            //Open dialog to change value
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
-            LayoutInflater inflater = getActivity().getLayoutInflater();
-            final View dialogView = inflater.inflate(R.layout.dialog_change_value, null);
-            dialogBuilder.setView(dialogView);
-
-            final EditText edit = (EditText) dialogView.findViewById(R.id.dialog_change_value_edit);
-            edit.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-            });
-
-            dialogBuilder.setTitle(getString(R.string.dialog_edit_value_title));
-
-            dialogBuilder.setPositiveButton(getString(R.string.dialog_compare), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                }
-            });
-            dialogBuilder.setNegativeButton(getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                }
-            });
-
-            AlertDialog alertDialog = dialogBuilder.create();
-            alertDialog.show();
+            //Load comparison value
+            SharedPreferences pref_item = getActivity().getSharedPreferences(key_upper, Context.MODE_PRIVATE);
+            SharedPreferences prefs_upper = mContext.getSharedPreferences(key_comp_upper, Context.MODE_PRIVATE);
+            String current_value = prefs_upper.getString(key_comp_upper, "");
+            try {
+                Carrier item = dbHelper.getCarriersWithName(pref_item.getString(key_upper, "")).get(0);
+                changeValue(new BigDecimal(current_value), item.get_unit());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     };
 
     View.OnClickListener lowerItemCompareValueClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //Open dialog to change value
+            //Load comparison value
+            SharedPreferences pref_item = getActivity().getSharedPreferences(key_lower, Context.MODE_PRIVATE);
+            SharedPreferences prefs_lower = mContext.getSharedPreferences(key_comp_lower, Context.MODE_PRIVATE);
+            String current_value = prefs_lower.getString(key_comp_lower, "");
+            try {
+                Carrier item = dbHelper.getCarriersWithName(pref_item.getString(key_lower, "")).get(0);
+                changeValue(new BigDecimal(current_value), item.get_unit());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     };
 
-    private String[] changeValue() {
+    @SuppressLint("InflateParams")
+    private String[] changeValue(BigDecimal current_value, String unit) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.dialog_change_value, null);
+        dialogBuilder.setView(dialogView);
+
+        final EditText edit = (EditText) dialogView.findViewById(R.id.dialog_change_value_edit);
+        edit.setText(df.format(current_value));
+        edit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        dialogBuilder.setTitle(getString(R.string.dialog_edit_value_title));
+
+        dialogBuilder.setPositiveButton(getString(R.string.dialog_compare), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        dialogBuilder.setNegativeButton(getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+
         return null;
     }
 

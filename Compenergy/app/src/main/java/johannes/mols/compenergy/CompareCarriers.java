@@ -468,7 +468,7 @@ class CompareCarriers {
         }
         else if (cat1.equalsIgnoreCase(unit_volume_content)) {
             if (cat2.equalsIgnoreCase(unit_capacity)) {
-                //Upper is consumer by distance, lower is electric producer. Calculate how long the producer needs to run to have the equal energy as the amount of the upper item in litre
+                //Upper is volume energy content, lower is electric producer. Calculate how long the producer needs to run to have the equal energy as the amount of the upper item in litre
                 //Amount = volume in litre => Time of producer = joules of volume (joule per litre * amount (litre)) / wattage of electric producer
                 BigDecimal volume_joule = e1.multiply(new BigDecimal(amount));
                 BigDecimal time = volume_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
@@ -481,7 +481,7 @@ class CompareCarriers {
                 return result;
             }
             else if (cat2.equalsIgnoreCase(unit_consumption)) {
-                //Upper is consumer by distance, lower is electric consumer. Calculate how long the consumer needs to run to have the equal energy as the amount of the upper item in litre
+                //Upper is volume energy content, lower is electric consumer. Calculate how long the consumer needs to run to have the equal energy as the amount of the upper item in litre
                 //Amount = volume in litre => Time of consumer = joules of volume (joule per litre * amount (litre)) / wattage of electric consumer
                 BigDecimal volume_joule = e1.multiply(new BigDecimal(amount));
                 BigDecimal time = volume_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
@@ -494,7 +494,7 @@ class CompareCarriers {
                 return result;
             }
             else if (cat2.equalsIgnoreCase(unit_volume_consumption)) {
-                //Upper is consumer by distance, consumer by distance. Calculate how far the lower item can move with the amount of energy of the upper item
+                //Upper is volume energy content, lower is consumer by distance. Calculate how far the lower item can move with the amount of energy of the upper item
                 //Amount = volume in litre => Distance of consumer by distance = joule of amount (joule per litre * amount (litre)) / joule per kilometre (joule per 100km / 100)
                 BigDecimal volume_joule = e1.multiply(new BigDecimal(amount));
                 BigDecimal consumption_per_km = e2.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP);
@@ -507,7 +507,16 @@ class CompareCarriers {
                 return result;
             }
             else if (cat2.equalsIgnoreCase(unit_mass_content)) {
+                //Upper is energy content by volume, lower is energy content by mass. Calculate how much mass of the lower item is needed to have the same energy as the amount of the upper item in litre
+                //Amount = Volume of item in litre => Mass of lower item in kg = joule for volume (volume in litre * amount (litre)) / joule for mass per kg
+                BigDecimal volume_content_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal mass = volume_content_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
 
+                result.add(0, df.format(amount));
+                result.add(1, df.format(mass));
+                result.add(2, com_litre);
+                result.add(3, com_kg);
+                return result;
             }
             else if (cat2.equalsIgnoreCase(unit_volume_content)) {
                 //Both volume energy content, can ignore amount
@@ -542,8 +551,6 @@ class CompareCarriers {
         else {
             return null;
         }
-
-        return null;
     }
 
     //Compare with a certain amount given for the lower item

@@ -384,7 +384,17 @@ class CompareCarriers {
         }
         else if (cat1.equalsIgnoreCase(unit_mass_content)) {
             if (cat2.equalsIgnoreCase(unit_capacity)) {
+                //Upper is energy content by mass, lower is electric producer. Calculate how much time the electric produer needs to produce the energy of the upper item with the given amount in kg
+                //Amount = Mass of item in kg => Time of production = joule of upper item (energy content per kg * amount (kg)) / wattage of electric producer
+                BigDecimal mass_content_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal time = mass_content_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
+                String[] lowerResult = findBestTimeUnit(time.longValue());
 
+                result.add(0, df.format(amount));
+                result.add(1, lowerResult[0]);
+                result.add(2, com_kg);
+                result.add(3, lowerResult[1]);
+                return result;
             }
             else if (cat2.equalsIgnoreCase(unit_consumption)) {
 

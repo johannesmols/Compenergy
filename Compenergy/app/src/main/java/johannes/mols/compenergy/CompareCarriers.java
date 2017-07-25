@@ -316,10 +316,43 @@ class CompareCarriers {
                 return result;
             }
             else if (cat2.equalsIgnoreCase(unit_consumption)) {
+                //Upper is consumer by distance, lower is electric consumer. Calculate how long the consumer needs to consume for the distance of the consumer by distance
+                //Amount = Distance in km => Time of consumer = Consumption of consumer on distance (consumption in joule / 100 * amount (distance in km)) / wattage of electric consumer
+                BigDecimal volume_consumer_joule = e1.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(amount));
+                BigDecimal time = volume_consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
+                String[] lowerResult = findBestTimeUnit(time.longValue());
 
+                result.add(0, df.format(amount));
+                result.add(1, lowerResult[0]);
+                result.add(2, com_km);
+                result.add(3, lowerResult[1]);
+                return result;
             }
             else if (cat2.equalsIgnoreCase(unit_volume_consumption)) {
-
+                //Both consumers by distance, can ignore amount
+                if(e1.compareTo(e2) == 1) { //larger
+                    BigDecimal timesBigger = e1.divide(e2, 2, BigDecimal.ROUND_HALF_UP);
+                    result.add(0, df.format(timesBigger));
+                    BigDecimal percentage = e2.divide(e1, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
+                    result.add(1, df.format(percentage) + " %");
+                    result.add(2, com_times_bigger);
+                    result.add(3, com_percentage);
+                    return result;
+                } else if (e1.compareTo(e2) == 0) { //same
+                    result.add(0, String.format(Locale.getDefault(), "%.1f", 1.0));
+                    result.add(1, String.format(Locale.getDefault(), "%.1f", 1.0));
+                    result.add(2, com_values_equal);
+                    result.add(3, com_values_equal);
+                    return result;
+                } else { //smaller
+                    BigDecimal percentage = e1.divide(e2, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
+                    result.add(0, df.format(percentage) + " %");
+                    BigDecimal timesBigger = e2.divide(e1, 2, BigDecimal.ROUND_HALF_UP);
+                    result.add(1, df.format(timesBigger));
+                    result.add(2, com_percentage);
+                    result.add(3, com_times_bigger);
+                    return result;
+                }
             }
             else if (cat2.equalsIgnoreCase(unit_mass_content)) {
 

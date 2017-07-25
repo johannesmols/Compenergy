@@ -423,10 +423,42 @@ class CompareCarriers {
                 return result;
             }
             else if (cat2.equalsIgnoreCase(unit_mass_content)) {
-
+                //Both mass energy content, can ignore amount
+                if(e1.compareTo(e2) == 1) { //larger
+                    BigDecimal timesBigger = e1.divide(e2, 2, BigDecimal.ROUND_HALF_UP);
+                    result.add(0, df.format(timesBigger));
+                    BigDecimal percentage = e2.divide(e1, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
+                    result.add(1, df.format(percentage) + " %");
+                    result.add(2, com_times_bigger);
+                    result.add(3, com_percentage);
+                    return result;
+                } else if (e1.compareTo(e2) == 0) { //same
+                    result.add(0, String.format(Locale.getDefault(), "%.1f", 1.0));
+                    result.add(1, String.format(Locale.getDefault(), "%.1f", 1.0));
+                    result.add(2, com_values_equal);
+                    result.add(3, com_values_equal);
+                    return result;
+                } else { //smaller
+                    BigDecimal percentage = e1.divide(e2, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
+                    result.add(0, df.format(percentage) + " %");
+                    BigDecimal timesBigger = e2.divide(e1, 2, BigDecimal.ROUND_HALF_UP);
+                    result.add(1, df.format(timesBigger));
+                    result.add(2, com_percentage);
+                    result.add(3, com_times_bigger);
+                    return result;
+                }
             }
             else if (cat2.equalsIgnoreCase(unit_volume_content)) {
+                //Upper is energy content by mass, lower is energy content by volume. Calculate how much volume of the lower item is needed to have the same energy as the amount of the upper item in kg
+                //Amount = Mass of item in kg => Volume of lower item in litre = joule for mass (mass in kg * amount (kg)) / joule for volume per litre
+                BigDecimal mass_content_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal volume = mass_content_joule.divide(e2, 2, BigDecimal.ROUND_HALF_UP);
 
+                result.add(0, df.format(amount));
+                result.add(1, df.format(volume));
+                result.add(2, com_kg);
+                result.add(3, com_litre);
+                return result;
             }
             else {
                 return null;

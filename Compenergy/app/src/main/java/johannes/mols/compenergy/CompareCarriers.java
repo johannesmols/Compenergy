@@ -471,7 +471,7 @@ class CompareCarriers {
                 //Upper is consumer by distance, lower is electric producer. Calculate how long the producer needs to run to have the equal energy as the amount of the upper item in litre
                 //Amount = volume in litre => Time of producer = joules of volume (joule per litre * amount (litre)) / wattage of electric producer
                 BigDecimal volume_joule = e1.multiply(new BigDecimal(amount));
-                BigDecimal time = volume_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100.0));
+                BigDecimal time = volume_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
                 String[] lowerResult = findBestTimeUnit(time.longValue());
 
                 result.add(0, df.format(amount));
@@ -484,7 +484,7 @@ class CompareCarriers {
                 //Upper is consumer by distance, lower is electric consumer. Calculate how long the consumer needs to run to have the equal energy as the amount of the upper item in litre
                 //Amount = volume in litre => Time of consumer = joules of volume (joule per litre * amount (litre)) / wattage of electric consumer
                 BigDecimal volume_joule = e1.multiply(new BigDecimal(amount));
-                BigDecimal time = volume_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100.0));
+                BigDecimal time = volume_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
                 String[] lowerResult = findBestTimeUnit(time.longValue());
 
                 result.add(0, df.format(amount));

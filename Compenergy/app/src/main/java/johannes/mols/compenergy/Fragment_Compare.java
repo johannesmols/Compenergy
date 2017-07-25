@@ -4,6 +4,7 @@
 
 package johannes.mols.compenergy;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -291,6 +292,7 @@ public class Fragment_Compare extends Fragment {
 
     View.OnClickListener upperItemCompareValueClick = new View.OnClickListener() {
         @Override
+        @SuppressLint("InflateParams")
         public void onClick(View v) {
             //Open dialog to change value
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
@@ -342,6 +344,10 @@ public class Fragment_Compare extends Fragment {
             //Open dialog to change value
         }
     };
+
+    private String[] changeValue() {
+        return null;
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

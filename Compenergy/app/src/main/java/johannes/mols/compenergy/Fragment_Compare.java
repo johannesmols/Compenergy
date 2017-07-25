@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -321,7 +322,11 @@ public class Fragment_Compare extends Fragment {
             String current_value = prefs_upper.getString(key_comp_upper, "");
             try {
                 Carrier item = dbHelper.getCarriersWithName(pref_item.getString(key_upper, "")).get(0);
-                changeValue(new BigDecimal(current_value), item.get_unit());
+                if (!current_value.equalsIgnoreCase("-1")) { //if the number is -1, it means it makes no sense to change that value, probably because it's a percentage or "times bigger" value
+                    changeValue(new BigDecimal(current_value), item.get_unit());
+                } else {
+                    Toast.makeText(mContext, getString(R.string.cant_change_that_value), Toast.LENGTH_SHORT).show();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -337,7 +342,11 @@ public class Fragment_Compare extends Fragment {
             String current_value = prefs_lower.getString(key_comp_lower, "");
             try {
                 Carrier item = dbHelper.getCarriersWithName(pref_item.getString(key_lower, "")).get(0);
-                changeValue(new BigDecimal(current_value), item.get_unit());
+                if (!current_value.equalsIgnoreCase("-1")) { //if the number is -1, it means it makes no sense to change that value, probably because it's a percentage or "times bigger" value
+                    changeValue(new BigDecimal(current_value), item.get_unit());
+                } else {
+                    Toast.makeText(mContext, getString(R.string.cant_change_that_value), Toast.LENGTH_SHORT).show();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

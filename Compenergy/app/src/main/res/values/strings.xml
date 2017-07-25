@@ -244,6 +244,7 @@
     <!-- Toast messages -->
     <string name="item_deleted">Item deleted</string>
     <string name="item_added_to_db">Item added to the database</string>
+    <string name="cant_change_that_value">Can not change that value</string>
 
     <!-- About screen -->
     <string name="about_placeholder_value">Value</string>

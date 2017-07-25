@@ -144,6 +144,8 @@ class CompareCarriers {
             if (cat2.equalsIgnoreCase(unit_capacity)) {
                 //Both capacitors, can ignore amount
                 if(e1.compareTo(e2) == 1) { //larger
+                    saveAsUpperCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+                    saveAsLowerCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
                     BigDecimal timesBigger = e1.divide(e2, 2, BigDecimal.ROUND_HALF_UP);
                     result.add(0, df.format(timesBigger));
                     BigDecimal percentage = e2.divide(e1, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
@@ -152,12 +154,16 @@ class CompareCarriers {
                     result.add(3, com_percentage);
                     return result;
                 } else if(e1.compareTo(e2) == 0) { //same
+                    saveAsUpperCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+                    saveAsLowerCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
                     result.add(0, String.format(Locale.getDefault(), "%.1f", 1.0));
                     result.add(1, String.format(Locale.getDefault(), "%.1f", 1.0));
                     result.add(2, com_values_equal);
                     result.add(3, com_values_equal);
                     return result;
                 } else { //smaller
+                    saveAsUpperCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
+                    saveAsLowerCompareResult(new BigDecimal("-1")); //-1 => changing that value makes no sense
                     BigDecimal percentage = e1.divide(e2, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
                     result.add(0, df.format(percentage) + " %");
                     BigDecimal timesBigger = e2.divide(e1, 2, BigDecimal.ROUND_HALF_UP);

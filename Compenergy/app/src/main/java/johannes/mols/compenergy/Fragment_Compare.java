@@ -32,6 +32,7 @@ import android.widget.Toast;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -120,11 +121,9 @@ public class Fragment_Compare extends Fragment {
         DecimalFormatSymbols symbols = df.getDecimalFormatSymbols();
         df.setDecimalFormatSymbols(symbols);
 
-        df_value = new DecimalFormat();
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.ENGLISH); //Use dots in all language settings as decimal separator
+        df_value = (DecimalFormat) numberFormat;
         df_value.setGroupingUsed(false);
-        DecimalFormatSymbols symbols_value = new DecimalFormatSymbols(Locale.getDefault());
-        symbols_value.setDecimalSeparator('.');
-        df_value.setDecimalFormatSymbols(symbols_value);
 
         key_upper = mContext.getString(R.string.key_upper);
         key_lower = mContext.getString(R.string.key_lower);
@@ -364,7 +363,7 @@ public class Fragment_Compare extends Fragment {
         dialogBuilder.setView(dialogView);
 
         final EditText edit = (EditText) dialogView.findViewById(R.id.dialog_change_value_edit);
-        edit.setText(df.format(current_value));
+        edit.setText(df_value.format(current_value));
 
         //Need to add more info and unit selection
         //Time is currently displayed in seconds for example

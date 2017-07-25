@@ -221,6 +221,7 @@
     <string name="dialog_no">No</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_ok">Okay</string>
+    <string name="dialog_compare">Compare</string>
     <string name="db_update_available">A database update is available</string>
     <string name="confirm_db_update">Do you want to update to the latest version?\nCustom data will be lost!</string>
     <string name="add_data_input_too_large_title">Input too large</string>
@@ -232,6 +233,7 @@
     <string name="pref_confirm_deletion">Confirm deletion</string>
     <string name="dialog_no_internet_browser">No internet browser found</string>
     <string name="dialog_no_email_app">No E-Mail application found</string>
+    <string name="dialog_edit_value_title">Edit value</string>
 
     <!-- Toast messages -->
     <string name="item_deleted">Item deleted</string>

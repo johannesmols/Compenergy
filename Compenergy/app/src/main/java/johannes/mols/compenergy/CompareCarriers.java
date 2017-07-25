@@ -272,7 +272,17 @@ class CompareCarriers {
                 return result;
             }
             else if (cat2.equalsIgnoreCase(unit_mass_content)) {
+                //Upper is electric consumer, lower is energy content by mass. Calculate how much time of consuming is worth how much weight of the second item
+                //Amount = Time of consumer => Weight of mass content = Joule of consumer (watt * time (amount)) / Mass energy content per kg in Joule
+                BigDecimal consumer_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal weight = consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
+                String[] upperResult = findBestTimeUnit(amount);
 
+                result.add(0, upperResult[0]);
+                result.add(1, df.format(weight));
+                result.add(2, upperResult[1]);
+                result.add(3, com_kg);
+                return result;
             }
             else if (cat2.equalsIgnoreCase(unit_volume_content)) {
 

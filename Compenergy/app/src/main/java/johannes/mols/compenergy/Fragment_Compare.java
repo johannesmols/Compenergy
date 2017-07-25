@@ -253,8 +253,33 @@ public class Fragment_Compare extends Fragment {
         displayItemInfo(true, c1);
         displayItemInfo(false, c2);
 
-        List<String> result = CompareCarriers.compareCarriers(mContext, c1, c2); //0: Value for upper item; 1: Value for lower item; 2: Unit for upper item; 3: Unit for lower item
-        if(result != null) {
+        List<String> result = CompareCarriers.compareCarriers(mContext, c1, c2);
+        if(result != null) { //0: Value for upper item; 1: Value for lower item; 2: Unit for upper item; 3: Unit for lower item
+            upperItemCompareValue.setText(result.get(0));
+            lowerItemCompareValue.setText(result.get(1));
+            upperItemCompareUnit.setText(result.get(2));
+            lowerItemCompareUnit.setText(result.get(3));
+        } else {
+            upperItemCompareValue.setText("");
+            lowerItemCompareValue.setText("");
+            upperItemCompareUnit.setText("");
+            lowerItemCompareUnit.setText("");
+            Log.e("Unexpected", "Unexpected error in comparison");
+        }
+
+        //Save which items are compared
+        SharedPreferences prefs1 = mContext.getSharedPreferences(key_upper, Context.MODE_PRIVATE);
+        SharedPreferences prefs2 = mContext.getSharedPreferences(key_lower, Context.MODE_PRIVATE);
+        prefs1.edit().putString(key_upper, upperItemName.getText().toString()).apply();
+        prefs2.edit().putString(key_lower, lowerItemName.getText().toString()).apply();
+    }
+
+    private void compareItemsWithFixedUnit(Carrier c1, Carrier c2, long amount, boolean upperOrLower) {
+        displayItemInfo(true, c1);
+        displayItemInfo(false, c2);
+
+        List<String> result = CompareCarriers.compareCarriers(mContext, c1, c2, amount, upperOrLower);
+        if(result != null) { //0: Value for upper item; 1: Value for lower item; 2: Unit for upper item; 3: Unit for lower item
             upperItemCompareValue.setText(result.get(0));
             lowerItemCompareValue.setText(result.get(1));
             upperItemCompareUnit.setText(result.get(2));
@@ -325,7 +350,7 @@ public class Fragment_Compare extends Fragment {
             try {
                 Carrier item = dbHelper.getCarriersWithName(pref_item.getString(key_upper, "")).get(0);
                 if (!current_value.equalsIgnoreCase("-1")) { //if the number is -1, it means it makes no sense to change that value, probably because it's a percentage or "times bigger" value
-                    changeValue(new BigDecimal(current_value), item.get_unit());
+                    changeValue(new BigDecimal(current_value), item.get_unit(), true);
                 } else {
                     Toast.makeText(mContext, getString(R.string.cant_change_that_value), Toast.LENGTH_SHORT).show();
                 }
@@ -345,7 +370,7 @@ public class Fragment_Compare extends Fragment {
             try {
                 Carrier item = dbHelper.getCarriersWithName(pref_item.getString(key_lower, "")).get(0);
                 if (!current_value.equalsIgnoreCase("-1")) { //if the number is -1, it means it makes no sense to change that value, probably because it's a percentage or "times bigger" value
-                    changeValue(new BigDecimal(current_value), item.get_unit());
+                    changeValue(new BigDecimal(current_value), item.get_unit(), false);
                 } else {
                     Toast.makeText(mContext, getString(R.string.cant_change_that_value), Toast.LENGTH_SHORT).show();
                 }
@@ -356,7 +381,7 @@ public class Fragment_Compare extends Fragment {
     };
 
     @SuppressLint("InflateParams")
-    private String[] changeValue(BigDecimal current_value, String unit) {
+    private void changeValue(BigDecimal current_value, String unit, boolean upperOrLower) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.dialog_change_value, null);
@@ -390,7 +415,16 @@ public class Fragment_Compare extends Fragment {
         dialogBuilder.setPositiveButton(getString(R.string.dialog_compare), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                //Load old carriers
+                SharedPreferences pref1 = getActivity().getSharedPreferences(key_upper, Context.MODE_PRIVATE);
+                SharedPreferences pref2 = getActivity().getSharedPreferences(key_lower, Context.MODE_PRIVATE);
+                try {
+                    Carrier upper = dbHelper.getCarriersWithName(pref1.getString(key_upper, "")).get(0);
+                    Carrier lower = dbHelper.getCarriersWithName(pref2.getString(key_lower, "")).get(0);
+                    compareItemsWithFixedUnit(upper, lower, Long.parseLong(edit.getText().toString()), true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         dialogBuilder.setNegativeButton(getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
@@ -402,8 +436,6 @@ public class Fragment_Compare extends Fragment {
 
         AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
-
-        return null;
     }
 
     @Override

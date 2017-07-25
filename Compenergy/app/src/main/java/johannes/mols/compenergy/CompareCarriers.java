@@ -115,20 +115,18 @@ class CompareCarriers {
     }
 
     //Comparing with given amounts
-    static List<String> compareCarriers(Context context, Carrier c1, Carrier c2, long amount, String unit, boolean upperOrLower) {
+    static List<String> compareCarriers(Context context, Carrier c1, Carrier c2, long amount, boolean upperOrLower) {
         setup(context);
 
-        if(dbHelper.getCarrierCount() == 0 || c1 == null || c2 == null || c1.get_energy() == 0 || c2.get_energy() == 0 || amount <= 0 || unit.trim().isEmpty()) {
+        if(dbHelper.getCarrierCount() == 0 || c1 == null || c2 == null || c1.get_energy() == 0 || c2.get_energy() == 0 || amount <= 0) { // || unit.trim().isEmpty()) {
             return null;
         }
 
         if(upperOrLower) {
-            compareWithFixedUnitUpper(c1, c2, amount);
+            return compareWithFixedUnitUpper(c1, c2, amount);
         } else {
-            compareWithFixedUnitLower(c1, c2, amount);
+            return compareWithFixedUnitLower(c1, c2, amount);
         }
-
-        return null;
     }
 
     //Compare with a certain amount given for the upper item

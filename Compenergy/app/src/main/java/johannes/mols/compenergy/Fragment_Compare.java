@@ -82,6 +82,11 @@ public class Fragment_Compare extends Fragment {
         upperItemCompareUnit = (TextView) view.findViewById(R.id.fragment_compare_upper_item_unit);
         lowerItemCompareUnit = (TextView) view.findViewById(R.id.fragment_compare_lower_item_unit);
 
+        key_upper = mContext.getString(R.string.key_upper);
+        key_lower = mContext.getString(R.string.key_lower);
+        key_comp_upper = mContext.getString(R.string.key_comp_upper);
+        key_comp_lower = mContext.getString(R.string.key_comp_lower);
+
         //See if the fragment is opened for the first time
         String key = getString(R.string.key_first_start);
         SharedPreferences prefs = getActivity().getSharedPreferences(key, Context.MODE_PRIVATE);
@@ -124,11 +129,6 @@ public class Fragment_Compare extends Fragment {
         df_value = (DecimalFormat) numberFormat;
         df_value.setGroupingUsed(false);
         df_value.setMaximumFractionDigits(2);
-
-        key_upper = mContext.getString(R.string.key_upper);
-        key_lower = mContext.getString(R.string.key_lower);
-        key_comp_upper = mContext.getString(R.string.key_comp_upper);
-        key_comp_lower = mContext.getString(R.string.key_comp_lower);
 
         return view;
     }

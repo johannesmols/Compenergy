@@ -756,17 +756,17 @@ class CompareCarriers {
                 return result;
             }
             else if (cat2.equalsIgnoreCase(unit_volume_content)) {
-                //Upper is electric producer, lower is energy content by volume. Calculate how much time of producing is worth how much volume of the second item
-                //Amount = Time of producer => Volume of volume content = Joule of producer (watt * time (amount)) / Volume energy content per litre in Joule
-                BigDecimal producer_joule = e1.multiply(amount);
-                BigDecimal volume = producer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
-                String[] upperResult = findBestTimeUnit(amount);
+                //Upper is electric producer, lower is energy content by volume. Calculate how long the producer needs to run to have the equal energy as the amount of the lower item in litre
+                //Amount = volume in litre => Time of producer = joules of volume (joule per litre * amount (litre)) / wattage of electric producer
+                BigDecimal volume_joule = e2.multiply(amount);
+                BigDecimal time = volume_joule.divide(e1, 10, BigDecimal.ROUND_HALF_UP);
+                String[] upperResult = findBestTimeUnit(time);
 
-                saveAsUpperCompareResult(amount);
-                saveAsLowerCompareResult(volume);
+                saveAsUpperCompareResult(time);
+                saveAsLowerCompareResult(amount);
 
                 result.add(0, upperResult[0]);
-                result.add(1, df.format(volume));
+                result.add(1, df.format(amount));
                 result.add(2, upperResult[1]);
                 result.add(3, com_litre);
                 return result;

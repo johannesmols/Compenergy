@@ -111,14 +111,14 @@ class CompareCarriers {
         }
         amount = randomRange(max, min);
 
-        return compareWithFixedUnitUpper(c1, c2, (long)amount);
+        return compareWithFixedUnitUpper(c1, c2, new BigDecimal(amount));
     }
 
     //Comparing with given amounts
-    static List<String> compareCarriers(Context context, Carrier c1, Carrier c2, long amount, boolean upperOrLower) {
+    static List<String> compareCarriers(Context context, Carrier c1, Carrier c2, BigDecimal amount, boolean upperOrLower) {
         setup(context);
 
-        if(dbHelper.getCarrierCount() == 0 || c1 == null || c2 == null || c1.get_energy() == 0 || c2.get_energy() == 0 || amount <= 0) {
+        if(dbHelper.getCarrierCount() == 0 || c1 == null || c2 == null || c1.get_energy() == 0 || c2.get_energy() == 0 || amount.compareTo(new BigDecimal(0)) == 0) { //compareTo(0) == 0 means the values are equal, so 0
             return null;
         }
 
@@ -130,7 +130,7 @@ class CompareCarriers {
     }
 
     //Compare with a certain amount given for the upper item
-    private static List<String> compareWithFixedUnitUpper(Carrier c1, Carrier c2, long amount) {
+    private static List<String> compareWithFixedUnitUpper(Carrier c1, Carrier c2, BigDecimal amount) {
         List<String> result = new ArrayList<>(); //0=upper value; 1=lower value; 2=upper unit; 3=lower unit
         BigDecimal e1 = new BigDecimal(c1.get_energy());
         BigDecimal e2 = new BigDecimal(c2.get_energy());
@@ -177,12 +177,12 @@ class CompareCarriers {
             else if (cat2.equalsIgnoreCase(unit_consumption)) {
                 //Upper is electric producer, lower is electric consumer. Calculate how long the consumer can run with some time of producing
                 //Amount = Time of producer => Time of consumer = Joule of producer (watt * time (amount)) / Wattage of consumer
-                BigDecimal producer_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal producer_joule = e1.multiply(amount);
                 BigDecimal time = producer_joule.divide(e2, 2, BigDecimal.ROUND_HALF_UP);
                 String[] upperResult = findBestTimeUnit(amount);
-                String[] lowerResult = findBestTimeUnit(time.longValue());
+                String[] lowerResult = findBestTimeUnit(time);
 
-                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsUpperCompareResult(amount);
                 saveAsLowerCompareResult(time);
 
                 result.add(0, upperResult[0]); //Upper time
@@ -194,11 +194,11 @@ class CompareCarriers {
             else if (cat2.equalsIgnoreCase(unit_volume_consumption)) {
                 //Upper is electric producer, lower is consumer by distance. Calculate how far the consumer can move with some time of producing
                 //Amount = Time of producer => Distance of consumer = Joule of producer (watt * time (amount)) / Consumption of consumer * 100 (consumption is in 100km)
-                BigDecimal producer_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal producer_joule = e1.multiply(amount);
                 BigDecimal distance = producer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100.0));
                 String[] upperResult = findBestTimeUnit(amount);
 
-                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsUpperCompareResult(amount);
                 saveAsLowerCompareResult(distance);
 
                 result.add(0, upperResult[0]);
@@ -210,11 +210,11 @@ class CompareCarriers {
             else if (cat2.equalsIgnoreCase(unit_mass_content)) {
                 //Upper is electric producer, lower is energy content by mass. Calculate how much time of producing is worth how much weight of the second item
                 //Amount = Time of producer => Weight of mass content = Joule of producer (watt * time (amount)) / Mass energy content per kg in Joule
-                BigDecimal producer_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal producer_joule = e1.multiply(amount);
                 BigDecimal weight = producer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
                 String[] upperResult = findBestTimeUnit(amount);
 
-                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsUpperCompareResult(amount);
                 saveAsLowerCompareResult(weight);
 
                 result.add(0, upperResult[0]);
@@ -226,11 +226,11 @@ class CompareCarriers {
             else if (cat2.equalsIgnoreCase(unit_volume_content)) {
                 //Upper is electric producer, lower is energy content by volume. Calculate how much time of producing is worth how much volume of the second item
                 //Amount = Time of producer => Volume of volume content = Joule of producer (watt * time (amount)) / Volume energy content per litre in Joule
-                BigDecimal producer_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal producer_joule = e1.multiply(amount);
                 BigDecimal volume = producer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
                 String[] upperResult = findBestTimeUnit(amount);
 
-                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsUpperCompareResult(amount);
                 saveAsLowerCompareResult(volume);
 
                 result.add(0, upperResult[0]);
@@ -247,12 +247,12 @@ class CompareCarriers {
             if (cat2.equalsIgnoreCase(unit_capacity)) {
                 //Upper is electric consumer, lower is electric producer. Calculate how long the producer needs to generate the energy which the consumer uses in the given amount of time
                 //Amount = Time of consumer => Time of producer = Joule of consumer (watt * time (amount)) / Wattage of producer
-                BigDecimal consumer_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal consumer_joule = e1.multiply(amount);
                 BigDecimal time = consumer_joule.divide(e2, 2, BigDecimal.ROUND_HALF_UP);
                 String[] upperResult = findBestTimeUnit(amount);
-                String[] lowerResult = findBestTimeUnit(time.longValue());
+                String[] lowerResult = findBestTimeUnit(time);
 
-                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsUpperCompareResult(amount);
                 saveAsLowerCompareResult(time);
 
                 result.add(0, upperResult[0]); //Upper time
@@ -299,11 +299,11 @@ class CompareCarriers {
             else if (cat2.equalsIgnoreCase(unit_volume_consumption)) {
                 //Upper is electric consumer, lower is consumer by distance. Calculate how far the volume consumer can move with some time of consuming the other item
                 //Amount = Time of consumer => Distance of volume consumer = Joule of consumer (watt * time (amount)) / Consumption of consumer * 100 (consumption is in 100km)
-                BigDecimal electric_consumer_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal electric_consumer_joule = e1.multiply(amount);
                 BigDecimal distance = electric_consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100.0));
                 String[] upperResult = findBestTimeUnit(amount);
 
-                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsUpperCompareResult(amount);
                 saveAsLowerCompareResult(distance);
 
                 result.add(0, upperResult[0]);
@@ -315,11 +315,11 @@ class CompareCarriers {
             else if (cat2.equalsIgnoreCase(unit_mass_content)) {
                 //Upper is electric consumer, lower is energy content by mass. Calculate how much time of consuming is worth how much weight of the second item
                 //Amount = Time of consumer => Weight of mass content = Joule of consumer (watt * time (amount)) / Mass energy content per kg in Joule
-                BigDecimal consumer_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal consumer_joule = e1.multiply(amount);
                 BigDecimal weight = consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
                 String[] upperResult = findBestTimeUnit(amount);
 
-                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsUpperCompareResult(amount);
                 saveAsLowerCompareResult(weight);
 
                 result.add(0, upperResult[0]);
@@ -331,11 +331,11 @@ class CompareCarriers {
             else if (cat2.equalsIgnoreCase(unit_volume_content)) {
                 //Upper is electric consumer, lower is energy content by volume. Calculate how much time of consuming is worth how much volume of the second item
                 //Amount = Time of consumer => Volume of volume content = Joule of consumer (watt * time (amount)) / Volume energy content per litre in Joule
-                BigDecimal consumer_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal consumer_joule = e1.multiply(amount);
                 BigDecimal volume = consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
                 String[] upperResult = findBestTimeUnit(amount);
 
-                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsUpperCompareResult(amount);
                 saveAsLowerCompareResult(volume);
 
                 result.add(0, upperResult[0]);
@@ -352,11 +352,11 @@ class CompareCarriers {
             if (cat2.equalsIgnoreCase(unit_capacity)) {
                 //Upper is consumer by distance, lower is electric producer. Calculate how long the producer needs to produce for the distance of the consumer by distance
                 //Amount = Distance in km => Time of producer = Consumption of consumer on distance (consumption in joule / 100 * amount (distance in km)) / wattage of electric producer
-                BigDecimal volume_consumer_joule = e1.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(amount));
+                BigDecimal volume_consumer_joule = e1.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP).multiply(amount);
                 BigDecimal time = volume_consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
-                String[] lowerResult = findBestTimeUnit(time.longValue());
+                String[] lowerResult = findBestTimeUnit(time);
 
-                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsUpperCompareResult(amount);
                 saveAsLowerCompareResult(time);
 
                 result.add(0, df.format(amount));
@@ -368,11 +368,11 @@ class CompareCarriers {
             else if (cat2.equalsIgnoreCase(unit_consumption)) {
                 //Upper is consumer by distance, lower is electric consumer. Calculate how long the consumer needs to consume for the distance of the consumer by distance
                 //Amount = Distance in km => Time of consumer = Consumption of consumer on distance (consumption in joule / 100 * amount (distance in km)) / wattage of electric consumer
-                BigDecimal volume_consumer_joule = e1.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(amount));
+                BigDecimal volume_consumer_joule = e1.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP).multiply(amount);
                 BigDecimal time = volume_consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
-                String[] lowerResult = findBestTimeUnit(time.longValue());
+                String[] lowerResult = findBestTimeUnit(time);
 
-                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsUpperCompareResult(amount);
                 saveAsLowerCompareResult(time);
 
                 result.add(0, df.format(amount));
@@ -419,10 +419,10 @@ class CompareCarriers {
             else if (cat2.equalsIgnoreCase(unit_mass_content)) {
                 //Upper is consumer by distance, lower is mass energy content. Calculate the amount of mass of the lower item which is needed to travel the amount of distance with the upper consumer by distance
                 //Amount = Distance in km => Mass of lower item to equal distance consumption = Consumption of consumer on distance (consumption in joule / 100 * amount (distance in km)) / joule of mass content per kg
-                BigDecimal volume_consumer_joule = e1.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(amount));
+                BigDecimal volume_consumer_joule = e1.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP).multiply(amount);
                 BigDecimal mass = volume_consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
 
-                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsUpperCompareResult(amount);
                 saveAsLowerCompareResult(mass);
 
                 result.add(0, df.format(amount));
@@ -434,10 +434,10 @@ class CompareCarriers {
             else if (cat2.equalsIgnoreCase(unit_volume_content)) {
                 //Upper is consumer by distance, lower is volume energy content. Calculate the amount of volume of the lower item which is needed to travel the amount of distance with the upper consumer by distance
                 //Amount = Distance in km => Volume of lower item to equal distance consumption = Consumption of consumer on distance (consumption in joule / 100 * amount (distance in km)) / joule of volume content per litre
-                BigDecimal volume_consumer_joule = e1.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(amount));
+                BigDecimal volume_consumer_joule = e1.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP).multiply(amount);
                 BigDecimal volume = volume_consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
 
-                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsUpperCompareResult(amount);
                 saveAsLowerCompareResult(volume);
 
                 result.add(0, df.format(amount));
@@ -454,11 +454,11 @@ class CompareCarriers {
             if (cat2.equalsIgnoreCase(unit_capacity)) {
                 //Upper is energy content by mass, lower is electric producer. Calculate how much time the electric producer needs to produce the energy of the upper item with the given amount in kg
                 //Amount = Mass of item in kg => Time of production = joule of upper item (energy content per kg * amount (kg)) / wattage of electric producer
-                BigDecimal mass_content_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal mass_content_joule = e1.multiply(amount);
                 BigDecimal time = mass_content_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
-                String[] lowerResult = findBestTimeUnit(time.longValue());
+                String[] lowerResult = findBestTimeUnit(time);
 
-                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsUpperCompareResult(amount);
                 saveAsLowerCompareResult(time);
 
                 result.add(0, df.format(amount));
@@ -470,11 +470,11 @@ class CompareCarriers {
             else if (cat2.equalsIgnoreCase(unit_consumption)) {
                 //Upper is energy content by mass, lower is electric consumer. Calculate how much time the electric consumer needs to consume the energy of the upper item with the given amount in kg
                 //Amount = Mass of item in kg => Time of consumption = joule of upper item (energy content per kg * amount (kg)) / wattage of electric consumer
-                BigDecimal mass_content_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal mass_content_joule = e1.multiply(amount);
                 BigDecimal time = mass_content_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
-                String[] lowerResult = findBestTimeUnit(time.longValue());
+                String[] lowerResult = findBestTimeUnit(time);
 
-                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsUpperCompareResult(amount);
                 saveAsLowerCompareResult(time);
 
                 result.add(0, df.format(amount));
@@ -486,11 +486,11 @@ class CompareCarriers {
             else if (cat2.equalsIgnoreCase(unit_volume_consumption)) {
                 //Upper is energy content by mass, lower is consumer by distance. Calculate how far the consumer by distance can move with the amount of kg of the upper item
                 //Amount = Mass of item in kg => Distance of consumer by distance = joule of upper item with amount (joule per kg * amount (kg)) / joule per km (joule per 100km / 100)
-                BigDecimal mass_content_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal mass_content_joule = e1.multiply(amount);
                 BigDecimal joule_per_km_of_consumer = e2.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP);
                 BigDecimal distance = mass_content_joule.divide(joule_per_km_of_consumer, 2, BigDecimal.ROUND_HALF_UP);
 
-                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsUpperCompareResult(amount);
                 saveAsLowerCompareResult(distance);
 
                 result.add(0, df.format(amount));
@@ -537,10 +537,10 @@ class CompareCarriers {
             else if (cat2.equalsIgnoreCase(unit_volume_content)) {
                 //Upper is energy content by mass, lower is energy content by volume. Calculate how much volume of the lower item is needed to have the same energy as the amount of the upper item in kg
                 //Amount = Mass of item in kg => Volume of lower item in litre = joule for mass (mass in kg * amount (kg)) / joule for volume per litre
-                BigDecimal mass_content_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal mass_content_joule = e1.multiply(amount);
                 BigDecimal volume = mass_content_joule.divide(e2, 2, BigDecimal.ROUND_HALF_UP);
 
-                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsUpperCompareResult(amount);
                 saveAsLowerCompareResult(volume);
 
                 result.add(0, df.format(amount));
@@ -557,11 +557,11 @@ class CompareCarriers {
             if (cat2.equalsIgnoreCase(unit_capacity)) {
                 //Upper is volume energy content, lower is electric producer. Calculate how long the producer needs to run to have the equal energy as the amount of the upper item in litre
                 //Amount = volume in litre => Time of producer = joules of volume (joule per litre * amount (litre)) / wattage of electric producer
-                BigDecimal volume_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal volume_joule = e1.multiply(amount);
                 BigDecimal time = volume_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
-                String[] lowerResult = findBestTimeUnit(time.longValue());
+                String[] lowerResult = findBestTimeUnit(time);
 
-                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsUpperCompareResult(amount);
                 saveAsLowerCompareResult(time);
 
                 result.add(0, df.format(amount));
@@ -573,11 +573,11 @@ class CompareCarriers {
             else if (cat2.equalsIgnoreCase(unit_consumption)) {
                 //Upper is volume energy content, lower is electric consumer. Calculate how long the consumer needs to run to have the equal energy as the amount of the upper item in litre
                 //Amount = volume in litre => Time of consumer = joules of volume (joule per litre * amount (litre)) / wattage of electric consumer
-                BigDecimal volume_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal volume_joule = e1.multiply(amount);
                 BigDecimal time = volume_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
-                String[] lowerResult = findBestTimeUnit(time.longValue());
+                String[] lowerResult = findBestTimeUnit(time);
 
-                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsUpperCompareResult(amount);
                 saveAsLowerCompareResult(time);
 
                 result.add(0, df.format(amount));
@@ -589,11 +589,11 @@ class CompareCarriers {
             else if (cat2.equalsIgnoreCase(unit_volume_consumption)) {
                 //Upper is volume energy content, lower is consumer by distance. Calculate how far the lower item can move with the amount of energy of the upper item
                 //Amount = volume in litre => Distance of consumer by distance = joule of amount (joule per litre * amount (litre)) / joule per kilometre (joule per 100km / 100)
-                BigDecimal volume_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal volume_joule = e1.multiply(amount);
                 BigDecimal consumption_per_km = e2.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP);
                 BigDecimal distance = volume_joule.divide(consumption_per_km, 10, BigDecimal.ROUND_HALF_UP);
 
-                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsUpperCompareResult(amount);
                 saveAsLowerCompareResult(distance);
 
                 result.add(0, df.format(amount));
@@ -605,10 +605,10 @@ class CompareCarriers {
             else if (cat2.equalsIgnoreCase(unit_mass_content)) {
                 //Upper is energy content by volume, lower is energy content by mass. Calculate how much mass of the lower item is needed to have the same energy as the amount of the upper item in litre
                 //Amount = Volume of item in litre => Mass of lower item in kg = joule for volume (volume in litre * amount (litre)) / joule for mass per kg
-                BigDecimal volume_content_joule = e1.multiply(new BigDecimal(amount));
+                BigDecimal volume_content_joule = e1.multiply(amount);
                 BigDecimal mass = volume_content_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
 
-                saveAsUpperCompareResult(new BigDecimal(amount));
+                saveAsUpperCompareResult(amount);
                 saveAsLowerCompareResult(mass);
 
                 result.add(0, df.format(amount));
@@ -662,26 +662,26 @@ class CompareCarriers {
     }
 
     //Compare with a certain amount given for the lower item
-    private static List<String> compareWithFixedUnitLower(Carrier c1, Carrier c2, long amount) {
+    private static List<String> compareWithFixedUnitLower(Carrier c1, Carrier c2, BigDecimal amount) {
         return null;
     }
 
-    private static String[] findBestTimeUnit(long seconds) {
+    private static String[] findBestTimeUnit(BigDecimal seconds) {
         String[] result = new String[2];
-        if (seconds < 60) { //smaller than one minute - display seconds
+        if (seconds.compareTo(new BigDecimal(60)) == -1) { //smaller than one minute - display seconds
             result[0] = df.format(seconds);
             result[1] = com_seconds;
-        } else if (seconds < 60 * 60) { //smaller than one hour - display minutes
-            result[0] = df.format((double)seconds / 60);
+        } else if (seconds.compareTo(new BigDecimal(60 * 60)) == -1) { //smaller than one hour - display minutes
+            result[0] = df.format(seconds.divide(new BigDecimal(60), 2, BigDecimal.ROUND_HALF_UP));
             result[1] = com_minutes;
-        } else if (seconds < 60 * 60 * 24) { //smaller than one day - display hours
-            result[0] = df.format((double)seconds / (60 * 60));
+        } else if (seconds.compareTo(new BigDecimal(60 * 60 * 24)) == -1) { //smaller than one day - display hours
+            result[0] = df.format(seconds.divide(new BigDecimal(60 * 60), 2, BigDecimal.ROUND_HALF_UP));
             result[1] = com_hours;
-        } else if (seconds < 60 * 60 * 24 * 365){ //smaller than one year - display days
-            result[0] = df.format((double)seconds / (60 * 60 * 24));
+        } else if (seconds.compareTo(new BigDecimal(60 * 60 * 24 * 365)) == -1){ //smaller than one year - display days
+            result[0] = df.format(seconds.divide(new BigDecimal(60 * 60 * 24), 2, BigDecimal.ROUND_HALF_UP));
             result[1] = com_days;
         } else { //display years
-            result[0] = df.format((double)seconds / (60 * 60 * 24 * 365));
+            result[0] = df.format(seconds.divide(new BigDecimal(60 * 60 * 24 * 365), 2, BigDecimal.ROUND_HALF_UP));
             result[1] = com_years;
         }
 

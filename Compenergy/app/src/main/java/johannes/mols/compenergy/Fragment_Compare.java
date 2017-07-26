@@ -273,7 +273,7 @@ public class Fragment_Compare extends Fragment {
         prefs2.edit().putString(key_lower, lowerItemName.getText().toString()).apply();
     }
 
-    private void compareItemsWithFixedUnit(Carrier c1, Carrier c2, long amount, boolean upperOrLower) {
+    private void compareItemsWithFixedUnit(Carrier c1, Carrier c2, BigDecimal amount, boolean upperOrLower) {
         displayItemInfo(true, c1);
         displayItemInfo(false, c2);
 
@@ -403,7 +403,7 @@ public class Fragment_Compare extends Fragment {
                 try {
                     Carrier upper = dbHelper.getCarriersWithName(pref1.getString(key_upper, "")).get(0);
                     Carrier lower = dbHelper.getCarriersWithName(pref2.getString(key_lower, "")).get(0);
-                    compareItemsWithFixedUnit(upper, lower, Long.parseLong(edit.getText().toString()), upperOrLower);
+                    compareItemsWithFixedUnit(upper, lower, new BigDecimal(edit.getText().toString()), upperOrLower);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

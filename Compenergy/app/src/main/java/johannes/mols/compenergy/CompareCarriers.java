@@ -882,32 +882,32 @@ class CompareCarriers {
         }
         else if (cat1.equalsIgnoreCase(unit_volume_consumption)) {
             if (cat2.equalsIgnoreCase(unit_capacity)) {
-                //Upper is consumer by distance, lower is electric producer. Calculate how long the producer needs to produce for the distance of the consumer by distance
-                //Amount = Distance in km => Time of producer = Consumption of consumer on distance (consumption in joule / 100 * amount (distance in km)) / wattage of electric producer
-                BigDecimal volume_consumer_joule = e1.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP).multiply(amount);
-                BigDecimal time = volume_consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
-                String[] lowerResult = findBestTimeUnit(time);
+                //Upper is consumer by distance, lower is electric producer. Calculate how far the consumer can move with some time of producing
+                //Amount = Time of producer => Distance of consumer = Joule of producer (watt * time (amount)) / Consumption of consumer * 100 (consumption is in 100km)
+                BigDecimal producer_joule = e2.multiply(amount);
+                BigDecimal distance = producer_joule.divide(e1, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100.0));
+                String[] lowerResult = findBestTimeUnit(amount);
 
-                saveAsUpperCompareResult(amount);
-                saveAsLowerCompareResult(time);
+                saveAsUpperCompareResult(distance);
+                saveAsLowerCompareResult(amount);
 
-                result.add(0, df.format(amount));
+                result.add(0, df.format(distance));
                 result.add(1, lowerResult[0]);
                 result.add(2, com_km);
                 result.add(3, lowerResult[1]);
                 return result;
             }
             else if (cat2.equalsIgnoreCase(unit_consumption)) {
-                //Upper is consumer by distance, lower is electric consumer. Calculate how long the consumer needs to consume for the distance of the consumer by distance
-                //Amount = Distance in km => Time of consumer = Consumption of consumer on distance (consumption in joule / 100 * amount (distance in km)) / wattage of electric consumer
-                BigDecimal volume_consumer_joule = e1.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP).multiply(amount);
-                BigDecimal time = volume_consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
-                String[] lowerResult = findBestTimeUnit(time);
+                //Upper is consumer by distance, lower is electric consumer. Calculate how far the volume consumer can move with some time of consuming the lower item
+                //Amount = Time of consumer => Distance of volume consumer = Joule of consumer (watt * time (amount)) / Consumption of consumer * 100 (consumption is in 100km)
+                BigDecimal electric_consumer_joule = e2.multiply(amount);
+                BigDecimal distance = electric_consumer_joule.divide(e1, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100.0));
+                String[] lowerResult = findBestTimeUnit(amount);
 
-                saveAsUpperCompareResult(amount);
-                saveAsLowerCompareResult(time);
+                saveAsUpperCompareResult(distance);
+                saveAsLowerCompareResult(amount);
 
-                result.add(0, df.format(amount));
+                result.add(0, df.format(distance));
                 result.add(1, lowerResult[0]);
                 result.add(2, com_km);
                 result.add(3, lowerResult[1]);
@@ -949,31 +949,33 @@ class CompareCarriers {
                 }
             }
             else if (cat2.equalsIgnoreCase(unit_mass_content)) {
-                //Upper is consumer by distance, lower is mass energy content. Calculate the amount of mass of the lower item which is needed to travel the amount of distance with the upper consumer by distance
-                //Amount = Distance in km => Mass of lower item to equal distance consumption = Consumption of consumer on distance (consumption in joule / 100 * amount (distance in km)) / joule of mass content per kg
-                BigDecimal volume_consumer_joule = e1.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP).multiply(amount);
-                BigDecimal mass = volume_consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
+                //Upper is consumer by distance, lower is mass energy content. Calculate how far the consumer by distance can move with the amount of kg of the lower item
+                //Amount = Mass of item in kg => Distance of consumer by distance = joule of upper item with amount (joule per kg * amount (kg)) / joule per km (joule per 100km / 100)
+                BigDecimal mass_content_joule = e2.multiply(amount);
+                BigDecimal joule_per_km_of_consumer = e1.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP);
+                BigDecimal distance = mass_content_joule.divide(joule_per_km_of_consumer, 2, BigDecimal.ROUND_HALF_UP);
 
-                saveAsUpperCompareResult(amount);
-                saveAsLowerCompareResult(mass);
+                saveAsUpperCompareResult(distance);
+                saveAsLowerCompareResult(amount);
 
-                result.add(0, df.format(amount));
-                result.add(1, df.format(mass));
+                result.add(0, df.format(distance));
+                result.add(1, df.format(amount));
                 result.add(2, com_km);
                 result.add(3, com_kg);
                 return result;
             }
             else if (cat2.equalsIgnoreCase(unit_volume_content)) {
-                //Upper is consumer by distance, lower is volume energy content. Calculate the amount of volume of the lower item which is needed to travel the amount of distance with the upper consumer by distance
-                //Amount = Distance in km => Volume of lower item to equal distance consumption = Consumption of consumer on distance (consumption in joule / 100 * amount (distance in km)) / joule of volume content per litre
-                BigDecimal volume_consumer_joule = e1.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP).multiply(amount);
-                BigDecimal volume = volume_consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
+                //Upper is consumer by distance, lower is volume energy content. Calculate how far the upper item can move with the amount of energy of the lower item
+                //Amount = volume in litre => Distance of consumer by distance = joule of amount (joule per litre * amount (litre)) / joule per kilometre (joule per 100km / 100)
+                BigDecimal volume_joule = e2.multiply(amount);
+                BigDecimal consumption_per_km = e1.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP);
+                BigDecimal distance = volume_joule.divide(consumption_per_km, 10, BigDecimal.ROUND_HALF_UP);
 
-                saveAsUpperCompareResult(amount);
-                saveAsLowerCompareResult(volume);
+                saveAsUpperCompareResult(distance);
+                saveAsLowerCompareResult(amount);
 
-                result.add(0, df.format(amount));
-                result.add(1, df.format(volume));
+                result.add(0, df.format(distance));
+                result.add(1, df.format(amount));
                 result.add(2, com_km);
                 result.add(3, com_litre);
                 return result;

@@ -41,6 +41,7 @@
      Sources for carriers:  [1] Mainly chemicals:             https://en.wikipedia.org/wiki/Energy_density
                             [2] Fuel usage of cars:           https://www.spritmonitor.de
                             [3] Fuel usage of cars:           https://www.auto-data.net
+                            [4] Food:                         http://fddb.info
 
  -->
 
@@ -467,6 +468,252 @@
         <favorite>false</favorite>
     </carrier>
 
+    <!-- Drinks -->
+
+    <carrier>
+        <name>Becks Beer</name>
+        <category>Beverages</category>
+        <unit>Content Volume</unit>
+        <energy>1590000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Budweiser</name>
+        <category>Beverages</category>
+        <unit>Content Volume</unit>
+        <energy>1720000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Corona Extra</name>
+        <category>Beverages</category>
+        <unit>Content Volume</unit>
+        <energy>1760000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Pilsner</name>
+        <category>Beverages</category>
+        <unit>Content Volume</unit>
+        <energy>1770000</energy>
+        <custom>false</custom>
+        <favorite>true</favorite>
+    </carrier>
+    <carrier>
+        <name>Wheat beer</name>
+        <category>Beverages</category>
+        <unit>Content Volume</unit>
+        <energy>1630000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Riesling wine</name>
+        <category>Beverages</category>
+        <unit>Content Volume</unit>
+        <energy>2930000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Burgundy wine</name>
+        <category>Beverages</category>
+        <unit>Content Volume</unit>
+        <energy>3500000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Sweet wine</name>
+        <category>Beverages</category>
+        <unit>Content Volume</unit>
+        <energy>4100000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Cider</name>
+        <category>Beverages</category>
+        <unit>Content Volume</unit>
+        <energy>1800000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Vodka</name>
+        <category>Beverages</category>
+        <unit>Content Volume</unit>
+        <energy>9000000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Captain Morgan</name>
+        <category>Beverages</category>
+        <unit>Content Volume</unit>
+        <energy>8580000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Malibu rum</name>
+        <category>Beverages</category>
+        <unit>Content Volume</unit>
+        <energy>6660000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Red Bull</name>
+        <category>Beverages</category>
+        <unit>Content Volume</unit>
+        <energy>1940000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Coca Cola</name>
+        <category>Beverages</category>
+        <unit>Content Volume</unit>
+        <energy>1760000</energy>
+        <custom>false</custom>
+        <favorite>true</favorite>
+    </carrier>
+    <carrier>
+        <name>Fanta</name>
+        <category>Beverages</category>
+        <unit>Content Volume</unit>
+        <energy>1550000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Pepsi Cola</name>
+        <category>Beverages</category>
+        <unit>Content Volume</unit>
+        <energy>1840000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+
+    <!-- Fruits -->
+
+    <carrier>
+        <name>Banana</name>
+        <category>Fruits</category>
+        <unit>Content Mass</unit>
+        <energy>3880000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Apple</name>
+        <category>Fruits</category>
+        <unit>Content Mass</unit>
+        <energy>2720000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Strawberry</name>
+        <category>Fruits</category>
+        <unit>Content Mass</unit>
+        <energy>1340000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Carrot</name>
+        <category>Fruits</category>
+        <unit>Content Mass</unit>
+        <energy>1630000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Cucumber</name>
+        <category>Fruits</category>
+        <unit>Content Mass</unit>
+        <energy>510000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Tomato</name>
+        <category>Fruits</category>
+        <unit>Content Mass</unit>
+        <energy>750000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Mango</name>
+        <category>Fruits</category>
+        <unit>Content Mass</unit>
+        <energy>2600000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Pineapple</name>
+        <category>Fruits</category>
+        <unit>Content Mass</unit>
+        <energy>2450000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Kiwi</name>
+        <category>Fruits</category>
+        <unit>Content Mass</unit>
+        <energy>2580000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Water melon</name>
+        <category>Fruits</category>
+        <unit>Content Mass</unit>
+        <energy>1620000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Cherry</name>
+        <category>Fruits</category>
+        <unit>Content Mass</unit>
+        <energy>2640000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Paprika</name>
+        <category>Fruits</category>
+        <unit>Content Mass</unit>
+        <energy>1800000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Broccoli</name>
+        <category>Fruits</category>
+        <unit>Content Mass</unit>
+        <energy>1420000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Orange</name>
+        <category>Fruits</category>
+        <unit>Content Mass</unit>
+        <energy>1980000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+
     <!-- Cars -->
 
     <carrier>
@@ -563,7 +810,7 @@
         <unit>Volume Consumption</unit>
         <energy>458280000</energy>
         <custom>false</custom>
-        <favorite>false</favorite>
+        <favorite>true</favorite>
     </carrier>
     <carrier>
         <name>Audi RS4 (2001)</name>
@@ -643,7 +890,7 @@
         <unit>Volume Consumption</unit>
         <energy>300960000</energy>
         <custom>false</custom>
-        <favorite>false</favorite>
+        <favorite>true</favorite>
     </carrier>
     <carrier>
         <name>BMW M6 (2016)</name>

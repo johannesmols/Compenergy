@@ -777,15 +777,15 @@ class CompareCarriers {
         }
         else if (cat1.equalsIgnoreCase(unit_consumption)) {
             if (cat2.equalsIgnoreCase(unit_capacity)) {
-                //Upper is electric consumer, lower is electric producer. Calculate how long the producer needs to generate the energy which the consumer uses in the given amount of time
-                //Amount = Time of consumer => Time of producer = Joule of consumer (watt * time (amount)) / Wattage of producer
-                BigDecimal consumer_joule = e1.multiply(amount);
-                BigDecimal time = consumer_joule.divide(e2, 2, BigDecimal.ROUND_HALF_UP);
-                String[] upperResult = findBestTimeUnit(amount);
-                String[] lowerResult = findBestTimeUnit(time);
+                //Upper is electric consumer, lower is electric producer. Calculate how long the consumer can run with some time of producing
+                //Amount = Time of producer => Time of consumer = Joule of producer (watt * time (amount)) / Wattage of consumer
+                BigDecimal producer_joule = e2.multiply(amount);
+                BigDecimal time = producer_joule.divide(e1, 2, BigDecimal.ROUND_HALF_UP);
+                String[] upperResult = findBestTimeUnit(time);
+                String[] lowerResult = findBestTimeUnit(amount);
 
-                saveAsUpperCompareResult(amount);
-                saveAsLowerCompareResult(time);
+                saveAsUpperCompareResult(time);
+                saveAsLowerCompareResult(amount);
 
                 result.add(0, upperResult[0]); //Upper time
                 result.add(1, lowerResult[0]); //Lower time
@@ -829,49 +829,49 @@ class CompareCarriers {
                 }
             }
             else if (cat2.equalsIgnoreCase(unit_volume_consumption)) {
-                //Upper is electric consumer, lower is consumer by distance. Calculate how far the volume consumer can move with some time of consuming the other item
-                //Amount = Time of consumer => Distance of volume consumer = Joule of consumer (watt * time (amount)) / Consumption of consumer * 100 (consumption is in 100km)
-                BigDecimal electric_consumer_joule = e1.multiply(amount);
-                BigDecimal distance = electric_consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100.0));
-                String[] upperResult = findBestTimeUnit(amount);
+                //Upper is electric consumer, lower is consumer by distance. Calculate how long the consumer needs to consume for the distance of the consumer by distance
+                //Amount = Distance in km => Time of consumer = Consumption of consumer on distance (consumption in joule / 100 * amount (distance in km)) / wattage of electric consumer
+                BigDecimal volume_consumer_joule = e2.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP).multiply(amount);
+                BigDecimal time = volume_consumer_joule.divide(e1, 10, BigDecimal.ROUND_HALF_UP);
+                String[] upperResult = findBestTimeUnit(time);
 
-                saveAsUpperCompareResult(amount);
-                saveAsLowerCompareResult(distance);
+                saveAsUpperCompareResult(time);
+                saveAsLowerCompareResult(amount);
 
                 result.add(0, upperResult[0]);
-                result.add(1, df.format(distance));
+                result.add(1, df.format(amount));
                 result.add(2, upperResult[1]);
                 result.add(3, com_km);
                 return result;
             }
             else if (cat2.equalsIgnoreCase(unit_mass_content)) {
-                //Upper is electric consumer, lower is energy content by mass. Calculate how much time of consuming is worth how much weight of the second item
-                //Amount = Time of consumer => Weight of mass content = Joule of consumer (watt * time (amount)) / Mass energy content per kg in Joule
-                BigDecimal consumer_joule = e1.multiply(amount);
-                BigDecimal weight = consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
-                String[] upperResult = findBestTimeUnit(amount);
+                //Upper is electric consumer, lower is energy content by mass. Calculate how much time the electric consumer needs to consume the energy of the lower item with the given amount in kg
+                //Amount = Mass of item in kg => Time of consumption = joule of upper item (energy content per kg * amount (kg)) / wattage of electric consumer
+                BigDecimal mass_content_joule = e2.multiply(amount);
+                BigDecimal time = mass_content_joule.divide(e1, 10, BigDecimal.ROUND_HALF_UP);
+                String[] upperResult = findBestTimeUnit(time);
 
-                saveAsUpperCompareResult(amount);
-                saveAsLowerCompareResult(weight);
+                saveAsUpperCompareResult(time);
+                saveAsLowerCompareResult(amount);
 
                 result.add(0, upperResult[0]);
-                result.add(1, df.format(weight));
+                result.add(1, df.format(amount));
                 result.add(2, upperResult[1]);
                 result.add(3, com_kg);
                 return result;
             }
             else if (cat2.equalsIgnoreCase(unit_volume_content)) {
-                //Upper is electric consumer, lower is energy content by volume. Calculate how much time of consuming is worth how much volume of the second item
-                //Amount = Time of consumer => Volume of volume content = Joule of consumer (watt * time (amount)) / Volume energy content per litre in Joule
-                BigDecimal consumer_joule = e1.multiply(amount);
-                BigDecimal volume = consumer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
-                String[] upperResult = findBestTimeUnit(amount);
+                //Upper is electric consumer, lower is energy content by volume. Calculate how long the consumer needs to run to have the equal energy as the amount of the lower item in litre
+                //Amount = volume in litre => Time of consumer = joules of volume (joule per litre * amount (litre)) / wattage of electric consumer
+                BigDecimal volume_joule = e2.multiply(amount);
+                BigDecimal time = volume_joule.divide(e1, 10, BigDecimal.ROUND_HALF_UP);
+                String[] upperResult = findBestTimeUnit(time);
 
-                saveAsUpperCompareResult(amount);
-                saveAsLowerCompareResult(volume);
+                saveAsUpperCompareResult(time);
+                saveAsLowerCompareResult(amount);
 
                 result.add(0, upperResult[0]);
-                result.add(1, df.format(volume));
+                result.add(1, df.format(amount));
                 result.add(2, upperResult[1]);
                 result.add(3, com_litre);
                 return result;

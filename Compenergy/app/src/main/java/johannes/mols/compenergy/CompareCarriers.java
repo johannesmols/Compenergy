@@ -724,17 +724,17 @@ class CompareCarriers {
                 return result;
             }
             else if (cat2.equalsIgnoreCase(unit_volume_consumption)) {
-                //Upper is electric producer, lower is consumer by distance. Calculate how far the consumer can move with some time of producing
-                //Amount = Time of producer => Distance of consumer = Joule of producer (watt * time (amount)) / Consumption of consumer * 100 (consumption is in 100km)
-                BigDecimal producer_joule = e1.multiply(amount);
-                BigDecimal distance = producer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100.0));
-                String[] upperResult = findBestTimeUnit(amount);
+                //Upper is electric producer, lower is consumer by distance. Calculate how long the producer needs to produce for the distance of the consumer by distance
+                //Amount = Distance in km => Time of producer = Consumption of consumer on distance (consumption in joule / 100 * amount (distance in km)) / wattage of electric producer
+                BigDecimal volume_consumer_joule = e2.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP).multiply(amount);
+                BigDecimal time = volume_consumer_joule.divide(e1, 10, BigDecimal.ROUND_HALF_UP);
+                String[] upperResult = findBestTimeUnit(time);
 
-                saveAsUpperCompareResult(amount);
-                saveAsLowerCompareResult(distance);
+                saveAsUpperCompareResult(time);
+                saveAsLowerCompareResult(amount);
 
                 result.add(0, upperResult[0]);
-                result.add(1, df.format(distance));
+                result.add(1, df.format(amount));
                 result.add(2, upperResult[1]);
                 result.add(3, com_km);
                 return result;

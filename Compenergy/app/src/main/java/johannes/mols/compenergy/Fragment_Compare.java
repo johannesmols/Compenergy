@@ -433,6 +433,14 @@ public class Fragment_Compare extends Fragment {
             }
         });
 
+        dialogBuilder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                edit.clearFocus();
+                hideKeyboard();
+            }
+        });
+
         AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
     }

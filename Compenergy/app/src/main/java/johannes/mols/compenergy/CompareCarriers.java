@@ -986,49 +986,48 @@ class CompareCarriers {
         }
         else if (cat1.equalsIgnoreCase(unit_mass_content)) {
             if (cat2.equalsIgnoreCase(unit_capacity)) {
-                //Upper is energy content by mass, lower is electric producer. Calculate how much time the electric producer needs to produce the energy of the upper item with the given amount in kg
-                //Amount = Mass of item in kg => Time of production = joule of upper item (energy content per kg * amount (kg)) / wattage of electric producer
-                BigDecimal mass_content_joule = e1.multiply(amount);
-                BigDecimal time = mass_content_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
-                String[] lowerResult = findBestTimeUnit(time);
+                //Upper is energy content by mass, lower is electric producer. Calculate how much time of producing is worth how much weight of the upper item
+                //Amount = Time of producer => Weight of mass content = Joule of producer (watt * time (amount)) / Mass energy content per kg in Joule
+                BigDecimal producer_joule = e2.multiply(amount);
+                BigDecimal weight = producer_joule.divide(e1, 10, BigDecimal.ROUND_HALF_UP);
+                String[] lowerResult = findBestTimeUnit(amount);
 
-                saveAsUpperCompareResult(amount);
-                saveAsLowerCompareResult(time);
+                saveAsUpperCompareResult(weight);
+                saveAsLowerCompareResult(amount);
 
-                result.add(0, df.format(amount));
+                result.add(0, df.format(weight));
                 result.add(1, lowerResult[0]);
                 result.add(2, com_kg);
                 result.add(3, lowerResult[1]);
                 return result;
             }
             else if (cat2.equalsIgnoreCase(unit_consumption)) {
-                //Upper is energy content by mass, lower is electric consumer. Calculate how much time the electric consumer needs to consume the energy of the upper item with the given amount in kg
-                //Amount = Mass of item in kg => Time of consumption = joule of upper item (energy content per kg * amount (kg)) / wattage of electric consumer
-                BigDecimal mass_content_joule = e1.multiply(amount);
-                BigDecimal time = mass_content_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
-                String[] lowerResult = findBestTimeUnit(time);
+                //Upper is energy content by mass, lower is electric consumer. Calculate how much time of consuming is worth how much weight of the second item
+                //Amount = Time of consumer => Weight of mass content = Joule of consumer (watt * time (amount)) / Mass energy content per kg in Joule
+                BigDecimal consumer_joule = e2.multiply(amount);
+                BigDecimal weight = consumer_joule.divide(e1, 10, BigDecimal.ROUND_HALF_UP);
+                String[] lowerResult = findBestTimeUnit(amount);
 
-                saveAsUpperCompareResult(amount);
-                saveAsLowerCompareResult(time);
+                saveAsUpperCompareResult(weight);
+                saveAsLowerCompareResult(amount);
 
-                result.add(0, df.format(amount));
+                result.add(0, df.format(weight));
                 result.add(1, lowerResult[0]);
                 result.add(2, com_kg);
                 result.add(3, lowerResult[1]);
                 return result;
             }
             else if (cat2.equalsIgnoreCase(unit_volume_consumption)) {
-                //Upper is energy content by mass, lower is consumer by distance. Calculate how far the consumer by distance can move with the amount of kg of the upper item
-                //Amount = Mass of item in kg => Distance of consumer by distance = joule of upper item with amount (joule per kg * amount (kg)) / joule per km (joule per 100km / 100)
-                BigDecimal mass_content_joule = e1.multiply(amount);
-                BigDecimal joule_per_km_of_consumer = e2.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP);
-                BigDecimal distance = mass_content_joule.divide(joule_per_km_of_consumer, 2, BigDecimal.ROUND_HALF_UP);
+                //Upper is energy content by mass, lower is consumer by distance. Calculate the amount of mass of the lower item which is needed to travel the amount of distance with the upper consumer by distance
+                //Amount = Distance in km => Mass of lower item to equal distance consumption = Consumption of consumer on distance (consumption in joule / 100 * amount (distance in km)) / joule of mass content per kg
+                BigDecimal volume_consumer_joule = e2.divide(new BigDecimal(100), 10, BigDecimal.ROUND_HALF_UP).multiply(amount);
+                BigDecimal mass = volume_consumer_joule.divide(e1, 10, BigDecimal.ROUND_HALF_UP);
 
-                saveAsUpperCompareResult(amount);
-                saveAsLowerCompareResult(distance);
+                saveAsUpperCompareResult(mass);
+                saveAsLowerCompareResult(amount);
 
-                result.add(0, df.format(amount));
-                result.add(1, df.format(distance));
+                result.add(0, df.format(mass));
+                result.add(1, df.format(amount));
                 result.add(2, com_kg);
                 result.add(3, com_km);
                 return result;
@@ -1069,16 +1068,16 @@ class CompareCarriers {
                 }
             }
             else if (cat2.equalsIgnoreCase(unit_volume_content)) {
-                //Upper is energy content by mass, lower is energy content by volume. Calculate how much volume of the lower item is needed to have the same energy as the amount of the upper item in kg
-                //Amount = Mass of item in kg => Volume of lower item in litre = joule for mass (mass in kg * amount (kg)) / joule for volume per litre
-                BigDecimal mass_content_joule = e1.multiply(amount);
-                BigDecimal volume = mass_content_joule.divide(e2, 2, BigDecimal.ROUND_HALF_UP);
+                //Upper is energy content by mass, lower is energy content by volume. Calculate how much mass of the upper item is needed to have the same energy as the amount of the lower item in litre
+                //Amount = Volume of item in litre => Mass of lower item in kg = joule for volume (volume in litre * amount (litre)) / joule for mass per kg
+                BigDecimal volume_content_joule = e2.multiply(amount);
+                BigDecimal mass = volume_content_joule.divide(e1, 10, BigDecimal.ROUND_HALF_UP);
 
-                saveAsUpperCompareResult(amount);
-                saveAsLowerCompareResult(volume);
+                saveAsUpperCompareResult(mass);
+                saveAsLowerCompareResult(amount);
 
-                result.add(0, df.format(amount));
-                result.add(1, df.format(volume));
+                result.add(0, df.format(mass));
+                result.add(1, df.format(amount));
                 result.add(2, com_kg);
                 result.add(3, com_litre);
                 return result;

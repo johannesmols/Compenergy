@@ -5,6 +5,7 @@
 package johannes.mols.compenergy;
 
 import android.annotation.SuppressLint;
+import android.support.annotation.Nullable;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -14,7 +15,6 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -82,7 +82,7 @@ public class Fragment_Compare extends Fragment {
         lowerItemCompareUnit = (TextView) view.findViewById(R.id.fragment_compare_lower_item_unit);
 
         //See if the fragment is opened for the first time
-        String key = "compenergy.compare.first_start";
+        String key = getString(R.string.key_first_start);
         SharedPreferences prefs = getActivity().getSharedPreferences(key, Context.MODE_PRIVATE);
         if(prefs.getBoolean(key, true)) {
             //First started, shuffle

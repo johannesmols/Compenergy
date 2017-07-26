@@ -221,6 +221,7 @@
     <string name="key_lower">compenergy.compare.lower_item</string>
     <string name="key_comp_upper">compenergy.compare.upper_compare_value</string>
     <string name="key_comp_lower">compenergy.compare.lower_compare_value</string>
+    <string name="key_first_start">compenergy.compare.first_start</string>
 
     <!-- Dialog messages -->
     <string name="dialog_yes">Yes</string>

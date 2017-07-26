@@ -380,7 +380,7 @@ public class Fragment_Compare extends Fragment {
     };
 
     @SuppressLint("InflateParams")
-    private void changeValue(BigDecimal current_value, String unit, boolean upperOrLower) {
+    private void changeValue(BigDecimal current_value, String unit, final boolean upperOrLower) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.dialog_change_value, null);
@@ -403,28 +403,14 @@ public class Fragment_Compare extends Fragment {
                 try {
                     Carrier upper = dbHelper.getCarriersWithName(pref1.getString(key_upper, "")).get(0);
                     Carrier lower = dbHelper.getCarriersWithName(pref2.getString(key_lower, "")).get(0);
-                    compareItemsWithFixedUnit(upper, lower, Long.parseLong(edit.getText().toString()), true);
+                    compareItemsWithFixedUnit(upper, lower, Long.parseLong(edit.getText().toString()), upperOrLower);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
 
-        dialogBuilder.setNegativeButton(getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //Load old carriers
-                SharedPreferences pref1 = getActivity().getSharedPreferences(key_upper, Context.MODE_PRIVATE);
-                SharedPreferences pref2 = getActivity().getSharedPreferences(key_lower, Context.MODE_PRIVATE);
-                try {
-                    Carrier upper = dbHelper.getCarriersWithName(pref1.getString(key_upper, "")).get(0);
-                    Carrier lower = dbHelper.getCarriersWithName(pref2.getString(key_lower, "")).get(0);
-                    compareItemsWithFixedUnit(upper, lower, Long.parseLong(edit.getText().toString()), false);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        dialogBuilder.setNegativeButton(getString(R.string.dialog_cancel), null);
 
         AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();

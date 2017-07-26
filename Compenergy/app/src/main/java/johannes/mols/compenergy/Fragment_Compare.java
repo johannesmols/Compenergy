@@ -5,7 +5,6 @@
 package johannes.mols.compenergy;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.Nullable;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -15,6 +14,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +23,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -379,6 +380,16 @@ public class Fragment_Compare extends Fragment {
         }
     };
 
+    private void showKeyboard() {
+        InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    }
+
     @SuppressLint("InflateParams")
     private void changeValue(BigDecimal current_value, String unit, final boolean upperOrLower) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
@@ -388,6 +399,8 @@ public class Fragment_Compare extends Fragment {
 
         final EditText edit = (EditText) dialogView.findViewById(R.id.dialog_change_value_edit);
         edit.setText(df_value.format(current_value));
+
+        showKeyboard();
 
         //Need to add more info and unit selection
         //Time is currently displayed in seconds for example
@@ -404,13 +417,21 @@ public class Fragment_Compare extends Fragment {
                     Carrier upper = dbHelper.getCarriersWithName(pref1.getString(key_upper, "")).get(0);
                     Carrier lower = dbHelper.getCarriersWithName(pref2.getString(key_lower, "")).get(0);
                     compareItemsWithFixedUnit(upper, lower, new BigDecimal(edit.getText().toString()), upperOrLower);
+                    edit.clearFocus();
+                    hideKeyboard();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
 
-        dialogBuilder.setNegativeButton(getString(R.string.dialog_cancel), null);
+        dialogBuilder.setNegativeButton(getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                edit.clearFocus();
+                hideKeyboard();
+            }
+        });
 
         AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();

@@ -740,17 +740,17 @@ class CompareCarriers {
                 return result;
             }
             else if (cat2.equalsIgnoreCase(unit_mass_content)) {
-                //Upper is electric producer, lower is energy content by mass. Calculate how much time of producing is worth how much weight of the second item
-                //Amount = Time of producer => Weight of mass content = Joule of producer (watt * time (amount)) / Mass energy content per kg in Joule
-                BigDecimal producer_joule = e1.multiply(amount);
-                BigDecimal weight = producer_joule.divide(e2, 10, BigDecimal.ROUND_HALF_UP);
-                String[] upperResult = findBestTimeUnit(amount);
+                //Upper is electric producer, lower is energy content by mass. Calculate how much time the electric producer needs to produce the energy of the lower item with the given amount in kg
+                //Amount = Mass of item in kg => Time of production = joule of upper item (energy content per kg * amount (kg)) / wattage of electric producer
+                BigDecimal mass_content_joule = e2.multiply(amount);
+                BigDecimal time = mass_content_joule.divide(e1, 10, BigDecimal.ROUND_HALF_UP);
+                String[] upperResult = findBestTimeUnit(time);
 
-                saveAsUpperCompareResult(amount);
-                saveAsLowerCompareResult(weight);
+                saveAsUpperCompareResult(time);
+                saveAsLowerCompareResult(amount);
 
                 result.add(0, upperResult[0]);
-                result.add(1, df.format(weight));
+                result.add(1, df.format(amount));
                 result.add(2, upperResult[1]);
                 result.add(3, com_kg);
                 return result;

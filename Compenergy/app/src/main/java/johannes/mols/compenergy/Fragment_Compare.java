@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,8 @@ public class Fragment_Compare extends Fragment {
     private AnimationDrawable animationDrawable;
     private static DecimalFormat df;
     private static DecimalFormat df_value;
+
+    private LinearLayout gradientRootLayout;
 
     private TextView upperItemName;
     private TextView lowerItemName;
@@ -70,6 +73,8 @@ public class Fragment_Compare extends Fragment {
 
         mContext = getContext();
         dbHelper = new DatabaseHelper(mContext, null, null, 1);
+
+        gradientRootLayout = (LinearLayout) view.findViewById(R.id.fragment_compare_root_layout);
 
         upperItemName = (TextView) view.findViewById(R.id.fragment_compare_upper_item_name);
         lowerItemName = (TextView) view.findViewById(R.id.fragment_compare_lower_item_name);
@@ -109,9 +114,16 @@ public class Fragment_Compare extends Fragment {
 
         setHasOptionsMenu(true);
 
-        animationDrawable = (AnimationDrawable) view.getBackground();
-        animationDrawable.setEnterFadeDuration(5000);
-        animationDrawable.setExitFadeDuration(5000);
+        //Animated gradient in background
+        String use_gradient_key = getString(R.string.pref_appearance_show_gradient_key);
+        SharedPreferences use_gradient_prefs = getActivity().getSharedPreferences(use_gradient_key, Context.MODE_PRIVATE);
+        if (use_gradient_prefs.getBoolean(use_gradient_key, true)) {
+            animationDrawable = (AnimationDrawable) view.getBackground();
+            animationDrawable.setEnterFadeDuration(5000);
+            animationDrawable.setExitFadeDuration(5000);
+        } else {
+            gradientRootLayout.setBackground(null);
+        }
 
         upperItemName.setOnClickListener(upperNameClick);
         lowerItemName.setOnClickListener(lowerNameClick);
@@ -144,6 +156,7 @@ public class Fragment_Compare extends Fragment {
         super.onResume();
 
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         if(animationDrawable != null && !animationDrawable.isRunning()) {
             animationDrawable.start();
         }
@@ -152,7 +165,9 @@ public class Fragment_Compare extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+
         if(animationDrawable != null && animationDrawable.isRunning()) {
             animationDrawable.stop();
         }

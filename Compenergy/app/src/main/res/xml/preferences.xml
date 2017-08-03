@@ -18,4 +18,16 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="@string/pref_appearance_group_title"
+        android:key="@string/pref_appearance_group_title_key">
+
+        <CheckBoxPreference
+            android:title="@string/pref_appearance_show_gradient_title"
+            android:summary="@string/pref_appearance_show_gradient_summary"
+            android:key="@string/pref_appearance_show_gradient_key"
+            android:defaultValue="true" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

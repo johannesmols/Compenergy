@@ -7,10 +7,13 @@ package johannes.mols.compenergy;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.preference.CheckBoxPreference;
+import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +24,10 @@ import android.widget.Toast;
 public class Fragment_Settings extends PreferenceFragmentCompat {
 
     private Context mContext;
+
+    private android.support.v7.preference.Preference resetButton;
+    private android.support.v7.preference.Preference deleteButton;
+    private android.support.v7.preference.CheckBoxPreference showGradient;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -34,10 +41,14 @@ public class Fragment_Settings extends PreferenceFragmentCompat {
         addPreferencesFromResource(R.xml.preferences);
         getActivity().setTitle(R.string.nav_item_settings);
 
-        android.support.v7.preference.Preference resetButton = findPreference(getContext().getString(R.string.pref_database_reset_key));
-        android.support.v7.preference.Preference deleteButton = findPreference(getContext().getString(R.string.pref_database_delete_key));
+        resetButton = findPreference(getContext().getString(R.string.pref_database_reset_key));
+        deleteButton = findPreference(getContext().getString(R.string.pref_database_delete_key));
+        showGradient = (CheckBoxPreference) findPreference(getContext().getString(R.string.pref_appearance_show_gradient_key));
         deleteButton.setOnPreferenceClickListener(onPreferenceClickListener);
         resetButton.setOnPreferenceClickListener(onPreferenceClickListener);
+        showGradient.setOnPreferenceChangeListener(onUseGradientPreferenceChange);
+
+        loadPrefs();
 
         return view;
     }
@@ -46,6 +57,18 @@ public class Fragment_Settings extends PreferenceFragmentCompat {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mContext = view.getContext();
+    }
+
+    private void loadPrefs() {
+        String key = getString(R.string.pref_appearance_show_gradient_key);
+        SharedPreferences prefs = getActivity().getSharedPreferences(key, Context.MODE_PRIVATE);
+        if (prefs.getBoolean(key, true)) {
+            //Gradient should be used
+            showGradient.setChecked(true);
+        } else {
+            //Gradient should not be used
+            showGradient.setChecked(false);
+        }
     }
 
     private android.support.v7.preference.Preference.OnPreferenceClickListener onPreferenceClickListener = new android.support.v7.preference.Preference.OnPreferenceClickListener() {
@@ -115,6 +138,24 @@ public class Fragment_Settings extends PreferenceFragmentCompat {
             }
 
             return false;
+        }
+    };
+
+    private android.support.v7.preference.CheckBoxPreference.OnPreferenceChangeListener onUseGradientPreferenceChange = new Preference.OnPreferenceChangeListener() {
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            String key = getString(R.string.pref_appearance_show_gradient_key);
+            SharedPreferences prefs = getActivity().getSharedPreferences(key, Context.MODE_PRIVATE);
+
+            if ((boolean) newValue) {
+                //Gradient should be used
+                prefs.edit().putBoolean(key, true).apply();
+            } else {
+                //Gradient should not be used
+                prefs.edit().putBoolean(key, false).apply();
+            }
+
+            return true;
         }
     };
 }

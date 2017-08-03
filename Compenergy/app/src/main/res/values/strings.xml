@@ -211,6 +211,11 @@
     <string name="pref_database_hint_delete_failed">Data deletion failed</string>
     <string name="pref_database_loading_reset">Resetting database…</string>
     <string name="pref_database_loading_clear">Clearing database…</string>
+    <string name="pref_appearance_group_title">Appearance</string>
+    <string name="pref_appearance_group_title_key">compenergy.appearance.title</string>
+    <string name="pref_appearance_show_gradient_title">Use Gradients</string>
+    <string name="pref_appearance_show_gradient_summary">Turn off the animated gradient in the compare section here</string>
+    <string name="pref_appearance_show_gradient_key">compenergy.appearance.show_gradient</string>
 
     <!-- Error messages -->
     <string name="name_already_exists">Name already exists</string>

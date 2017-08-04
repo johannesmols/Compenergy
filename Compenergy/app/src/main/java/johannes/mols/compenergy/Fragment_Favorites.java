@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -58,6 +59,7 @@ public class Fragment_Favorites extends Fragment {
 
         searchEditText = (EditText) view.findViewById(R.id.fragment_favorites_search);
         searchEditText.setOnTouchListener(editSearchOnTouchListener);
+        searchEditText.setFilters(new InputFilter[] { Util.filter });
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

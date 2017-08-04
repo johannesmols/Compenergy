@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.DisplayMetrics;
 
 import java.util.Map;
@@ -129,4 +131,20 @@ class Util {
         boolean hasDecimal = truncated < 100 && (truncated / 10d) != (truncated / 10);
         return hasDecimal ? (truncated / 10d) + suffix : (truncated / 10) + suffix;
     }
+
+    /* --- Input Filter to disallow possible SQL errors --- */
+
+    static InputFilter filter = new InputFilter() {
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+
+            for (int i = start; i < end; i++) {
+                if (source.charAt(i) == '\'' || source.charAt(i) == '"') {
+                    return "";
+                }
+            }
+            return null;
+        }
+    };
 }

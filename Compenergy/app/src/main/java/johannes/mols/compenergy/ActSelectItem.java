@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -55,6 +56,7 @@ public class ActSelectItem extends AppCompatActivity {
 
         searchEditText = (EditText) findViewById(R.id.act_select_item_data_search);
         searchEditText.setOnTouchListener(selectionSearchOnTouchListener);
+        searchEditText.setFilters(new InputFilter[] { Util.filter });
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

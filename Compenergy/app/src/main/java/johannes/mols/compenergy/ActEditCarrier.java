@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
-import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -51,8 +50,6 @@ public class ActEditCarrier extends AppCompatActivity {
     private Button button_edit;
     private CheckBox fav_checkbox;
 
-    private String blockCharacterSet = "'"; //Can cause SQL errors
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,9 +83,9 @@ public class ActEditCarrier extends AppCompatActivity {
 
         edit_name.addTextChangedListener(editNameTextWatcher);
 
-        edit_name.setFilters(new InputFilter[] { filter });
-        autoComplete_category.setFilters(new InputFilter[] { filter });
-        edit_energy.setFilters(new InputFilter[] { filter });
+        edit_name.setFilters(new InputFilter[] { Util.filter });
+        autoComplete_category.setFilters(new InputFilter[] { Util.filter });
+        edit_energy.setFilters(new InputFilter[] { Util.filter });
 
         //Get the carrier
         final Intent intent = getIntent();
@@ -370,20 +367,6 @@ public class ActEditCarrier extends AppCompatActivity {
                     dbHelper.updateCarrier(editableCarrier.get_id(), new_carrier);
                 }
             }
-        }
-    };
-
-    /* --- Input Filter --- */
-
-    private InputFilter filter = new InputFilter() {
-
-        @Override
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-
-            if (source != null && blockCharacterSet.contains(("" + source))) {
-                return "";
-            }
-            return null;
         }
     };
 }

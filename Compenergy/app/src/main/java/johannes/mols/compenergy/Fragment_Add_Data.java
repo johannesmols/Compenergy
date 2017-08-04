@@ -12,7 +12,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.InputFilter;
-import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -54,8 +53,6 @@ public class Fragment_Add_Data extends Fragment {
     private DatabaseHelper dbHelper;
 
     private List<String> alreadyExistentCarriersNameList;
-
-    private String blockCharacterSet = "'"; //Can cause SQL errors
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -101,10 +98,10 @@ public class Fragment_Add_Data extends Fragment {
 
         button_add.setOnClickListener(addButtonClickListener);
 
-        edit_name.setFilters(new InputFilter[] { filter });
-        edit_category.setFilters(new InputFilter[] { filter });
-        edit_energy.setFilters(new InputFilter[] { filter });
-        edit_unit_amount.setFilters(new InputFilter[] { filter });
+        edit_name.setFilters(new InputFilter[] { Util.filter });
+        edit_category.setFilters(new InputFilter[] { Util.filter });
+        edit_energy.setFilters(new InputFilter[] { Util.filter });
+        edit_unit_amount.setFilters(new InputFilter[] { Util.filter });
 
         return view;
     }
@@ -577,20 +574,6 @@ public class Fragment_Add_Data extends Fragment {
             vehicle_fuel_type_layout.setVisibility(View.GONE);
             edit_unit_amount.setVisibility(View.GONE);
             spinner_unit.setVisibility(View.GONE);
-        }
-    };
-
-    /* --- Input Filter --- */
-
-    private InputFilter filter = new InputFilter() {
-
-        @Override
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-
-            if (source != null && blockCharacterSet.contains(("" + source))) {
-                return "";
-            }
-            return null;
         }
     };
 

@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.Html;
+import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -64,6 +65,7 @@ public class Fragment_Data extends Fragment {
 
         searchEditText = (EditText) view.findViewById(R.id.fragment_data_search);
         searchEditText.setOnTouchListener(editSearchOnTouchListener);
+        searchEditText.setFilters(new InputFilter[] { Util.filter });
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

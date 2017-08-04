@@ -15,6 +15,9 @@ import android.text.InputFilter;
 import android.text.Spanned;
 import android.util.DisplayMetrics;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
@@ -147,4 +150,39 @@ class Util {
             return null;
         }
     };
+
+    static String[] findBestTimeUnit(Context context, BigDecimal seconds) {
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+        df.setMinimumFractionDigits(2);
+        df.setGroupingUsed(true);
+        DecimalFormatSymbols symbols = df.getDecimalFormatSymbols();
+        df.setDecimalFormatSymbols(symbols);
+
+        String com_seconds = context.getString(R.string.com_seconds);
+        String com_minutes = context.getString(R.string.com_minutes);
+        String com_hours = context.getString(R.string.com_hours);
+        String com_days = context.getString(R.string.com_days);
+        String com_years = context.getString(R.string.com_years);
+
+        String[] result = new String[2];
+        if (seconds.compareTo(new BigDecimal(60)) == -1) { //smaller than one minute - display seconds
+            result[0] = df.format(seconds);
+            result[1] = com_seconds;
+        } else if (seconds.compareTo(new BigDecimal(60 * 60)) == -1) { //smaller than one hour - display minutes
+            result[0] = df.format(seconds.divide(new BigDecimal(60), 2, BigDecimal.ROUND_HALF_UP));
+            result[1] = com_minutes;
+        } else if (seconds.compareTo(new BigDecimal(60 * 60 * 24)) == -1) { //smaller than one day - display hours
+            result[0] = df.format(seconds.divide(new BigDecimal(60 * 60), 2, BigDecimal.ROUND_HALF_UP));
+            result[1] = com_hours;
+        } else if (seconds.compareTo(new BigDecimal(60 * 60 * 24 * 365)) == -1){ //smaller than one year - display days
+            result[0] = df.format(seconds.divide(new BigDecimal(60 * 60 * 24), 2, BigDecimal.ROUND_HALF_UP));
+            result[1] = com_days;
+        } else { //display years
+            result[0] = df.format(seconds.divide(new BigDecimal(60 * 60 * 24 * 365), 2, BigDecimal.ROUND_HALF_UP));
+            result[1] = com_years;
+        }
+
+        return result;
+    }
 }

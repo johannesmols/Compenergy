@@ -25,8 +25,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -411,8 +413,10 @@ public class Fragment_Compare extends Fragment {
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
+    //Shows the dialog to change values, everything related to that dialog has to go into this function
+
     @SuppressLint("InflateParams")
-    private void changeValue(BigDecimal current_value, String unit, final boolean upperOrLower) {
+    private void changeValue(BigDecimal current_value, String unit_type, final boolean upperOrLower) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.dialog_change_value, null);
@@ -441,8 +445,44 @@ public class Fragment_Compare extends Fragment {
 
         showKeyboard();
 
-        //Need to add more info and unit selection
-        //Time is currently displayed in seconds for example
+        //Fill the spinner with the unit list
+        Spinner unit_list = (Spinner) dialogView.findViewById(R.id.dialog_change_value_unit_spinner_list);
+        ArrayAdapter<CharSequence> adapter = null;
+
+        if (unit_type.equalsIgnoreCase(getString(R.string.carrier_type_db_capacity))) {
+            adapter = ArrayAdapter.createFromResource(mContext, R.array.unit_list_time, R.layout.spinner_item);
+            unit_list.setSelection(0); //Seconds => change to the best time unit later
+        } else if (unit_type.equalsIgnoreCase(getString(R.string.carrier_type_db_consumption))) {
+            adapter = ArrayAdapter.createFromResource(mContext, R.array.unit_list_time, R.layout.spinner_item);
+            unit_list.setSelection(0); //Seconds => change to the best time unit later
+        } else if (unit_type.equalsIgnoreCase(getString(R.string.carrier_type_db_volume_consumption))) {
+            adapter = ArrayAdapter.createFromResource(mContext, R.array.unit_list_distance, R.layout.spinner_item);
+            unit_list.setSelection(5); //Kilometre
+        } else if (unit_type.equalsIgnoreCase(getString(R.string.carrier_type_db_content_mass))) {
+            adapter = ArrayAdapter.createFromResource(mContext, R.array.unit_list_mass, R.layout.spinner_item);
+            unit_list.setSelection(8); //Kilogram
+        } else if (unit_type.equalsIgnoreCase(getString(R.string.carrier_type_db_content_volume))) {
+            adapter = ArrayAdapter.createFromResource(mContext, R.array.unit_list_volume, R.layout.spinner_item);
+            unit_list.setSelection(11); //Litre
+        }
+
+        if (adapter != null) {
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            unit_list.setAdapter(adapter);
+        }
+
+        //Set the selection to the default units
+        if (unit_type.equalsIgnoreCase(getString(R.string.carrier_type_db_capacity))) {
+            unit_list.setSelection(0); //Seconds => change to the best time unit later
+        } else if (unit_type.equalsIgnoreCase(getString(R.string.carrier_type_db_consumption))) {
+            unit_list.setSelection(0); //Seconds => change to the best time unit later
+        } else if (unit_type.equalsIgnoreCase(getString(R.string.carrier_type_db_volume_consumption))) {
+            unit_list.setSelection(5); //Kilometre
+        } else if (unit_type.equalsIgnoreCase(getString(R.string.carrier_type_db_content_mass))) {
+            unit_list.setSelection(8); //Kilogram
+        } else if (unit_type.equalsIgnoreCase(getString(R.string.carrier_type_db_content_volume))) {
+            unit_list.setSelection(11); //Litre
+        }
 
         dialogBuilder.setTitle(getString(R.string.dialog_edit_value_title));
 

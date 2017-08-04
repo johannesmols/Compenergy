@@ -119,6 +119,30 @@
                 android:textAlignment="textStart"
                 android:textColor="@color/dark_text"  />
 
+            <TextView
+                android:id="@+id/fragment_about_default_database_version_number_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/fragment_about_build_value"
+                android:textSize="14sp"
+                android:textAllCaps="true"
+                android:text="@string/about_database_version"
+                android:textAlignment="textStart"
+                android:textColor="@color/gray_text"/>
+
+            <TextView
+                android:id="@+id/fragment_about_default_database_version_number_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/fragment_about_default_database_version_number_title"
+                android:textSize="16sp"
+                android:text="@string/about_placeholder_value"
+                android:textAllCaps="false"
+                android:textAlignment="textStart"
+                android:textColor="@color/dark_text"  />
+
         </RelativeLayout>
 
     </ScrollView>

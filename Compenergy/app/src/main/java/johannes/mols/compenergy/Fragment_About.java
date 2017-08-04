@@ -13,8 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class Fragment_About extends Fragment {
 
@@ -50,6 +53,11 @@ public class Fragment_About extends Fragment {
         String buildDateDisplay = String.valueOf(cal.get(Calendar.DAY_OF_MONTH)) + "." + String.valueOf(cal.get(Calendar.MONTH) + 1) + "." + String.valueOf(cal.get(Calendar.YEAR));
         TextView build = (TextView) view.findViewById(R.id.fragment_about_build_value);
         build.setText(String.valueOf(BuildConfig.VERSION_CODE) + " (" + buildDateDisplay + ")");
+
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.ENGLISH); //Use dots in all language settings as decimal separator
+        DecimalFormat df = (DecimalFormat) numberFormat;
+        TextView db_version = (TextView) view.findViewById(R.id.fragment_about_default_database_version_number_value);
+        db_version.setText(df.format(DatabaseHelper.DATABASE_VERSION));
 
         return view;
     }

@@ -446,7 +446,7 @@ public class Fragment_Compare extends Fragment {
         showKeyboard();
 
         //Fill the spinner with the unit list
-        Spinner unit_list = (Spinner) dialogView.findViewById(R.id.dialog_change_value_unit_spinner_list);
+        final Spinner unit_list = (Spinner) dialogView.findViewById(R.id.dialog_change_value_unit_spinner_list);
         ArrayAdapter<CharSequence> adapter = null;
 
         if (unit_type.equalsIgnoreCase(getString(R.string.carrier_type_db_capacity))) {
@@ -495,7 +495,36 @@ public class Fragment_Compare extends Fragment {
                 try {
                     Carrier upper = dbHelper.getCarriersWithName(pref1.getString(key_upper, "")).get(0);
                     Carrier lower = dbHelper.getCarriersWithName(pref2.getString(key_lower, "")).get(0);
-                    compareItemsWithFixedUnit(upper, lower, new BigDecimal(edit.getText().toString()), upperOrLower);
+
+                    //Convert the input amount to the correct unit
+                    Carrier work_carrier;
+                    if (upperOrLower) {
+                        work_carrier = upper;
+                    } else {
+                        work_carrier = lower;
+                    }
+
+                    String unit_type = work_carrier.get_unit();
+                    BigDecimal amount = null;
+                    if (unit_type.equalsIgnoreCase(getString(R.string.carrier_type_db_capacity))) {
+                        //Time in seconds
+                    } else if (unit_type.equalsIgnoreCase(getString(R.string.carrier_type_db_consumption))) {
+                        //Time in seconds
+                    } else if (unit_type.equalsIgnoreCase(getString(R.string.carrier_type_db_volume_consumption))) {
+                        //Distance in kilometre
+                        amount = UnitConverter.distanceInputToKilometre(unit_list.getSelectedItemPosition(), new BigDecimal(edit.getText().toString()));
+                    } else if (unit_type.equalsIgnoreCase(getString(R.string.carrier_type_db_content_volume))) {
+                        //Volume in litre
+                        amount = UnitConverter.volumeInputToLitre(unit_list.getSelectedItemPosition(), new BigDecimal(edit.getText().toString()));
+                    } else if (unit_type.equalsIgnoreCase(getString(R.string.carrier_type_db_content_mass))) {
+                        //Mass in kilogram
+                        amount = UnitConverter.massInputToKilogram(unit_list.getSelectedItemPosition(), new BigDecimal(edit.getText().toString()));
+                    }
+
+                    if (amount != null) {
+                        compareItemsWithFixedUnit(upper, lower, amount, upperOrLower);
+                    }
+
                     edit.clearFocus();
                     hideKeyboard();
                 } catch (Exception e) {

@@ -473,9 +473,37 @@ public class Fragment_Compare extends Fragment {
 
         //Set the selection to the default units
         if (unit_type.equalsIgnoreCase(getString(R.string.carrier_type_db_capacity))) {
-            unit_list.setSelection(0); //Seconds => change to the best time unit later
+            String[] result = Util.findBestTimeUnitUnformatted(mContext, current_value);
+            edit.setText(df_value.format(new BigDecimal(result[0])));
+            if (result[1].equalsIgnoreCase(getString(R.string.com_seconds))) {
+                unit_list.setSelection(0); //seconds
+            } else if (result[1].equalsIgnoreCase(getString(R.string.com_minutes))) {
+                unit_list.setSelection(1); //minutes
+            } else if (result[1].equalsIgnoreCase(getString(R.string.com_hours))) {
+                unit_list.setSelection(2); //hours
+            } else if (result[1].equalsIgnoreCase(getString(R.string.com_days))) {
+                unit_list.setSelection(3); //days
+            } else if (result[1].equalsIgnoreCase(getString(R.string.com_years))) {
+                unit_list.setSelection(4); //years
+            } else {
+                unit_list.setSelection(0);
+            }
         } else if (unit_type.equalsIgnoreCase(getString(R.string.carrier_type_db_consumption))) {
-            unit_list.setSelection(0); //Seconds => change to the best time unit later
+            String[] result = Util.findBestTimeUnitUnformatted(mContext, current_value);
+            edit.setText(df_value.format(new BigDecimal(result[0])));
+            if (result[1].equalsIgnoreCase(getString(R.string.com_seconds))) {
+                unit_list.setSelection(0); //seconds
+            } else if (result[1].equalsIgnoreCase(getString(R.string.com_minutes))) {
+                unit_list.setSelection(1); //minutes
+            } else if (result[1].equalsIgnoreCase(getString(R.string.com_hours))) {
+                unit_list.setSelection(2); //hours
+            } else if (result[1].equalsIgnoreCase(getString(R.string.com_days))) {
+                unit_list.setSelection(3); //days
+            } else if (result[1].equalsIgnoreCase(getString(R.string.com_years))) {
+                unit_list.setSelection(4); //years
+            } else {
+                unit_list.setSelection(0);
+            }
         } else if (unit_type.equalsIgnoreCase(getString(R.string.carrier_type_db_volume_consumption))) {
             unit_list.setSelection(5); //Kilometre
         } else if (unit_type.equalsIgnoreCase(getString(R.string.carrier_type_db_content_mass))) {
@@ -508,8 +536,10 @@ public class Fragment_Compare extends Fragment {
                     BigDecimal amount = null;
                     if (unit_type.equalsIgnoreCase(getString(R.string.carrier_type_db_capacity))) {
                         //Time in seconds
+                        amount = Util.convertTimeWithUnitToSeconds(new BigDecimal(edit.getText().toString()), unit_list.getSelectedItemPosition());
                     } else if (unit_type.equalsIgnoreCase(getString(R.string.carrier_type_db_consumption))) {
                         //Time in seconds
+                        amount = Util.convertTimeWithUnitToSeconds(new BigDecimal(edit.getText().toString()), unit_list.getSelectedItemPosition());
                     } else if (unit_type.equalsIgnoreCase(getString(R.string.carrier_type_db_volume_consumption))) {
                         //Distance in kilometre
                         amount = UnitConverter.distanceInputToKilometre(unit_list.getSelectedItemPosition(), new BigDecimal(edit.getText().toString()));

@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -419,6 +420,24 @@ public class Fragment_Compare extends Fragment {
 
         final EditText edit = (EditText) dialogView.findViewById(R.id.dialog_change_value_edit);
         edit.setText(df_value.format(current_value));
+        View.OnTouchListener editChangeAmountOnTouchListener = new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                //final int DRAWABLE_LEFT = 0;
+                //final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                //final int DRAWABLE_BOTTOM = 3;
+
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+                    if(event.getRawX() >= (edit.getRight() - edit.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        edit.setText("");
+                        return true;
+                    }
+                }
+                return false;
+            }
+        };
+        edit.setOnTouchListener(editChangeAmountOnTouchListener);
 
         showKeyboard();
 

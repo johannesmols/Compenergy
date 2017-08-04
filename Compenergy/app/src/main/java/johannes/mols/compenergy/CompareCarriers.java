@@ -6,6 +6,7 @@ package johannes.mols.compenergy;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -1223,6 +1224,8 @@ class CompareCarriers {
         SharedPreferences prefs_upper = mContext.getSharedPreferences(key_comp_upper, Context.MODE_PRIVATE);
         if (result != null) {
             prefs_upper.edit().putString(key_comp_upper, result.toString()).apply();
+
+            Log.i("Upper: ", prefs_upper.getString(key_comp_upper, null));
         }
     }
 
@@ -1230,6 +1233,8 @@ class CompareCarriers {
         SharedPreferences prefs_lower = mContext.getSharedPreferences(key_comp_lower, Context.MODE_PRIVATE);
         if (result != null) {
             prefs_lower.edit().putString(key_comp_lower, result.toString()).apply();
+
+            Log.i("Lower: ", prefs_lower.getString(key_comp_lower, null));
         }
     }
 }

@@ -99,13 +99,20 @@ public class Fragment_Compare extends Fragment {
             //First started, shuffle
             shuffle();
         } else {
-            //Load old carriers
+            //Load old carriers with old compare amount
             SharedPreferences pref1 = getActivity().getSharedPreferences(key_upper, Context.MODE_PRIVATE);
             SharedPreferences pref2 = getActivity().getSharedPreferences(key_lower, Context.MODE_PRIVATE);
+            SharedPreferences prefs_upper = mContext.getSharedPreferences(key_comp_upper, Context.MODE_PRIVATE);
             try {
                 Carrier upper = dbHelper.getCarriersWithName(pref1.getString(key_upper, "")).get(0);
                 Carrier lower = dbHelper.getCarriersWithName(pref2.getString(key_lower, "")).get(0);
-                compareItems(upper, lower);
+                String amount = prefs_upper.getString(key_comp_upper, "");
+
+                if (amount.equalsIgnoreCase("-1") || amount.equalsIgnoreCase("")) {
+                    compareItems(upper, lower);
+                } else {
+                    compareItemsWithFixedUnit(upper, lower, new BigDecimal(amount), true);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

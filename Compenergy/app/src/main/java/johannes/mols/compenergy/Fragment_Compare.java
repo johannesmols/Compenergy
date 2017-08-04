@@ -45,8 +45,6 @@ public class Fragment_Compare extends Fragment {
     private static DecimalFormat df;
     private static DecimalFormat df_value;
 
-    private LinearLayout gradientRootLayout;
-
     private TextView upperItemName;
     private TextView lowerItemName;
     private TextView upperItemEnergy;
@@ -74,7 +72,7 @@ public class Fragment_Compare extends Fragment {
         mContext = getContext();
         dbHelper = new DatabaseHelper(mContext, null, null, 1);
 
-        gradientRootLayout = (LinearLayout) view.findViewById(R.id.fragment_compare_root_layout);
+        LinearLayout gradientRootLayout = (LinearLayout) view.findViewById(R.id.fragment_compare_root_layout);
 
         upperItemName = (TextView) view.findViewById(R.id.fragment_compare_upper_item_name);
         lowerItemName = (TextView) view.findViewById(R.id.fragment_compare_lower_item_name);
@@ -474,17 +472,29 @@ public class Fragment_Compare extends Fragment {
             //Show selected item
             SharedPreferences pref1 = getActivity().getSharedPreferences(key_upper, Context.MODE_PRIVATE);
             SharedPreferences pref2 = getActivity().getSharedPreferences(key_lower, Context.MODE_PRIVATE);
+            SharedPreferences prefs_upper = mContext.getSharedPreferences(key_comp_upper, Context.MODE_PRIVATE);
+            SharedPreferences prefs_lower = mContext.getSharedPreferences(key_comp_lower, Context.MODE_PRIVATE);
             int selectedID = data.getIntExtra(getString(R.string.act_selection_intent_result_key_do_not_change), -1);
             if(upperOrLower) {
                 //Upper item changed
                 Carrier upperItem = dbHelper.getCarrierWithID(selectedID).get(0);
                 Carrier lowerItem = dbHelper.getCarriersWithName(pref2.getString(key_lower, "")).get(0);
-                compareItems(upperItem, lowerItem);
+                String amount = prefs_lower.getString(key_comp_lower, ""); //Upper item changed, load comparison with old lower amount
+                if (amount.equalsIgnoreCase("-1") || amount.equalsIgnoreCase("")) {
+                    compareItems(upperItem, lowerItem);
+                } else {
+                    compareItemsWithFixedUnit(upperItem, lowerItem, new BigDecimal(amount), false);
+                }
             } else {
                 //Lower item changed
                 Carrier upperItem = dbHelper.getCarriersWithName(pref1.getString(key_upper, "")).get(0);
                 Carrier lowerItem = dbHelper.getCarrierWithID(selectedID).get(0);
-                compareItems(upperItem, lowerItem);
+                String amount = prefs_upper.getString(key_comp_upper, ""); //Lower item changed, load comparison with old upper amount
+                if (amount.equalsIgnoreCase("-1") || amount.equalsIgnoreCase("")) {
+                    compareItems(upperItem, lowerItem);
+                } else {
+                    compareItemsWithFixedUnit(upperItem, lowerItem, new BigDecimal(amount), true);
+                }
             }
         }
     }

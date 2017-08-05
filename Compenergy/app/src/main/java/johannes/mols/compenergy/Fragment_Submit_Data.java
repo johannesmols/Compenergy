@@ -15,6 +15,9 @@ import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +62,8 @@ public class Fragment_Submit_Data extends Fragment {
 
         expandAllGroups();
 
+        setHasOptionsMenu(true);
+
         searchEditText = (EditText) view.findViewById(R.id.fragment_submit_data_search);
         searchEditText.setOnTouchListener(editSearchOnTouchListener);
         searchEditText.setFilters(new InputFilter[] { Util.filter });
@@ -83,6 +88,23 @@ public class Fragment_Submit_Data extends Fragment {
         expandableListView.setOnChildClickListener(toggleSendData);
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.fragment_submit_data_toolbar, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.fragment_submit_data_toolbar_send:
+                sendEmail();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void expandAllGroups() {

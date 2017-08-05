@@ -247,6 +247,7 @@
     <string name="cant_change_that_value">Can not change that value</string>
     <string name="data_sent">Data sent successfully</string>
     <string name="data_not_sent">Could not send data</string>
+    <string name="select_at_least_one">Select at least one item</string>
 
     <!-- About screen -->
     <string name="about_placeholder_value">Value</string>

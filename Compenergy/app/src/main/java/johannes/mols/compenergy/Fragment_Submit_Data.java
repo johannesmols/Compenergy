@@ -7,6 +7,7 @@ package johannes.mols.compenergy;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,10 +27,13 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class Fragment_Submit_Data extends Fragment {
 
@@ -40,6 +44,8 @@ public class Fragment_Submit_Data extends Fragment {
     private HashMap<String, List<Carrier>> carriers_list;
     private SubmitDataExpandableListAdapter adapter;
     private EditText searchEditText;
+
+    private List<Carrier> items_to_send = new ArrayList<>();
 
     private DatabaseHelper dbHelper;
 
@@ -131,6 +137,11 @@ public class Fragment_Submit_Data extends Fragment {
         for(int i = 0; i < categories_list.size(); i++) {
             List<Carrier> carrierList = dbHelper.getCustomCarriersWithCategory(categories_list.get(i));
             carriers_list.put(categories_list.get(i), carrierList);
+
+            //Add every custom item to this list at the beginning
+            for (Carrier item : carrierList) {
+                items_to_send.add(item);
+            }
         }
 
         //Sort
@@ -148,6 +159,15 @@ public class Fragment_Submit_Data extends Fragment {
             CheckBox checkBox = (CheckBox) v.findViewById(R.id.fragment_submit_data_toggle);
             boolean result = checkBox.isChecked();
             checkBox.setChecked(!result);
+
+            if (items_to_send.contains(item)) {
+                //Remove from list
+                items_to_send.remove(item);
+            } else {
+                //Add to list
+                items_to_send.add(item);
+            }
+
             return true; //indicates that the event is consumed, meaning the long click listener can't be triggered too
         }
     };
@@ -185,7 +205,13 @@ public class Fragment_Submit_Data extends Fragment {
                 progressDialog.dismiss();
             }
         });
-        sendCustomData.execute(mContext);
+
+        if (items_to_send.size() > 0) {
+            sendCustomData.execute(items_to_send);
+        } else {
+            Toast.makeText(mContext, getString(R.string.select_at_least_one), Toast.LENGTH_LONG).show();
+        }
+
         if (sendCustomData.getStatus() == AsyncTask.Status.RUNNING) {
             progressDialog.setMessage(getString(R.string.dialog_sending_data));
             progressDialog.show();
@@ -193,7 +219,7 @@ public class Fragment_Submit_Data extends Fragment {
     }
 }
 
-class sendCustomData extends AsyncTask<Context, Integer, Boolean> {
+class sendCustomData extends AsyncTask<List<Carrier>, Integer, Boolean> {
 
     interface AsyncResponse {
         void processFinish(Boolean output);
@@ -205,20 +231,48 @@ class sendCustomData extends AsyncTask<Context, Integer, Boolean> {
         this.delegate = delegate;
     }
 
+    @SafeVarargs
+    @Override
+    protected final Boolean doInBackground(List<Carrier>... params) {
+        try {
+            GMailSender sender = new GMailSender("compenergy.app@gmail.com", "johannes.mols.compenergy");
+            return sender.sendMail("Data suggestion [" + getDate() + " GMT]", collectData(params[0]), "compenergy.app@gmail.com", "compenergy.app@gmail.com");
+        } catch (Exception e) {
+            Log.e("SendMail", e.getMessage(), e);
+            return false;
+        }
+    }
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
     }
 
-    @Override
-    protected Boolean doInBackground(Context... params) {
-        try {
-            GMailSender sender = new GMailSender("compenergy.app@gmail.com", "johannes.mols.compenergy");
-            return sender.sendMail("Data suggestion", "", "compenergy.app@gmail.com", "compenergy.app@gmail.com");
-        } catch (Exception e) {
-            Log.e("SendMail", e.getMessage(), e);
-            return false;
+    private String getDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.GERMAN);
+        return sdf.format(new Date());
+    }
+
+    private String collectData(List<Carrier> data_to_send) {
+
+        //Generate the pseudo xml to attach in the mail
+        String xml_items = "";
+        for (Carrier item : data_to_send) {
+            xml_items += "<carrier>" + "\n" +
+                         "   <name>" + item.get_name() + "</name>" + "\n" +
+                         "   <category>" + item.get_category() + "</category>" + "\n" +
+                         "   <unit>" + item.get_unit() + "</unit>" + "\n" +
+                         "   <energy>" + item.get_energy() + "</energy>" + "\n" +
+                         "   <custom>" + "false" + "</custom>" + "\n" +
+                         "   <favorite>" + "false" + "</favorite>" + "\n" +
+                         "</carrier>" + "\n";
         }
+
+        return "OS API Level: " + Build.VERSION.SDK_INT + "\n" +
+                "Device: " + Build.DEVICE + "\n" +
+                "Model and Product: " + Build.MODEL + " (" + Build.PRODUCT + ")" + "\n\n" +
+                "--------------------" + "\n\n" +
+                xml_items + "\n";
     }
 
     @Override

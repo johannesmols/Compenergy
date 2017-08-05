@@ -50,7 +50,7 @@ class GMailSender extends javax.mail.Authenticator {
         return new PasswordAuthentication(user, password);
     }
 
-    synchronized void sendMail(String subject, String body, String sender, String recipients) throws Exception {
+    synchronized boolean sendMail(String subject, String body, String sender, String recipients) throws Exception {
         try {
             MimeMessage message = new MimeMessage(session);
             DataHandler handler = new DataHandler(new ByteArrayDataSource(body.getBytes(), "text/plain"));
@@ -62,8 +62,10 @@ class GMailSender extends javax.mail.Authenticator {
             else
                 message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipients));
             Transport.send(message);
+            return true;
         } catch(Exception e){
             Log.e("Email", e.getMessage(), e);
+            return false;
         }
     }
 

@@ -239,11 +239,14 @@
     <string name="dialog_no_internet_browser">No internet browser found</string>
     <string name="dialog_no_email_app">No E-Mail application found</string>
     <string name="dialog_edit_value_title">Edit value</string>
+    <string name="dialog_sending_data">Sending Data…</string>
 
     <!-- Toast messages -->
     <string name="item_deleted">Item deleted</string>
     <string name="item_added_to_db">Item added to the database</string>
     <string name="cant_change_that_value">Can not change that value</string>
+    <string name="data_sent">Data sent successfully</string>
+    <string name="data_not_sent">Could not send data</string>
 
     <!-- About screen -->
     <string name="about_placeholder_value">Value</string>

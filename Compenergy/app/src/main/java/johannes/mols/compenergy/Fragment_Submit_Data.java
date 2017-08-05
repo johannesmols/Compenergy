@@ -28,7 +28,7 @@ public class Fragment_Submit_Data extends Fragment {
 
         getActivity().setTitle(R.string.nav_item_submit_data);
 
-        sendEmail();
+        //sendEmail();
     }
 
     @Nullable
@@ -43,18 +43,18 @@ public class Fragment_Submit_Data extends Fragment {
             @Override
             public void processFinish(Boolean output) {
                 if (output) {
-                    Log.i("AsyncTask", "Email sent successfully");
-                    Toast.makeText(mContext, "Email sent", Toast.LENGTH_LONG).show();
+                    Log.i("AsyncTask", getString(R.string.data_sent));
+                    Toast.makeText(mContext, getString(R.string.data_sent), Toast.LENGTH_LONG).show();
                 } else {
-                    Log.i("AsyncTask", "Email failed to send");
-                    Toast.makeText(mContext, "Email not sent", Toast.LENGTH_LONG).show();
+                    Log.i("AsyncTask", getString(R.string.data_not_sent));
+                    Toast.makeText(mContext, getString(R.string.data_not_sent), Toast.LENGTH_LONG).show();
                 }
                 progressDialog.dismiss();
             }
         });
         sendCustomData.execute(mContext);
         if (sendCustomData.getStatus() == AsyncTask.Status.RUNNING) {
-            progressDialog.setMessage("Sending Data...");
+            progressDialog.setMessage(getString(R.string.dialog_sending_data));
             progressDialog.show();
         }
     }
@@ -81,8 +81,7 @@ class sendCustomData extends AsyncTask<Context, Integer, Boolean> {
     protected Boolean doInBackground(Context... params) {
         try {
             GMailSender sender = new GMailSender("compenergy.app@gmail.com", "johannes.mols.compenergy");
-            sender.sendMail("Test subject", "Test body", "compenergy.app@gmail.com", "compenergy.app@gmail.com");
-            return true;
+            return sender.sendMail("Data suggestion", "", "compenergy.app@gmail.com", "compenergy.app@gmail.com");
         } catch (Exception e) {
             Log.e("SendMail", e.getMessage(), e);
             return false;

@@ -253,7 +253,7 @@
     <string name="about_contact_value">compenergy.app@googlemail.com</string>
     <string name="about_app_version_title">Version</string>
     <string name="about_app_build_title">Build Number</string>
-    <string name="about_database_version">Default Database Version</string>
+    <string name="about_database_version">Database Version</string>
 
     <!-- Placeholders -->
     <string name="placeholder_item_listview">Item Name</string>

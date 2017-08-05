@@ -236,7 +236,7 @@ class sendCustomData extends AsyncTask<List<Carrier>, Integer, Boolean> {
     protected final Boolean doInBackground(List<Carrier>... params) {
         try {
             GMailSender sender = new GMailSender("compenergy.app@gmail.com", "johannes.mols.compenergy");
-            return sender.sendMail("Data suggestion [" + getDate() + " GMT]", collectData(params[0]), "compenergy.app@gmail.com", "compenergy.app@gmail.com");
+            return sender.sendMail("Data suggestion [" + getDate() + "]", collectData(params[0]), "compenergy.app@gmail.com", "compenergy.app@gmail.com");
         } catch (Exception e) {
             Log.e("SendMail", e.getMessage(), e);
             return false;
@@ -268,7 +268,7 @@ class sendCustomData extends AsyncTask<List<Carrier>, Integer, Boolean> {
                          "</carrier>" + "\n";
         }
 
-        return  "Date: " + getDate() + " GMT" + "\n" +
+        return  "Date: " + getDate() + "\n" +
                 "OS API Level: " + Build.VERSION.SDK_INT + "\n" +
                 "Device: " + Build.DEVICE + "\n" +
                 "Model and Product: " + Build.MODEL + " (" + Build.PRODUCT + ")" + "\n\n" +

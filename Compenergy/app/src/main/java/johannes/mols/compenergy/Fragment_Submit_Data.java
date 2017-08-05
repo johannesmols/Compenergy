@@ -268,7 +268,8 @@ class sendCustomData extends AsyncTask<List<Carrier>, Integer, Boolean> {
                          "</carrier>" + "\n";
         }
 
-        return "OS API Level: " + Build.VERSION.SDK_INT + "\n" +
+        return  "Date: " + getDate() + " GMT" + "\n" +
+                "OS API Level: " + Build.VERSION.SDK_INT + "\n" +
                 "Device: " + Build.DEVICE + "\n" +
                 "Model and Product: " + Build.MODEL + " (" + Build.PRODUCT + ")" + "\n\n" +
                 "--------------------" + "\n\n" +

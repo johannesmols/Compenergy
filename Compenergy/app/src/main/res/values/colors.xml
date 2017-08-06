@@ -7,8 +7,6 @@
     <color name="dark_text">#212121</color>
     <color name="gray_text">#424242</color>
 
-    <color name="material_white">#FAFAFA</color>
-
     <!-- Gradient Colors -->
     <color name="red">#ef9a9a</color>
     <color name="pink">#f48fb1</color>

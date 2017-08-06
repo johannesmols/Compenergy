@@ -146,7 +146,6 @@
     <string name="com_values_equal">values equal</string>
     <string name="com_percentage">percentage</string>
     <string name="com_times_bigger">times bigger</string>
-    <string name="com_time">time</string>
     <string name="com_seconds">seconds</string>
     <string name="com_minutes">minutes</string>
     <string name="com_hours">hours</string>
@@ -173,7 +172,6 @@
     <string name="edit_data_act_title">Edit Data</string>
     <string name="edit_data_name_edit_hint">Name</string>
     <string name="edit_data_category_edit_hint">Category</string>
-    <string name="edit_data_energy_edit_hint">Energy</string>
     <string name="edit_data_unit_watt">Watt</string>
     <string name="edit_data_unit_joule">Joule</string>
     <string name="edit_data_button_title">Edit Item</string>
@@ -184,7 +182,6 @@
     <string name="edit_data_info_type_5">The energy content is defined in Joule per Litre</string>
 
     <!-- Select Data Activity -->
-    <string name="intent_key_for_selector">SELECTOR_DATA</string>
     <string name="act_selection_title">Select an item</string>
     <string name="act_selection_fav_group_title">Favorites</string>
     <string name="act_selection_intent_result_key_do_not_change">item</string>
@@ -271,7 +268,6 @@
     <!-- Content Descriptions -->
     <string name="content_description_list_view_header">Minimize or maximize this category</string>
     <string name="content_description_nav_drawer_icon">Application icon</string>
-    <string name="content_description_compare_color_bucket">Change the item color</string>
     <string name="content_description_compare_arrows">Compare items</string>
 
     <!-- Help text -->

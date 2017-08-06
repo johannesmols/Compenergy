@@ -128,7 +128,7 @@ public class Fragment_Settings extends PreferenceFragmentCompat {
                                 });
                                 clearDatabase.execute(mContext);
                                 if(clearDatabase.getStatus() == AsyncTask.Status.RUNNING) {
-                                    progDialog.setMessage(mContext.getResources().getString(R.string.pref_database_loading_reset));
+                                    progDialog.setMessage(mContext.getResources().getString(R.string.pref_database_loading_clear));
                                     progDialog.show();
                                 }
                             }

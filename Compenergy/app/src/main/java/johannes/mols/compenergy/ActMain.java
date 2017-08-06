@@ -4,6 +4,7 @@
 
 package johannes.mols.compenergy;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -21,6 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class ActMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -68,8 +70,20 @@ public class ActMain extends AppCompatActivity implements NavigationView.OnNavig
         displaySelectedScreen(R.id.content_act_compare);
 
         //Database
-        createDbAysncIfNotExistent createDb = new createDbAysncIfNotExistent();
+        final ProgressDialog progDialog = new ProgressDialog(mContext);
+        createDbAysncIfNotExistent createDb = new createDbAysncIfNotExistent(new createDbAysncIfNotExistent.AsyncResponse() {
+            @Override
+            public void processFinish(Boolean output) {
+                //output = true => Database setup successful
+                //output = false => Database already set up
+                progDialog.dismiss();
+            }
+        });
         createDb.execute(mContext);
+        if (createDb.getStatus() == AsyncTask.Status.RUNNING) {
+            progDialog.setMessage(getString(R.string.dialog_setting_up_db));
+            progDialog.show();
+        }
 
         //Check for updated database
         checkForDbUpdateAsync checkForDbUpdateAsync = new checkForDbUpdateAsync(new checkForDbUpdateAsync.AsyncResponse() {
@@ -163,22 +177,43 @@ public class ActMain extends AppCompatActivity implements NavigationView.OnNavig
 
 class createDbAysncIfNotExistent extends AsyncTask<Context, Integer, Boolean> {
 
+    interface AsyncResponse {
+        void processFinish(Boolean output);
+    }
+
+    private AsyncResponse delegate = null;
+
+    createDbAysncIfNotExistent(AsyncResponse delegate) {
+        this.delegate = delegate;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+    }
+
     @Override
     protected Boolean doInBackground(Context... params) {
-        Boolean result = false;
+        boolean res1 = false;
+        boolean res2 = false;
         DatabaseHelper db = new DatabaseHelper(params[0], null, null, 1);
-        if (db.getAllCarriers().size() == 0) {
+        if (db.getCarrierCount() == 0) {
             db.addDefaultData();
             Log.i("AsyncTask", "Default Data added");
-            result = true;
+            res1 = true;
         }
         if(db.getAllDatabaseVersions().size() == 0) {
             db.addDatabaseVersionNumber();
             Log.i("AsyncTask", "Added Db Version");
-            result = true;
+            res2 = true;
         }
 
-        return result;
+        return res1 && res2;
+    }
+
+    @Override
+    protected void onPostExecute(Boolean aBoolean) {
+        delegate.processFinish(aBoolean);
     }
 }
 

@@ -240,6 +240,7 @@
     <string name="dialog_no_email_app">No E-Mail application found</string>
     <string name="dialog_edit_value_title">Edit value</string>
     <string name="dialog_sending_data">Sending Data…</string>
+    <string name="dialog_setting_up_db">Setting up database…</string>
 
     <!-- Toast messages -->
     <string name="item_deleted">Item deleted</string>

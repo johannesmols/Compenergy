@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -93,7 +94,8 @@ class DatabaseHelper extends SQLiteOpenHelper {
     //Get a dataset
     private List<Carrier> getCarriers(String condition) {
         List<Carrier> result = new ArrayList<>();
-        try (SQLiteDatabase db = getWritableDatabase()) {
+        try {
+            SQLiteDatabase db = getWritableDatabase();
             String query = "SELECT * FROM " + TABLE_CARRIERS_NAME + " WHERE " + condition + ";";
 
             Cursor c = db.rawQuery(query, null);
@@ -116,13 +118,16 @@ class DatabaseHelper extends SQLiteOpenHelper {
             }
             c.close();
             db.close();
+        } catch (Exception e) {
+            Log.e("DB Error", e.getMessage());
         }
         return result;
     }
 
     List<String> getAllCarriersAsStringList() {
         List<String> result = new ArrayList<>();
-        try (SQLiteDatabase db = getWritableDatabase()) {
+        try {
+            SQLiteDatabase db = getWritableDatabase();
             String query = "SELECT " + CARRIER_NAME + " FROM " + TABLE_CARRIERS_NAME + " WHERE 1;";
 
             Cursor c = db.rawQuery(query, null);
@@ -136,6 +141,8 @@ class DatabaseHelper extends SQLiteOpenHelper {
             }
             c.close();
             db.close();
+        } catch (Exception e) {
+            Log.e("DB Error", e.getMessage());
         }
         return result;
     }
@@ -190,7 +197,8 @@ class DatabaseHelper extends SQLiteOpenHelper {
 
     List<String> getCategoryList() {
         List<String> categories = new ArrayList<>();
-        try (SQLiteDatabase db = getWritableDatabase()) {
+        try {
+            SQLiteDatabase db = getWritableDatabase();
             String query = "SELECT DISTINCT " + CARRIER_CATEGORY + " FROM " + TABLE_CARRIERS_NAME + ";";
 
             Cursor c = db.rawQuery(query, null);
@@ -204,6 +212,8 @@ class DatabaseHelper extends SQLiteOpenHelper {
             }
             c.close();
             db.close();
+        } catch (Exception e) {
+            Log.e("DB Error", e.getMessage());
         }
 
         return categories;
@@ -211,7 +221,8 @@ class DatabaseHelper extends SQLiteOpenHelper {
 
     List<String> getCategoryListThatContainsFavorites() {
         List<String> categories = new ArrayList<>();
-        try (SQLiteDatabase db = getWritableDatabase()) {
+        try {
+            SQLiteDatabase db = getWritableDatabase();
             String query = "SELECT DISTINCT " + CARRIER_CATEGORY + " FROM " + TABLE_CARRIERS_NAME + " WHERE " + CARRIER_FAVORITE + "=1;";
 
             Cursor c = db.rawQuery(query, null);
@@ -225,6 +236,8 @@ class DatabaseHelper extends SQLiteOpenHelper {
             }
             c.close();
             db.close();
+        } catch (Exception e) {
+            Log.e("DB Error", e.getMessage());
         }
 
         return categories;
@@ -232,7 +245,8 @@ class DatabaseHelper extends SQLiteOpenHelper {
 
     List<String> getCategoryListThatContainsCustoms() {
         List<String> categories = new ArrayList<>();
-        try (SQLiteDatabase db = getWritableDatabase()) {
+        try {
+            SQLiteDatabase db = getWritableDatabase();
             String query = "SELECT DISTINCT " + CARRIER_CATEGORY + " FROM " + TABLE_CARRIERS_NAME + " WHERE " + CARRIER_CUSTOM + "=1;";
 
             Cursor c = db.rawQuery(query, null);
@@ -246,6 +260,8 @@ class DatabaseHelper extends SQLiteOpenHelper {
             }
             c.close();
             db.close();
+        } catch (Exception e) {
+            Log.e("DB Error", e.getMessage());
         }
 
         return categories;
@@ -253,7 +269,8 @@ class DatabaseHelper extends SQLiteOpenHelper {
 
     List<Integer> getIdList() {
         List<Integer> ids = new ArrayList<>();
-        try (SQLiteDatabase db = getWritableDatabase()) {
+        try {
+            SQLiteDatabase db = getWritableDatabase();
             String query = "SELECT * FROM " + TABLE_CARRIERS_NAME + ";";
 
             Cursor c = db.rawQuery(query, null);
@@ -265,6 +282,8 @@ class DatabaseHelper extends SQLiteOpenHelper {
             }
             c.close();
             db.close();
+        } catch (Exception e) {
+            Log.e("DB Error", e.getMessage());
         }
 
         return ids;
@@ -308,7 +327,8 @@ class DatabaseHelper extends SQLiteOpenHelper {
 
     boolean isDatabaseCurrent() {
         List<Integer> db_version = new ArrayList<>();
-        try (SQLiteDatabase db = getWritableDatabase()) {
+        try {
+            SQLiteDatabase db = getWritableDatabase();
             String query = "SELECT " + COLUMN_DB_VERSION + " FROM " + TABLE_DB_VERSION + " WHERE 1;";
 
             Cursor c = db.rawQuery(query, null);
@@ -320,22 +340,28 @@ class DatabaseHelper extends SQLiteOpenHelper {
             }
             c.close();
             db.close();
+        } catch (Exception e) {
+            Log.e("DB Error", e.getMessage());
         }
 
         return db_version.size() == 1 && db_version.get(0) == DATABASE_VERSION;
     }
 
     void setDatabaseVersion() {
-        try (SQLiteDatabase db = getWritableDatabase()) {
+        try {
+            SQLiteDatabase db = getWritableDatabase();
             ContentValues values = new ContentValues();
             values.put(COLUMN_DB_VERSION, DATABASE_VERSION);
             db.update(TABLE_DB_VERSION, values, COLUMN_DB_VERSION + "=?", null);
+        } catch (Exception e) {
+            Log.e("DB Error", e.getMessage());
         }
     }
 
     List<Integer> getAllDatabaseVersions() {
         List<Integer> result = new ArrayList<>();
-        try (SQLiteDatabase db = getWritableDatabase()) {
+        try {
+            SQLiteDatabase db = getWritableDatabase();
             String query = "SELECT * FROM " + TABLE_DB_VERSION + " WHERE 1;";
 
             Cursor c = db.rawQuery(query, null);
@@ -348,13 +374,16 @@ class DatabaseHelper extends SQLiteOpenHelper {
             }
             c.close();
             db.close();
+        } catch (Exception e) {
+            Log.e("DB Error", e.getMessage());
         }
         return result;
     }
 
     //Add a dataset
     void addCarrier(Carrier carrier) {
-        try (SQLiteDatabase db = getWritableDatabase()) {
+        try {
+            SQLiteDatabase db = getWritableDatabase();
             ContentValues values = new ContentValues();
             values.put(CARRIER_NAME, carrier.get_name());
             values.put(CARRIER_CATEGORY, carrier.get_category());
@@ -364,12 +393,15 @@ class DatabaseHelper extends SQLiteOpenHelper {
             values.put(CARRIER_FAVORITE, carrier.get_favorite());
             db.insert(TABLE_CARRIERS_NAME, null, values);
             db.close();
+        } catch (Exception e) {
+            Log.e("DB Error", e.getMessage());
         }
     }
 
     //Update a dataset
     void updateCarrier(int id, Carrier new_carrier) {
-        try (SQLiteDatabase db = getWritableDatabase()) {
+        try {
+            SQLiteDatabase db = getWritableDatabase();
             ContentValues values = new ContentValues();
             values.put(CARRIER_NAME, new_carrier.get_name());
             values.put(CARRIER_CATEGORY, new_carrier.get_category());
@@ -379,29 +411,40 @@ class DatabaseHelper extends SQLiteOpenHelper {
             values.put(CARRIER_FAVORITE, new_carrier.get_favorite());
             db.update(TABLE_CARRIERS_NAME, values, CARRIER_ID + "=" + id, null);
             db.close();
+        } catch (Exception e) {
+            Log.e("DB Error", e.getMessage());
         }
     }
 
     //Delete a dataset
     void deleteCarrier(String carrier_name) {
-        try (SQLiteDatabase db = getWritableDatabase()) {
+        try {
+            SQLiteDatabase db = getWritableDatabase();
             db.execSQL("DELETE FROM " + TABLE_CARRIERS_NAME + " WHERE " + CARRIER_NAME + "=\"" + carrier_name + "\";");
+        } catch (Exception e) {
+            Log.e("DB Error", e.getMessage());
         }
     }
 
     //Delete all datasets
     void deleteAllCarriers() {
-        try (SQLiteDatabase db = getWritableDatabase()) {
+        try {
+            SQLiteDatabase db = getWritableDatabase();
             db.execSQL("DELETE FROM " + TABLE_CARRIERS_NAME + " WHERE 1");
+        } catch (Exception e) {
+            Log.e("DB Error", e.getMessage());
         }
     }
 
     //Drops table and creates a new one, shouldn't be called, use delete all instead
     void dropTables() {
-        try (SQLiteDatabase db = getWritableDatabase()) {
+        try {
+            SQLiteDatabase db = getWritableDatabase();
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_CARRIERS_NAME);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_DB_VERSION);
             onCreate(db);
+        } catch (Exception e) {
+            Log.e("DB Error", e.getMessage());
         }
     }
 }

@@ -39,9 +39,11 @@
 
 
      Sources for carriers:  [1] Mainly chemicals:             https://en.wikipedia.org/wiki/Energy_density
+                            [2] More energy densities:        https://en.wikipedia.org/wiki/Energy_density_Extended_Reference_Table
                             [2] Fuel usage of cars:           https://www.spritmonitor.de
                             [3] Fuel usage of cars:           https://www.auto-data.net
                             [4] Food:                         http://fddb.info
+                            [5] Human brain:                  https://www.scientificamerican.com/article/thinking-hard-calories/
 
  -->
 
@@ -279,7 +281,7 @@
 
     <carrier>
         <name>Lithium battery</name>
-        <category>Electrochemical</category>
+        <category>Batteries</category>
         <unit>Content Mass</unit>
         <energy>1800000</energy>
         <custom>false</custom>
@@ -287,7 +289,7 @@
     </carrier>
     <carrier>
         <name>Alkaline battery</name>
-        <category>Electrochemical</category>
+        <category>Batteries</category>
         <unit>Content Mass</unit>
         <energy>500400</energy>
         <custom>false</custom>
@@ -295,7 +297,7 @@
     </carrier>
     <carrier>
         <name>Lithium-ion battery</name>
-        <category>Electrochemical</category>
+        <category>Batteries</category>
         <unit>Content Mass</unit>
         <energy>874800</energy>
         <custom>false</custom>
@@ -303,7 +305,7 @@
     </carrier>
     <carrier>
         <name>Lead-acid battery</name>
-        <category>Electrochemical</category>
+        <category>Batteries</category>
         <unit>Content Mass</unit>
         <energy>169200</energy>
         <custom>false</custom>
@@ -311,7 +313,7 @@
     </carrier>
     <carrier>
         <name>Nickel-metal hydride battery</name>
-        <category>Electrochemical</category>
+        <category>Batteries</category>
         <unit>Content Mass</unit>
         <energy>288000</energy>
         <custom>false</custom>
@@ -449,10 +451,37 @@
         <favorite>false</favorite>
     </carrier>
     <carrier>
-        <name>TNT</name>
+        <name>Liquid Nitrogen</name>
         <category>Chemical</category>
+        <unit>Content Volume</unit>
+        <energy>334000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+
+    <!-- Explosives -->
+
+    <carrier>
+        <name>TNT</name>
+        <category>Explosives</category>
         <unit>Content Mass</unit>
-        <energy>4600000</energy>
+        <energy>4610000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Nitroglycerin</name>
+        <category>Explosives</category>
+        <unit>Content Mass</unit>
+        <energy>6260000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Thermite</name>
+        <category>Explosives</category>
+        <unit>Content Mass</unit>
+        <energy>4000000</energy>
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>
@@ -464,6 +493,14 @@
         <category>Organs</category>
         <unit>Capacity</unit>
         <energy>2</energy> //it's actually 1.33 Watt
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Human brain</name>
+        <category>Organs</category>
+        <unit>Capacity</unit>
+        <energy>13</energy> //it's actually 12.6 Watt
         <custom>false</custom>
         <favorite>false</favorite>
     </carrier>

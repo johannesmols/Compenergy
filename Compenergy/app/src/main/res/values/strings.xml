@@ -20,12 +20,12 @@
     <string name="nav_item_help">Help</string>
 
     <!-- Spinner Dropdown Lists -->
-    <string name="carrier_type_db_capacity">Capacity</string>
-    <string name="carrier_type_db_consumption">Consumption</string>
-    <string name="carrier_type_db_volume_consumption">Volume Consumption</string>
-    <string name="carrier_type_db_content_mass">Content Mass</string>
-    <string name="carrier_type_db_content_volume">Content Volume</string>
-    <string name="carrier_type_vehicle_only_client_side">Vehicle</string>
+    <string name="carrier_type_db_capacity" translatable="false">Capacity</string>
+    <string name="carrier_type_db_consumption" translatable="false">Consumption</string>
+    <string name="carrier_type_db_volume_consumption" translatable="false">Volume Consumption</string>
+    <string name="carrier_type_db_content_mass" translatable="false">Content Mass</string>
+    <string name="carrier_type_db_content_volume" translatable="false">Content Volume</string>
+    <string name="carrier_type_vehicle_only_client_side" translatable="false">Vehicle</string>
 
     <!-- String arrays for spinners - DO NOT CHANGE ORDER -->
     <string-array name="spinner_carrier_types">
@@ -168,7 +168,7 @@
     <string name="add_data_add_button">Add Item</string>
 
     <!-- Edit Data Activity -->
-    <string name="intent_key_for_editor">CARRIER_DATA</string>
+    <string name="intent_key_for_editor" translatable="false">CARRIER_DATA</string>
     <string name="edit_data_act_title">Edit Data</string>
     <string name="edit_data_name_edit_hint">Name</string>
     <string name="edit_data_category_edit_hint">Category</string>
@@ -184,17 +184,17 @@
     <!-- Select Data Activity -->
     <string name="act_selection_title">Select an item</string>
     <string name="act_selection_fav_group_title">Favorites</string>
-    <string name="act_selection_intent_result_key_do_not_change">item</string>
+    <string name="act_selection_intent_result_key_do_not_change" translatable="false">item</string>
 
     <!-- Preference screen strings -->
     <string name="pref_database_group_title">Database</string>
-    <string name="pref_database_group_title_key">compenergy.database.title</string>
+    <string name="pref_database_group_title_key" translatable="false">compenergy.database.title</string>
     <string name="pref_database_reset_button">Reset database</string>
     <string name="pref_database_reset_summary">Resets all data to the default values and removes custom data sets</string>
-    <string name="pref_database_reset_key">compenergy.database.reset</string>
+    <string name="pref_database_reset_key" translatable="false">compenergy.database.reset</string>
     <string name="pref_database_delete_button">Delete all data</string>
     <string name="pref_database_delete_summary">Deletes every dataset and leaves you with an empty database</string>
-    <string name="pref_database_delete_key">compenergy.database.delete</string>
+    <string name="pref_database_delete_key" translatable="false">compenergy.database.delete</string>
     <string name="pref_database_hint_reset">Database reset successful</string>
     <string name="pref_database_hint_reset_failed">Database reset failed</string>
     <string name="pref_database_hint_delete">All data deleted</string>
@@ -202,21 +202,21 @@
     <string name="pref_database_loading_reset">Resetting database…</string>
     <string name="pref_database_loading_clear">Clearing database…</string>
     <string name="pref_appearance_group_title">Appearance</string>
-    <string name="pref_appearance_group_title_key">compenergy.appearance.title</string>
+    <string name="pref_appearance_group_title_key" translatable="false">compenergy.appearance.title</string>
     <string name="pref_appearance_show_gradient_title">Use Gradients</string>
     <string name="pref_appearance_show_gradient_summary">Turn off the animated gradient in the compare section here</string>
-    <string name="pref_appearance_show_gradient_key">compenergy.appearance.show_gradient</string>
+    <string name="pref_appearance_show_gradient_key" translatable="false">compenergy.appearance.show_gradient</string>
 
     <!-- Error messages -->
     <string name="name_already_exists">Name already exists</string>
     <string name="invalid_input">Invalid input</string>
 
     <!-- Keys -->
-    <string name="key_upper">compenergy.compare.upper_item</string>
-    <string name="key_lower">compenergy.compare.lower_item</string>
-    <string name="key_comp_upper">compenergy.compare.upper_compare_value</string>
-    <string name="key_comp_lower">compenergy.compare.lower_compare_value</string>
-    <string name="key_first_start">compenergy.compare.first_start</string>
+    <string name="key_upper" translatable="false">compenergy.compare.upper_item</string>
+    <string name="key_lower" translatable="false">compenergy.compare.lower_item</string>
+    <string name="key_comp_upper" translatable="false">compenergy.compare.upper_compare_value</string>
+    <string name="key_comp_lower" translatable="false">compenergy.compare.lower_compare_value</string>
+    <string name="key_first_start" translatable="false">compenergy.compare.first_start</string>
 
     <!-- Dialog messages -->
     <string name="dialog_yes">Yes</string>

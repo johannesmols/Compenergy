@@ -751,6 +751,193 @@
         <favorite>false</favorite>
     </carrier>
 
+    <!-- Electrical devices -->
+
+    <carrier>
+        <name>Oven</name>
+        <category>Electrical devices</category>
+        <unit>Consumption</unit>
+        <energy>3000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Hair Dryer</name>
+        <category>Electrical devices</category>
+        <unit>Consumption</unit>
+        <energy>1538</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Dishwasher</name>
+        <category>Electrical devices</category>
+        <unit>Consumption</unit>
+        <energy>1200</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Microwave</name>
+        <category>Electrical devices</category>
+        <unit>Consumption</unit>
+        <energy>1500</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Toaster</name>
+        <category>Electrical devices</category>
+        <unit>Consumption</unit>
+        <energy>1100</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Vacuum Cleaner</name>
+        <category>Electrical devices</category>
+        <unit>Consumption</unit>
+        <energy>500</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Water Heater</name>
+        <category>Electrical devices</category>
+        <unit>Consumption</unit>
+        <energy>479</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Espresso Machine</name>
+        <category>Electrical devices</category>
+        <unit>Consumption</unit>
+        <energy>360</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Standard TV</name>
+        <category>Electrical devices</category>
+        <unit>Consumption</unit>
+        <energy>188</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Home Computer</name>
+        <category>Electrical devices</category>
+        <unit>Consumption</unit>
+        <energy>100</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Gaming Computer</name>
+        <category>Electrical devices</category>
+        <unit>Consumption</unit>
+        <energy>500</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Laptop</name>
+        <category>Electrical devices</category>
+        <unit>Consumption</unit>
+        <energy>50</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Ceiling Fan</name>
+        <category>Electrical devices</category>
+        <unit>Consumption</unit>
+        <energy>75</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Clock Radio</name>
+        <category>Electrical devices</category>
+        <unit>Consumption</unit>
+        <energy>7</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Shaver</name>
+        <category>Electrical devices</category>
+        <unit>Consumption</unit>
+        <energy>15</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Plasma TV</name>
+        <category>Electrical devices</category>
+        <unit>Consumption</unit>
+        <energy>339</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>LCD TV</name>
+        <category>Electrical devices</category>
+        <unit>Consumption</unit>
+        <energy>219</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Satellite Dish</name>
+        <category>Electrical devices</category>
+        <unit>Consumption</unit>
+        <energy>30</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Light Bulb</name>
+        <category>Electrical devices</category>
+        <unit>Consumption</unit>
+        <energy>50</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Hedge Trimmer</name>
+        <category>Electrical devices</category>
+        <unit>Consumption</unit>
+        <energy>450</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Iron</name>
+        <category>Electrical devices</category>
+        <unit>Consumption</unit>
+        <energy>1000</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Scanner</name>
+        <category>Electrical devices</category>
+        <unit>Consumption</unit>
+        <energy>18</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+    <carrier>
+        <name>Refrigerator</name>
+        <category>Electrical devices</category>
+        <unit>Consumption</unit>
+        <energy>130</energy>
+        <custom>false</custom>
+        <favorite>false</favorite>
+    </carrier>
+
     <!-- Cars -->
 
     <carrier>

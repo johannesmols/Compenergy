@@ -28,7 +28,7 @@
     <string name="carrier_type_vehicle_only_client_side" translatable="false">Vehicle</string>
 
     <!-- String arrays for spinners - DO NOT CHANGE ORDER -->
-    <string-array name="spinner_carrier_types">
+    <string-array translatable="false" name="spinner_carrier_types">
         <item>Electric producer</item>
         <item>Electric consumer</item>
         <item>Consumer by distance</item>
@@ -37,7 +37,7 @@
         <item>Vehicle</item>
     </string-array>
 
-    <string-array name="spinner_carrier_types_without_vehicles">
+    <string-array translatable="false" name="spinner_carrier_types_without_vehicles">
         <item>Electric producer</item>
         <item>Electric consumer</item>
         <item>Consumer by distance</item>
@@ -45,7 +45,7 @@
         <item>Volume energy content</item>
     </string-array>
 
-    <string-array name="spinner_energy_type">
+    <string-array translatable="false" name="spinner_energy_type">
         <item>Joule</item>
         <item>Kilojoule</item>
         <item>Megajoule</item>
@@ -59,14 +59,14 @@
         <item>Foot-pound</item>
     </string-array>
 
-    <string-array name="spinner_energy_type_electric">
+    <string-array translatable="false" name="spinner_energy_type_electric">
         <item>Watt</item>
         <item>Kilowatt</item>
         <item>Megawatt</item>
     </string-array>
 
     <!-- Energy density: https://en.wikipedia.org/wiki/Fuel#Energy -->
-    <string-array name="spinner_energy_type_if_vehicle">
+    <string-array translatable="false" name="spinner_energy_type_if_vehicle">
         <item>Gasoline</item>
         <item>Diesel</item>
         <item>Kerosene</item>
@@ -76,7 +76,7 @@
         <item>Methanol</item>
     </string-array>
 
-    <string-array name="unit_list_time">
+    <string-array translatable="false" name="unit_list_time">
         <item>Seconds</item>
         <item>Minutes</item>
         <item>Hours</item>
@@ -84,7 +84,7 @@
         <item>Years</item>
     </string-array>
 
-    <string-array name="unit_list_volume">
+    <string-array translatable="false" name="unit_list_volume">
         <item>Cubic inch</item>
         <item>Cubic foot</item>
         <item>Cubic metre</item>
@@ -106,7 +106,7 @@
         <item>US liquid gallon</item>
     </string-array>
 
-    <string-array name="unit_list_mass">
+    <string-array translatable="false" name="unit_list_mass">
         <item>Ounce</item>
         <item>Pound</item>
         <item>Stone</item>
@@ -119,7 +119,7 @@
         <item>Ton</item>
     </string-array>
 
-    <string-array name="unit_list_distance">
+    <string-array translatable="false" name="unit_list_distance">
         <item>Nanometre</item>
         <item>Micrometre</item>
         <item>Millimetre</item>
@@ -271,5 +271,5 @@
     <string name="content_description_compare_arrows">Compare items</string>
 
     <!-- Help text -->
-    <string name="help_text"><b>1. What is this app good for?</b>\n\nThe purpose of this application is to give you a tool to compare all kinds of energy forms, whether it makes sense to compare them or not.\n\n<b>2. What can I do with it?</b>\n\nYou can select two different energy carriers in the main section of the application by clicking on the \'Shuffle\' button in the top right corner or simply clicking on the currently displayed items. You can now change the compare values for each item. For example, if you selected a liquid, you can click on the corresponding display for the amount (in the middle of the screen) and select a value in your desired unit. The corresponding value for the other item will now be calculated based on this. If you don\'t change those values, the app will select some randomly.\n\n<b>3. How does it work?</b>\n\nEvery item\'s energy is saved in Joule or Watt. Based on these values, we can determine how much time/distance/mass/volume you need of a specific item to achieve the same amount of energy of a specific amount of the other item. For example, you can calculate how much Beer you would need to be able to drive one kilometre with your car. Even when the comparison seems ridiculous and impossible.\n\n<b>4. Can I change the data?</b>\n\nYes! The database is completely open for customization. You can go to the \'Data\' tab and click on an item to change it\'s properties.\n\n<b>5. How can I delete an item?</b>\n\nYou can delete an item from the database by going to the \'Data\' tab and clicking long on an item, a dialog will appear and ask for confirmation.\n\n<b>6. How can I add my own items?</b>\n\nHead over to the \'Add Item\' tab and enter the information. You can change the item type by selecting a different type from the dropdown menu.\n\n<b>7. What are favorites good for?\n\n</b>You can mark an item as your favorite by going into it\'s editing screen (by clicking on it in the \'Data\' tab) and clicking the star in the upper right corner. Favorites will pop up first in the list when selecting items in the main screen.\n\n<b>8. I accidentally deleted or changed something</b>\n\nIf you ended up deleting or changing something by accident, you can simply reset the entire database in the \'Settings\' tab, note that every custom data will be lost by that.\n\n<b>9. What is \'Submit Data\'?</b>\n\nYou can easily send your custom created data to the developer, if you want it to be featured in the default data of this application.\n\n<b>10. Contact the developer for help or feedback</b>\n\nYou can contact me by simply clicking on the E-Mail address provided in the \'About\' tab.</string>
+    <string name="help_text" translatable="false"><b>1. What is this app good for?</b>\n\nThe purpose of this application is to give you a tool to compare all kinds of energy forms, whether it makes sense to compare them or not.\n\n<b>2. What can I do with it?</b>\n\nYou can select two different energy carriers in the main section of the application by clicking on the \'Shuffle\' button in the top right corner or simply clicking on the currently displayed items. You can now change the compare values for each item. For example, if you selected a liquid, you can click on the corresponding display for the amount (in the middle of the screen) and select a value in your desired unit. The corresponding value for the other item will now be calculated based on this. If you don\'t change those values, the app will select some randomly.\n\n<b>3. How does it work?</b>\n\nEvery item\'s energy is saved in Joule or Watt. Based on these values, we can determine how much time/distance/mass/volume you need of a specific item to achieve the same amount of energy of a specific amount of the other item. For example, you can calculate how much Beer you would need to be able to drive one kilometre with your car. Even when the comparison seems ridiculous and impossible.\n\n<b>4. Can I change the data?</b>\n\nYes! The database is completely open for customization. You can go to the \'Data\' tab and click on an item to change it\'s properties.\n\n<b>5. How can I delete an item?</b>\n\nYou can delete an item from the database by going to the \'Data\' tab and clicking long on an item, a dialog will appear and ask for confirmation.\n\n<b>6. How can I add my own items?</b>\n\nHead over to the \'Add Item\' tab and enter the information. You can change the item type by selecting a different type from the dropdown menu.\n\n<b>7. What are favorites good for?\n\n</b>You can mark an item as your favorite by going into it\'s editing screen (by clicking on it in the \'Data\' tab) and clicking the star in the upper right corner. Favorites will pop up first in the list when selecting items in the main screen.\n\n<b>8. I accidentally deleted or changed something</b>\n\nIf you ended up deleting or changing something by accident, you can simply reset the entire database in the \'Settings\' tab, note that every custom data will be lost by that.\n\n<b>9. What is \'Submit Data\'?</b>\n\nYou can easily send your custom created data to the developer, if you want it to be featured in the default data of this application.\n\n<b>10. Contact the developer for help or feedback</b>\n\nYou can contact me by simply clicking on the E-Mail address provided in the \'About\' tab.</string>
 </resources>

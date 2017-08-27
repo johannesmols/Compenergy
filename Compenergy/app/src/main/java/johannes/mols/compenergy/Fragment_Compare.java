@@ -13,8 +13,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.AnimationDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -130,7 +132,11 @@ public class Fragment_Compare extends Fragment {
             animationDrawable.setEnterFadeDuration(5000);
             animationDrawable.setExitFadeDuration(5000);
         } else {
-            gradientRootLayout.setBackground(null);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                gradientRootLayout.setBackground(null);
+            } else {
+                gradientRootLayout.setBackgroundDrawable(null);
+            }
         }
 
         upperItemName.setOnClickListener(upperNameClick);
@@ -326,7 +332,12 @@ public class Fragment_Compare extends Fragment {
         if(dbHelper.getCarrierCount() > 0) {
             List<Integer> id_list = dbHelper.getIdList();
             int idx1, idx2;
-            int max = id_list.size() - 1;
+            int max;
+            if (id_list.size() > 0) {
+                max = id_list.size() - 1;
+            } else {
+                return;
+            }
             int min = 0;
             Random r = new Random();
             idx1 = r.nextInt(max - min) + min;

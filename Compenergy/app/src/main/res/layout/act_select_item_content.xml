@@ -27,7 +27,8 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:drawableEnd="@drawable/ic_close_black_24dp" />
+        android:drawableEnd="@drawable/ic_close_black_24dp"
+        android:drawableRight="@drawable/ic_close_black_24dp"/>
 
     <ExpandableListView
         android:id="@+id/act_select_expandable_list_view"
